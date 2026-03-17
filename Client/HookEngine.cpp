@@ -134,7 +134,7 @@ void HookEngine::InstallAll()
                         s_trampolineProcessPkt,
                         STOLEN_ProcessPacket))
     {
-        OrigProcessPacket = (fnProcessPacket)s_trampolineProcessPkt;
+        OrigProcessPacket = (fnProcessPacket)(void*)s_trampolineProcessPkt;
     }
 
     // 2. Expose DataSend (we store trampoline to CALL it directly for injecting our packets)
@@ -143,7 +143,7 @@ void HookEngine::InstallAll()
                         s_trampolineDataSend,
                         STOLEN_DataSend))
     {
-        OrigDataSend = (fnDataSend)s_trampolineDataSend;
+        OrigDataSend = (fnDataSend)(void*)s_trampolineDataSend;
     }
 
     // 3. Hook SwapBuffers via IAT

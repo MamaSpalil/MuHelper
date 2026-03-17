@@ -215,5 +215,9 @@ void CMuHelperClient::AddLog(LogColor c, const char* fmt, ...)
     char buf[256];
     va_list ap; va_start(ap, fmt); vsnprintf(buf, 255, fmt, ap); va_end(ap);
     if (m_log.size() >= MAX_LOG) m_log.pop_front();
-    m_log.push_back({ buf, GetTickCount(), c });
+    HelperLogEntry entry;
+    entry.sText = buf;
+    entry.dwTimestamp = GetTickCount();
+    entry.color = c;
+    m_log.push_back(entry);
 }

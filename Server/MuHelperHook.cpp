@@ -105,21 +105,22 @@ void MuHelper_DispatchPacket(int nObjIndex, BYTE* lpMsg, int nMsgSize)
 //  handled entirely by our code before the GG dispatch table.
 //
 // ============================================================
-//  SQL (run once)
+//  SQL (MSSQL 2008 R2 — run once, see muhelper_schema_mssql.sql)
 // ============================================================
 //
-//  CREATE TABLE IF NOT EXISTS MuHelperConfig (
-//      CharIdx    INT UNSIGNED NOT NULL PRIMARY KEY,
-//      cfg        BLOB         NOT NULL,
-//      UpdatedAt  TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
-//                 ON UPDATE CURRENT_TIMESTAMP
-//  ) ENGINE=InnoDB;
+//  CREATE TABLE [dbo].[MuHelperConfig] (
+//      [CharIdx]   INT           NOT NULL,
+//      [cfg]       VARBINARY(96) NOT NULL,
+//      [UpdatedAt] DATETIME      NOT NULL DEFAULT GETDATE(),
+//      CONSTRAINT [PK_MuHelperConfig] PRIMARY KEY CLUSTERED ([CharIdx])
+//  );
 //
-//  CREATE TABLE IF NOT EXISTS MuHelperProfiles (
-//      CharIdx    INT UNSIGNED NOT NULL,
-//      SlotIdx    TINYINT UNSIGNED NOT NULL,
-//      Name       VARCHAR(16) NOT NULL DEFAULT '',
-//      cfg        BLOB NOT NULL,
-//      PRIMARY KEY (CharIdx, SlotIdx)
-//  ) ENGINE=InnoDB;
+//  CREATE TABLE [dbo].[MuHelperProfiles] (
+//      [CharIdx]   INT           NOT NULL,
+//      [SlotIdx]   TINYINT       NOT NULL,
+//      [Name]      VARCHAR(16)   NOT NULL DEFAULT '',
+//      [cfg]       VARBINARY(96) NOT NULL,
+//      [UpdatedAt] DATETIME      NOT NULL DEFAULT GETDATE(),
+//      CONSTRAINT [PK_MuHelperProfiles] PRIMARY KEY CLUSTERED ([CharIdx], [SlotIdx])
+//  );
 //

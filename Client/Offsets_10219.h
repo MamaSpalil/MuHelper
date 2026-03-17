@@ -136,6 +136,67 @@ namespace Addr_main_10219
 
     //  Current map ID
     static const DWORD PTR_WorldActive      = 0x08B09A2C;
+
+    // =============================================================
+    //  USERSTRUCT — Player character structure (OBJECTSTRUCT)
+    //
+    //  In main.exe 1.02.19, the user/character structure array
+    //  starts at the Hero pointer base.  Each entry contains
+    //  character attributes: position (X,Y), HP, MP, shield,
+    //  level, class, equipment, etc.
+    //
+    //  Structure offsets within USERSTRUCT:
+    //    +0x00  WORD  wIndex           — character index
+    //    +0x04  char  szName[11]       — character name
+    //    +0x10  BYTE  bClass           — class ID (MuCharClass enum)
+    //    +0x12  WORD  wLevel           — character level
+    //    +0x14  int   X                — map X coordinate
+    //    +0x18  int   Y                — map Y coordinate
+    //    +0x1C  DWORD dwLife           — current HP
+    //    +0x20  DWORD dwMaxLife        — maximum HP
+    //    +0x24  DWORD dwMana           — current MP
+    //    +0x28  DWORD dwMaxMana        — maximum MP
+    //    +0x2C  DWORD dwShield         — current SD (shield defense)
+    //    +0x30  DWORD dwMaxShield      — maximum SD
+    //    +0x34  DWORD dwExp            — current experience
+    //    +0x38  DWORD dwNextExp        — experience for next level
+    //    +0x3C  WORD  wStr             — Strength
+    //    +0x3E  WORD  wAgi             — Agility
+    //    +0x40  WORD  wVit             — Vitality
+    //    +0x42  WORD  wEne             — Energy
+    //    +0x44  WORD  wCmd             — Command (DL only)
+    //    +0x48  BYTE  bMapNumber       — current map ID
+    //    +0x4C  BYTE  bPKLevel         — PK level (0-6)
+    //    +0x50  DWORD dwZen            — current zen amount
+    //    +0x54  int   nPartyNumber     — party index (-1 if none)
+    //
+    //  Base address for the user (self) struct:
+    // =============================================================
+    static const DWORD PTR_UserStruct       = 0x08B25740;   // == PTR_Hero
+
+    //  Size of a single USERSTRUCT entry (approx, varies by build)
+    static const DWORD USERSTRUCT_SIZE      = 0x120;
+
+    // =============================================================
+    //  USERACCOUNT — Account-level data
+    //
+    //  In main.exe 1.02.19, account information is stored at a
+    //  separate global after successful login.  This contains the
+    //  account name (username) used to authenticate with the server.
+    //
+    //  Layout:
+    //    +0x00  char  szAccountName[11]  — login account name
+    //    +0x0C  BYTE  bAuthLevel         — account authority level
+    //    +0x10  DWORD dwAccountId        — numeric account ID
+    //    +0x14  BYTE  bCharCount         — number of characters
+    //    +0x18  char  szLastChar[11]     — last played character name
+    //
+    //  How to locate manually:
+    //    1. Search for the LoginResult handler (opcode 0xF1 01)
+    //    2. Trace the CALL that copies account name → global buffer
+    //    3. Typical x-ref: LEA EDI, [USERACCOUNT]  near login handler
+    // =============================================================
+    static const DWORD PTR_UserAccount      = 0x08B09A00;
 }
 
 // ─────────────────────────────────────────────────────────────

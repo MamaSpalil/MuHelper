@@ -25,7 +25,9 @@ MuHelper/
 
 - **Visual Studio 2010** (Platform Toolset v100) или выше
 - Операционная система Windows 10 Pro x86/x64
+- **База данных**: MSSQL 2008 R2
 - Код совместим с C++ компилятором VS 2010 (не использует C++11-only конструкции, кроме `auto`, `nullptr`, `static_assert`, `std::array`, `std::function`, `std::unordered_map` и лямбд — всё поддерживается в VS 2010)
+- **Важно**: ImGui должен быть версии **v1.82.x** (или более ранней) для совместимости с VS 2010. Версии v1.83+ используют `constexpr` и `enum class`, не поддерживаемые VS 2010.
 
 ---
 
@@ -33,7 +35,7 @@ MuHelper/
 
 ### Требования
 - Visual Studio 2010 (или тот же компилятор что и GS)
-- MySQL C API или ODBC
+- MSSQL 2008 R2 (ODBC через DatabaseManager GameServer)
 
 ### Новые возможности сервера
 - **Profile save/load** — 5 именованных профилей на персонажа
@@ -42,24 +44,25 @@ MuHelper/
 - **EXP/Kill rate** — подсчёт per-hour статистики
 - **Stop on level up** / **Stop on EXC drop** — новые режимы паузы
 
-### SQL (добавить к существующей таблице)
+### SQL (MSSQL 2008 R2 — выполнить один раз, см. muhelper_schema_mssql.sql)
 ```sql
 -- Основная таблица (v2: увеличен размер cfg до 96 байт)
-CREATE TABLE IF NOT EXISTS MuHelperConfig (
-    CharIdx  INT UNSIGNED NOT NULL PRIMARY KEY,
-    cfg      BLOB         NOT NULL,
-    UpdatedAt TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
-             ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
+CREATE TABLE [dbo].[MuHelperConfig] (
+    [CharIdx]   INT           NOT NULL,
+    [cfg]       VARBINARY(96) NOT NULL,
+    [UpdatedAt] DATETIME      NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT [PK_MuHelperConfig] PRIMARY KEY CLUSTERED ([CharIdx])
+);
 
 -- Профили
-CREATE TABLE IF NOT EXISTS MuHelperProfiles (
-    CharIdx  INT UNSIGNED NOT NULL,
-    SlotIdx  TINYINT      NOT NULL,
-    Name     VARCHAR(16)  NOT NULL DEFAULT '',
-    cfg      BLOB         NOT NULL,
-    PRIMARY KEY (CharIdx, SlotIdx)
-) ENGINE=InnoDB;
+CREATE TABLE [dbo].[MuHelperProfiles] (
+    [CharIdx]   INT           NOT NULL,
+    [SlotIdx]   TINYINT       NOT NULL,
+    [Name]      VARCHAR(16)   NOT NULL DEFAULT '',
+    [cfg]       VARBINARY(96) NOT NULL,
+    [UpdatedAt] DATETIME      NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT [PK_MuHelperProfiles] PRIMARY KEY CLUSTERED ([CharIdx], [SlotIdx])
+);
 ```
 
 ---
@@ -91,7 +94,7 @@ Shared/MuHelperNetData.h         ← MUHELPER_NET_DATA (совместим с Mu
 cd MuHelper/Client
 mkdir imgui && cd imgui
 
-# Скачать файлы с https://github.com/ocornut/imgui (tag v1.90.x):
+# Скачать файлы с https://github.com/ocornut/imgui (tag v1.82.x для совместимости с VS2010):
 imgui.h
 imgui.cpp
 imgui_draw.cpp
