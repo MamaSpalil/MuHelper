@@ -48,10 +48,282 @@
 #define POTION_FLAG_ANTIDOTE        0x08
 
 #define BUFF_SLOT_NONE              0xFF
+#define SKILL_NONE                  0xFFFF
 #define MUHELPER_MAX_RADIUS         12
 #define MUHELPER_DEFAULT_RADIUS     5
 #define MUHELPER_MAX_PROFILES       5
 
+// ============================================================
+//  Character Class IDs (server Class byte & 0x0F)
+// ============================================================
+enum MuCharClass : BYTE
+{
+    CLASS_DK  = 0,    // Dark Knight (base)
+    CLASS_BK  = 1,    // Blade Knight (1st evolution)
+    CLASS_BM  = 2,    // Blade Master (2nd evolution)
+    CLASS_DW  = 3,    // Dark Wizard (base)
+    CLASS_SM  = 4,    // Soul Master (1st evolution)
+    CLASS_GM  = 5,    // Grand Master (2nd evolution)
+    CLASS_FE  = 6,    // Fairy Elf (base)
+    CLASS_ME  = 7,    // Muse Elf (1st evolution)
+    CLASS_HE  = 8,    // High Elf (2nd evolution)
+    CLASS_MG  = 9,    // Magic Gladiator (hybrid, no base evolution)
+    CLASS_DM  = 10,   // Duel Master (MG evolution)
+    CLASS_DL  = 11,   // Dark Lord (base)
+    CLASS_LE  = 12,   // Lord Emperor (DL evolution)
+    CLASS_COUNT= 13
+};
+
+// ============================================================
+//  Skill IDs — unique per class ability
+// ============================================================
+enum MuSkillId : WORD
+{
+    // -- Dark Knight line --
+    SKILL_DK_SLASH              = 0x0001,
+    SKILL_DK_UPPERCUT           = 0x0002,
+    SKILL_DK_CYCLONE            = 0x0003,
+    SKILL_DK_LUNGE              = 0x0004,
+    SKILL_BK_SWORD_DANCE        = 0x0010,
+    SKILL_BK_COMBO_ATTACK       = 0x0011,
+    SKILL_BK_IMPALE             = 0x0012,
+    SKILL_BM_DRAGON_SLASH       = 0x0020,
+    SKILL_BM_PENETRATION        = 0x0021,
+    SKILL_BM_LIGHTNING_STRIKE   = 0x0022,
+    // -- Dark Wizard line --
+    SKILL_DW_FIREBALL           = 0x0101,
+    SKILL_DW_POWER_WAVE         = 0x0102,
+    SKILL_DW_LIGHTNING           = 0x0103,
+    SKILL_DW_ICE_ARROW          = 0x0104,
+    SKILL_DW_TELEPORT           = 0x0105,
+    SKILL_SM_CHAIN_LIGHTNING    = 0x0110,
+    SKILL_SM_NOVA               = 0x0111,
+    SKILL_SM_DECAY              = 0x0112,
+    SKILL_GM_STORM              = 0x0120,
+    SKILL_GM_INFERNO            = 0x0121,
+    SKILL_GM_ICE_STORM          = 0x0122,
+    // -- Fairy Elf line --
+    SKILL_FE_TRIPLE_SHOT        = 0x0201,
+    SKILL_FE_HEAL               = 0x0202,
+    SKILL_FE_DEFENSE_UP         = 0x0203,
+    SKILL_FE_ATTACK_UP          = 0x0204,
+    SKILL_FE_SUMMON_MONSTER     = 0x0205,
+    SKILL_ME_MULTI_SHOT         = 0x0210,
+    SKILL_ME_PENETRATION_ARROW  = 0x0211,
+    SKILL_ME_CURE               = 0x0212,
+    SKILL_HE_BOW_LASER          = 0x0220,
+    SKILL_HE_INFINITY_ARROW     = 0x0221,
+    SKILL_HE_BLESS              = 0x0222,
+    // -- Magic Gladiator line --
+    SKILL_MG_POWER_SLASH        = 0x0301,
+    SKILL_MG_FIREBALL_SLASH     = 0x0302,
+    SKILL_MG_TELEPORT           = 0x0303,
+    SKILL_MG_SWORD_POWER        = 0x0304,
+    SKILL_DM_ICE_SLASH          = 0x0310,
+    SKILL_DM_FLAME_STRIKE       = 0x0311,
+    SKILL_DM_EARTHQUAKE         = 0x0312,
+    // -- Dark Lord line --
+    SKILL_DL_FIRESCREAM         = 0x0401,
+    SKILL_DL_CHAOTIC_DISEIER    = 0x0402,
+    SKILL_DL_DARKNESS           = 0x0403,
+    SKILL_DL_ARMY_OF_DARKNESS   = 0x0404,
+    SKILL_LE_IMPERIAL_FORT      = 0x0410,
+    SKILL_LE_FIRE_BURST         = 0x0411,
+    SKILL_LE_DARK_HORSE_ATTACK  = 0x0412,
+};
+
+// ============================================================
+//  Per-class skill table — defines primary, secondary, AoE,
+//  buff, combo, and party heal for each class
+// ============================================================
+struct ClassSkillInfo
+{
+    MuCharClass eClass;
+    const char* szClassName;
+    const char* szClassAbbr;
+    WORD  wPrimarySkill;        // main single-target attack
+    WORD  wSecondarySkill;      // secondary/alternate attack
+    WORD  wAoESkill;            // area-of-effect skill
+    WORD  wBuffSkill1;          // self/party buff 1
+    WORD  wBuffSkill2;          // self/party buff 2
+    WORD  wComboSkill;          // combo finisher (0xFFFF = none)
+    WORD  wPartyHealSkill;      // party heal (0xFFFF = none)
+    BYTE  bComboHitsRequired;   // hits before combo fires (0 = no combo)
+    BYTE  bHasPartyHeal;        // 1 if can heal party members
+    BYTE  bIsMelee;             // 1 = melee, 0 = ranged
+    BYTE  bCanTeleport;         // 1 if class has teleport
+    DWORD dwPrimaryCooldownMs;
+    DWORD dwSecondaryCooldownMs;
+    DWORD dwAoECooldownMs;
+};
+
+inline const ClassSkillInfo* GetClassSkillTable()
+{
+    static const ClassSkillInfo table[CLASS_COUNT] = {
+        // Dark Knight (DK) — melee, no combo yet
+        { CLASS_DK, "Dark Knight",     "DK",
+          SKILL_DK_SLASH,       SKILL_DK_UPPERCUT,      SKILL_DK_CYCLONE,
+          SKILL_NONE,           SKILL_NONE,             SKILL_NONE,
+          SKILL_NONE,           0, 0, 1, 0,
+          600, 800, 2000 },
+        // Blade Knight (BK) — melee, combo at 3 hits
+        { CLASS_BK, "Blade Knight",    "BK",
+          SKILL_BK_SWORD_DANCE, SKILL_BK_IMPALE,        SKILL_DK_CYCLONE,
+          SKILL_NONE,           SKILL_NONE,             SKILL_BK_COMBO_ATTACK,
+          SKILL_NONE,           3, 0, 1, 0,
+          600, 800, 2000 },
+        // Blade Master (BM) — melee, combo at 3 hits
+        { CLASS_BM, "Blade Master",    "BM",
+          SKILL_BM_DRAGON_SLASH,SKILL_BM_PENETRATION,   SKILL_BM_LIGHTNING_STRIKE,
+          SKILL_NONE,           SKILL_NONE,             SKILL_BK_COMBO_ATTACK,
+          SKILL_NONE,           3, 0, 1, 0,
+          600, 700, 1800 },
+        // Dark Wizard (DW) — ranged, can teleport
+        { CLASS_DW, "Dark Wizard",     "DW",
+          SKILL_DW_FIREBALL,    SKILL_DW_POWER_WAVE,    SKILL_DW_LIGHTNING,
+          SKILL_NONE,           SKILL_NONE,             SKILL_NONE,
+          SKILL_NONE,           0, 0, 0, 1,
+          700, 900, 2500 },
+        // Soul Master (SM) — ranged, can teleport
+        { CLASS_SM, "Soul Master",     "SM",
+          SKILL_SM_CHAIN_LIGHTNING, SKILL_DW_ICE_ARROW, SKILL_SM_NOVA,
+          SKILL_NONE,           SKILL_NONE,             SKILL_NONE,
+          SKILL_NONE,           0, 0, 0, 1,
+          700, 800, 3000 },
+        // Grand Master (GM) — ranged, can teleport
+        { CLASS_GM, "Grand Master",    "GM",
+          SKILL_GM_STORM,       SKILL_GM_INFERNO,       SKILL_GM_ICE_STORM,
+          SKILL_NONE,           SKILL_NONE,             SKILL_NONE,
+          SKILL_NONE,           0, 0, 0, 1,
+          700, 800, 2500 },
+        // Fairy Elf (FE) — ranged, has party heal & buffs
+        { CLASS_FE, "Fairy Elf",       "FE",
+          SKILL_FE_TRIPLE_SHOT, SKILL_FE_SUMMON_MONSTER,SKILL_NONE,
+          SKILL_FE_DEFENSE_UP,  SKILL_FE_ATTACK_UP,     SKILL_NONE,
+          SKILL_FE_HEAL,        0, 1, 0, 0,
+          600, 2000, 0 },
+        // Muse Elf (ME) — ranged, has party heal & buffs
+        { CLASS_ME, "Muse Elf",        "ME",
+          SKILL_ME_MULTI_SHOT,  SKILL_ME_PENETRATION_ARROW, SKILL_NONE,
+          SKILL_FE_DEFENSE_UP,  SKILL_FE_ATTACK_UP,     SKILL_NONE,
+          SKILL_ME_CURE,        0, 1, 0, 0,
+          600, 1500, 0 },
+        // High Elf (HE) — ranged, has party heal & buffs
+        { CLASS_HE, "High Elf",        "HE",
+          SKILL_HE_BOW_LASER,   SKILL_HE_INFINITY_ARROW,SKILL_NONE,
+          SKILL_FE_DEFENSE_UP,  SKILL_FE_ATTACK_UP,     SKILL_NONE,
+          SKILL_HE_BLESS,       0, 1, 0, 0,
+          500, 1200, 0 },
+        // Magic Gladiator (MG) — hybrid melee/ranged, can teleport
+        { CLASS_MG, "Magic Gladiator", "MG",
+          SKILL_MG_POWER_SLASH, SKILL_MG_FIREBALL_SLASH,SKILL_MG_SWORD_POWER,
+          SKILL_NONE,           SKILL_NONE,             SKILL_NONE,
+          SKILL_NONE,           0, 0, 1, 1,
+          600, 800, 2500 },
+        // Duel Master (DM) — MG evolution, hybrid
+        { CLASS_DM, "Duel Master",     "DM",
+          SKILL_DM_ICE_SLASH,   SKILL_DM_FLAME_STRIKE,  SKILL_DM_EARTHQUAKE,
+          SKILL_NONE,           SKILL_NONE,             SKILL_NONE,
+          SKILL_NONE,           0, 0, 1, 1,
+          600, 700, 2200 },
+        // Dark Lord (DL) — melee, summon buffs
+        { CLASS_DL, "Dark Lord",       "DL",
+          SKILL_DL_FIRESCREAM,  SKILL_DL_CHAOTIC_DISEIER,SKILL_DL_ARMY_OF_DARKNESS,
+          SKILL_DL_DARKNESS,    SKILL_NONE,             SKILL_NONE,
+          SKILL_NONE,           0, 0, 1, 0,
+          700, 900, 3000 },
+        // Lord Emperor (LE) — DL evolution
+        { CLASS_LE, "Lord Emperor",    "LE",
+          SKILL_LE_FIRE_BURST,  SKILL_LE_DARK_HORSE_ATTACK, SKILL_DL_ARMY_OF_DARKNESS,
+          SKILL_LE_IMPERIAL_FORT,SKILL_DL_DARKNESS,     SKILL_NONE,
+          SKILL_NONE,           0, 0, 1, 0,
+          600, 800, 2500 },
+    };
+    return table;
+}
+
+inline const ClassSkillInfo* GetClassSkillInfo(BYTE classId)
+{
+    if (classId >= CLASS_COUNT) return nullptr;
+    return &GetClassSkillTable()[classId];
+}
+
+inline const char* GetClassName(BYTE classId)
+{
+    const ClassSkillInfo* info = GetClassSkillInfo(classId);
+    return info ? info->szClassName : "Unknown";
+}
+
+inline const char* GetClassAbbr(BYTE classId)
+{
+    const ClassSkillInfo* info = GetClassSkillInfo(classId);
+    return info ? info->szClassAbbr : "??";
+}
+
+// ============================================================
+//  Skill name lookup
+// ============================================================
+struct SkillNameEntry { WORD wSkillId; const char* szName; };
+
+inline const char* GetSkillName(WORD skillId)
+{
+    static const SkillNameEntry names[] = {
+        { SKILL_DK_SLASH,              "Slash" },
+        { SKILL_DK_UPPERCUT,           "Uppercut" },
+        { SKILL_DK_CYCLONE,            "Cyclone" },
+        { SKILL_DK_LUNGE,              "Lunge" },
+        { SKILL_BK_SWORD_DANCE,        "Sword Dance" },
+        { SKILL_BK_COMBO_ATTACK,       "Combo Attack" },
+        { SKILL_BK_IMPALE,             "Impale" },
+        { SKILL_BM_DRAGON_SLASH,       "Dragon Slash" },
+        { SKILL_BM_PENETRATION,        "Penetration" },
+        { SKILL_BM_LIGHTNING_STRIKE,   "Lightning Strike" },
+        { SKILL_DW_FIREBALL,           "Fireball" },
+        { SKILL_DW_POWER_WAVE,         "Power Wave" },
+        { SKILL_DW_LIGHTNING,          "Lightning" },
+        { SKILL_DW_ICE_ARROW,          "Ice Arrow" },
+        { SKILL_DW_TELEPORT,           "Teleport" },
+        { SKILL_SM_CHAIN_LIGHTNING,    "Chain Lightning" },
+        { SKILL_SM_NOVA,               "Nova" },
+        { SKILL_SM_DECAY,              "Decay" },
+        { SKILL_GM_STORM,              "Storm" },
+        { SKILL_GM_INFERNO,            "Inferno" },
+        { SKILL_GM_ICE_STORM,          "Ice Storm" },
+        { SKILL_FE_TRIPLE_SHOT,        "Triple Shot" },
+        { SKILL_FE_HEAL,               "Heal" },
+        { SKILL_FE_DEFENSE_UP,         "Defense Up" },
+        { SKILL_FE_ATTACK_UP,          "Attack Up" },
+        { SKILL_FE_SUMMON_MONSTER,     "Summon Monster" },
+        { SKILL_ME_MULTI_SHOT,         "Multi-Shot" },
+        { SKILL_ME_PENETRATION_ARROW,  "Penetration Arrow" },
+        { SKILL_ME_CURE,               "Cure" },
+        { SKILL_HE_BOW_LASER,          "Bow Laser" },
+        { SKILL_HE_INFINITY_ARROW,     "Infinity Arrow" },
+        { SKILL_HE_BLESS,              "Bless" },
+        { SKILL_MG_POWER_SLASH,        "Power Slash" },
+        { SKILL_MG_FIREBALL_SLASH,     "Fireball Slash" },
+        { SKILL_MG_TELEPORT,           "Teleport" },
+        { SKILL_MG_SWORD_POWER,        "Sword Power" },
+        { SKILL_DM_ICE_SLASH,          "Ice Slash" },
+        { SKILL_DM_FLAME_STRIKE,       "Flame Strike" },
+        { SKILL_DM_EARTHQUAKE,         "Earthquake" },
+        { SKILL_DL_FIRESCREAM,         "Firescream" },
+        { SKILL_DL_CHAOTIC_DISEIER,    "Chaotic Diseier" },
+        { SKILL_DL_DARKNESS,           "Darkness" },
+        { SKILL_DL_ARMY_OF_DARKNESS,   "Army of Darkness" },
+        { SKILL_LE_IMPERIAL_FORT,      "Imperial Fort" },
+        { SKILL_LE_FIRE_BURST,         "Fire Burst" },
+        { SKILL_LE_DARK_HORSE_ATTACK,  "Dark Horse Attack" },
+        { SKILL_NONE,                  "(none)" },
+    };
+    for (const auto& e : names)
+        if (e.wSkillId == skillId) return e.szName;
+    return "Unknown";
+}
+
+// ============================================================
+//  Config struct (96 bytes)
+// ============================================================
 struct MuHelperConfig
 {
     BYTE  bEnabled;
@@ -82,9 +354,19 @@ struct MuHelperConfig
     BYTE  bOverlayX;
     BYTE  bOverlayY;
     BYTE  bAvoidPvP;
-    BYTE  bReserved[68];
+    BYTE  bReserved[64];
 };
 static_assert(sizeof(MuHelperConfig) == 96, "MuHelperConfig size");
+
+// ============================================================
+//  Profile (shared between server and client)
+// ============================================================
+struct HelperProfile
+{
+    char           szName[16];
+    MuHelperConfig cfg;
+    BYTE           bUsed;
+};
 
 struct PKT_MuHelper_Enable       { BYTE h,sz,op,sub; BYTE bEnable; BYTE pad[3]; };
 struct PKT_MuHelper_CfgSend      { BYTE h,sz,op,sub; MuHelperConfig cfg; };

@@ -19,9 +19,6 @@ struct HelperLogEntry
     LogColor    color;
 };
 
-// Profile slot
-struct HelperProfile { char szName[16]; MuHelperConfig cfg; bool bUsed; };
-
 // Skill cooldown bar data
 struct SkillCooldown { BYTE bSlot; WORD wMaxMs; WORD wRemMs; DWORD dwLastUpdate; };
 

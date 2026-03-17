@@ -97,6 +97,7 @@ void CMuHelperManager::TickPlayer(int idx)
     DoAutoRepair         (idx, s);
     DoAutoAttack         (idx, s);
     DoAutoPickup         (idx, s);
+    DoPartyHeal          (idx, s);
 
     // Party HP broadcast every 2s
     if (Elapsed(s.tLastParty, MH_PARTY_SEND_MS))
@@ -142,7 +143,73 @@ static void SetSkillCD(MuHelperSession& s, BYTE slot, DWORD durationMs)
 }
 
 // ============================================================
-//  AUTO ATTACK + SKILL ROTATION
+//  CLASS-AWARE SKILL RESOLUTION
+// ============================================================
+WORD CMuHelperManager::ResolveAttackSkill(int idx, MuHelperSession& s, const ClassSkillInfo* ci)
+{
+    if (!ci) return SKILL_NONE;
+
+    // If AoE mode and multiple mobs in range, prefer AoE skill
+    if ((s.cfg.bCombatMode & COMBAT_MODE_AOE) && ci->wAoESkill != SKILL_NONE)
+    {
+        if (CountMobsInRange(idx, s.cfg.bAttackRadius) >= 3)
+            return ci->wAoESkill;
+    }
+
+    // Alternate between primary and secondary
+    if (s.bAttackCount % 3 == 2 && ci->wSecondarySkill != SKILL_NONE)
+        return ci->wSecondarySkill;
+
+    return ci->wPrimarySkill;
+}
+
+WORD CMuHelperManager::ResolveAoESkill(const ClassSkillInfo* ci)
+{
+    if (!ci) return SKILL_NONE;
+    return ci->wAoESkill;
+}
+
+int CMuHelperManager::CountMobsInRange(int idx, int radius)
+{
+    OBJECTSTRUCT& self = gObj[idx];
+    int count = 0;
+    float r2 = (float)(radius * radius);
+    for (int i = 0; i < gObjMaxIndex; i++)
+    {
+        if (i == idx) continue;
+        OBJECTSTRUCT& o = gObj[i];
+        if (o.Type != OBJTYPE_MONSTER || o.Life <= 0) continue;
+        if (o.MapNumber != self.MapNumber) continue;
+        float dx = (float)(self.X - o.X);
+        float dy = (float)(self.Y - o.Y);
+        if (dx*dx + dy*dy <= r2) count++;
+    }
+    return count;
+}
+
+// ============================================================
+//  COMBO ATTACK (BK/BM specific)
+// ============================================================
+void CMuHelperManager::DoComboAttack(int idx, MuHelperSession& s, const ClassSkillInfo* ci)
+{
+    if (!ci || ci->wComboSkill == SKILL_NONE) return;
+    if (ci->bComboHitsRequired == 0) return;
+
+    s.bComboHitCount++;
+    if (s.bComboHitCount >= ci->bComboHitsRequired)
+    {
+        // Fire combo finisher
+        if (s.nTarget >= 0)
+        {
+            GCSkillAttackSend(idx, s.nTarget, ci->wComboSkill & 0xFF);
+            SetSkillCD(s, ci->wComboSkill & 0x07, 2000);
+        }
+        s.bComboHitCount = 0;
+    }
+}
+
+// ============================================================
+//  AUTO ATTACK + SKILL ROTATION (class-aware)
 // ============================================================
 void CMuHelperManager::DoAutoAttack(int idx, MuHelperSession& s)
 {
@@ -158,7 +225,8 @@ void CMuHelperManager::DoAutoAttack(int idx, MuHelperSession& s)
     if (s.nTarget < 0) s.nTarget = FindBestTarget(idx, s);
     if (s.nTarget < 0) return;
 
-    // Check stop-on-drop / stop-on-level is handled by those events
+    // Resolve class info for this player
+    const ClassSkillInfo* ci = GetClassSkillInfo(s.bClass);
 
     // Determine which skill to use this tick
     BYTE skillSlot = 0xFF;
@@ -188,7 +256,26 @@ void CMuHelperManager::DoAutoAttack(int idx, MuHelperSession& s)
     }
     else if (s.cfg.bCombatMode & COMBAT_MODE_SKILL)
     {
-        skillSlot = s.cfg.bAttackSkillSlot;
+        // Class-aware skill selection: use class info to determine
+        // whether we should use the AoE or primary skill slot
+        if (ci)
+        {
+            WORD resolvedSkill = ResolveAttackSkill(idx, s, ci);
+            if (resolvedSkill != SKILL_NONE)
+            {
+                skillSlot = s.cfg.bAttackSkillSlot;
+                // If resolved to AoE and combo slot is configured, use that
+                if (resolvedSkill == ci->wAoESkill &&
+                    s.cfg.bComboSkillSlot != 0xFF)
+                {
+                    skillSlot = s.cfg.bComboSkillSlot;
+                }
+            }
+        }
+        else
+        {
+            skillSlot = s.cfg.bAttackSkillSlot;
+        }
     }
 
     s.bAttackCount++;
@@ -199,9 +286,21 @@ void CMuHelperManager::DoAutoAttack(int idx, MuHelperSession& s)
     else
     {
         GCSkillAttackSend(idx, s.nTarget, skillSlot);
-        // Estimate cooldown (server-side: 1-3 seconds based on skill)
-        SetSkillCD(s, skillSlot, 1500);
+        // Use class-specific cooldown based on which skill was selected
+        DWORD cdMs = 1500;
+        if (ci)
+        {
+            if (skillSlot == s.cfg.bComboSkillSlot)
+                cdMs = ci->dwAoECooldownMs;
+            else
+                cdMs = ci->dwPrimaryCooldownMs;
+        }
+        SetSkillCD(s, skillSlot, cdMs);
     }
+
+    // Combo system (BK/BM)
+    if ((s.cfg.bCombatMode & COMBAT_MODE_COMBO) && ci)
+        DoComboAttack(idx, s, ci);
 
     s.tLastAttack = Clock::now();
 }
@@ -302,13 +401,34 @@ void CMuHelperManager::DoAutoPotion(int idx, MuHelperSession& s)
 }
 
 // ============================================================
-//  AUTO BUFF (two slots)
+//  CLASS-AWARE BUFF APPLICATION
+// ============================================================
+void CMuHelperManager::ApplyClassBuffs(int idx, MuHelperSession& s, const ClassSkillInfo* ci)
+{
+    if (!ci) return;
+
+    // Apply class-specific buff skills if available
+    if (ci->wBuffSkill1 != SKILL_NONE)
+    {
+        GCSkillSelfSend(idx, ci->wBuffSkill1 & 0xFF);
+        SetSkillCD(s, 6, 30000);  // buff slot 1 on CD slot 6
+    }
+    if (ci->wBuffSkill2 != SKILL_NONE)
+    {
+        GCSkillSelfSend(idx, ci->wBuffSkill2 & 0xFF);
+        SetSkillCD(s, 7, 30000);  // buff slot 2 on CD slot 7
+    }
+}
+
+// ============================================================
+//  AUTO BUFF (class-aware, two custom slots + class buffs)
 // ============================================================
 void CMuHelperManager::DoAutoBuff(int idx, MuHelperSession& s)
 {
     if (!s.cfg.bSelfBuff) return;
     if (!Elapsed(s.tLastBuff, MH_BUFF_INTERVAL_MS)) return;
 
+    // User-configured buff slots (manual override)
     if (s.cfg.bBuffSkillSlot != BUFF_SLOT_NONE)
     {
         GCSkillSelfSend(idx, s.cfg.bBuffSkillSlot);
@@ -319,7 +439,54 @@ void CMuHelperManager::DoAutoBuff(int idx, MuHelperSession& s)
         GCSkillSelfSend(idx, s.cfg.bBuffSkillSlot2);
         SetSkillCD(s, s.cfg.bBuffSkillSlot2, 30000);
     }
+
+    // Class-specific buffs (e.g. Elf Defense Up / Attack Up, DL Darkness)
+    const ClassSkillInfo* ci = GetClassSkillInfo(s.bClass);
+    ApplyClassBuffs(idx, s, ci);
+
     s.tLastBuff = Clock::now();
+}
+
+// ============================================================
+//  PARTY HEAL (Elf classes only: FE, ME, HE)
+// ============================================================
+void CMuHelperManager::DoPartyHeal(int idx, MuHelperSession& s)
+{
+    if (!s.cfg.bUsePartyHeal) return;
+
+    // Only elf classes can heal party members
+    const ClassSkillInfo* ci = GetClassSkillInfo(s.bClass);
+    if (!ci || !ci->bHasPartyHeal || ci->wPartyHealSkill == SKILL_NONE) return;
+    if (!Elapsed(s.tLastPartyHeal, MH_POTION_COOLDOWN_MS)) return;
+
+    OBJECTSTRUCT& self = gObj[idx];
+    if (self.PartyNumber < 0) return;
+
+    // Find party member with lowest HP% below threshold
+    int healTarget = -1;
+    BYTE lowestHpPct = MH_PARTY_HEAL_HP_PCT;
+
+    for (int i = 0; i < gObjMaxIndex; i++)
+    {
+        if (i == idx) continue;
+        OBJECTSTRUCT& m = gObj[i];
+        if (m.Connected != PLAYER_PLAYING) continue;
+        if (m.PartyNumber != self.PartyNumber) continue;
+        if (m.Life <= 0 || m.MaxLife <= 0) continue;
+
+        BYTE hpPct = (BYTE)(m.Life * 100 / m.MaxLife);
+        if (hpPct < lowestHpPct)
+        {
+            lowestHpPct = hpPct;
+            healTarget = i;
+        }
+    }
+
+    if (healTarget >= 0)
+    {
+        GCSkillAttackSend(idx, healTarget, ci->wPartyHealSkill & 0xFF);
+        s.tLastPartyHeal = Clock::now();
+    }
 }
 
 // ============================================================
@@ -364,7 +531,7 @@ void CMuHelperManager::DoPartyHPBroadcast(int idx, MuHelperSession& s)
         if (m.PartyNumber != self.PartyNumber) continue;
         if (i == idx) continue;
 
-        auto& pm = pkt.members[count++];
+        auto& pm = pkt.m[count++];
         strncpy_s(pm.szName, m.Name, 10);
         pm.bHpPct = (BYTE)(m.MaxLife > 0 ? m.Life * 100 / m.MaxLife : 0);
         pm.bMpPct = (BYTE)(m.MaxMana > 0 ? m.Mana * 100 / m.MaxMana : 0);
@@ -528,11 +695,19 @@ void CMuHelperManager::OnCharLoad(int idx, DWORD dwCharDbId)
     std::lock_guard<std::recursive_mutex> lk(m_mutex);
     m_charIds[idx] = dwCharDbId;
     auto& s = m_sessions[idx];
+
+    // Capture the character's class from the game object
+    s.bClass = (BYTE)(gObj[idx].Class & 0x0F);
+
     LoadCfgFromDB    (idx, dwCharDbId);
     LoadProfilesFromDB(idx, dwCharDbId);
 
     // Initialise GG auth session for this client
     InitGGAuthForPlayer(idx);
+
+    const ClassSkillInfo* ci = GetClassSkillInfo(s.bClass);
+    if (ci)
+        LogAdd("[MuHelper] idx=%d class=%s loaded.", idx, ci->szClassName);
 }
 
 void CMuHelperManager::OnCharDisconnect(int idx)
