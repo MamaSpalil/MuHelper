@@ -64,7 +64,26 @@ CREATE TABLE IF NOT EXISTS MuHelperProfiles (
 
 ---
 
-## B. Клиентская DLL (main.exe 1.02.11)
+## B. Клиентская DLL (main.exe 1.02.11 или 1.02.19)
+
+### Выбор версии main.exe
+
+По умолчанию проект собирается для main.exe **1.02.11**.  
+Для сборки под main.exe **1.02.19** (Season 3 Ep 1):
+
+1. В VS-проекте → C/C++ → Preprocessor Definitions:
+   добавить `MUHELPER_TARGET_10219`
+2. Или в Property Sheet: `/D MUHELPER_TARGET_10219`
+
+Адреса (офсеты) для 1.02.19 определены в `Client/Offsets_10219.h`.  
+**NAME_CHAR** для 1.02.19: `0x08B26758` (глобальный буфер имени персонажа).
+
+### Файлы для 1.02.19 (новые)
+```
+Client/Offsets_10219.h           ← все офсеты для 1.02.19 + NAME_CHAR
+Client/MuHelperWorkLoop.h/.cpp   ← логика автоматизации (порт из MuMain S5.2)
+Shared/MuHelperNetData.h         ← MUHELPER_NET_DATA (совместим с MuMain)
+```
 
 ### ImGui — скачать и добавить
 
@@ -105,6 +124,7 @@ backends/imgui_impl_win32.cpp
 dllmain.cpp
 HookEngine.cpp
 MuHelperClient.cpp
+MuHelperWorkLoop.cpp
 MuHelperUI.cpp
 imgui/imgui.cpp
 imgui/imgui_draw.cpp

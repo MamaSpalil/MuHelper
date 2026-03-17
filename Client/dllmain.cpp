@@ -1,6 +1,6 @@
 // ============================================================
 //  MuHelper v2 — DLL Entry Point
-//  Injects into main.exe 1.02.11 (OpenGL)
+//  Injects into main.exe (1.02.11 or 1.02.19 via build config)
 // ============================================================
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>

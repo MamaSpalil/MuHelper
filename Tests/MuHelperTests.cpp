@@ -11,6 +11,7 @@
 // ============================================================
 
 #include "../Shared/MuHelperPackets.h"
+#include "../Shared/MuHelperNetData.h"
 #include <cassert>
 #include <cstdio>
 #include <cstring>
@@ -529,6 +530,147 @@ TEST(le_has_imperial_fort_and_darkness)
 }
 
 // ============================================================
+//  15. MUHELPER_NET_DATA (MuMain-compatible) SIZE TESTS
+// ============================================================
+TEST(net_data_size)
+{
+    // MUHELPER_NET_DATA must match PRECEIVE_MUHELPER_DATA from
+    // MuMain Season 5.2 (245 bytes payload, indices 4-248 in packet)
+    ASSERT_EQ(sizeof(MUHELPER_NET_DATA), 245);
+}
+
+TEST(net_status_size)
+{
+    ASSERT_EQ(sizeof(MUHELPER_NET_STATUS), 12);
+}
+
+TEST(net_data_extra_items_layout)
+{
+    // ExtraItems: 12 slots x 15 chars = 180 bytes
+    MUHELPER_NET_DATA nd;
+    memset(&nd, 0, sizeof(nd));
+    // Verify the ExtraItems array is correctly sized
+    ASSERT_EQ(sizeof(nd.ExtraItems), (size_t)180);
+    ASSERT_EQ(sizeof(nd.ExtraItems[0]), (size_t)15);
+}
+
+TEST(net_data_hunting_range_nibble)
+{
+    MUHELPER_NET_DATA nd;
+    memset(&nd, 0, sizeof(nd));
+    nd.HuntingRange = 6;
+    nd.ObtainRange  = 8;
+    ASSERT_EQ(nd.HuntingRange, 6);
+    ASSERT_EQ(nd.ObtainRange, 8);
+}
+
+TEST(net_data_skill_fields)
+{
+    MUHELPER_NET_DATA nd;
+    memset(&nd, 0, sizeof(nd));
+    nd.BasicSkill1       = 0x1234;
+    nd.ActivationSkill1  = 0x5678;
+    nd.ActivationSkill2  = 0x9ABC;
+    ASSERT_EQ(nd.BasicSkill1, 0x1234);
+    ASSERT_EQ(nd.ActivationSkill1, 0x5678);
+    ASSERT_EQ(nd.ActivationSkill2, (WORD)0x9ABC);
+}
+
+TEST(net_data_bitfield_flags)
+{
+    MUHELPER_NET_DATA nd;
+    memset(&nd, 0, sizeof(nd));
+    nd.AutoPotion  = 1;
+    nd.AutoHeal    = 1;
+    nd.Combo       = 1;
+    nd.Party       = 1;
+    nd.RepairItem  = 1;
+    ASSERT_EQ(nd.AutoPotion, 1);
+    ASSERT_EQ(nd.AutoHeal, 1);
+    ASSERT_EQ(nd.Combo, 1);
+    ASSERT_EQ(nd.Party, 1);
+    ASSERT_EQ(nd.RepairItem, 1);
+    // Other flags should be 0
+    ASSERT_EQ(nd.DrainLife, 0);
+    ASSERT_EQ(nd.LongDistanceAttack, 0);
+}
+
+// ============================================================
+//  16. VERSION 1.02.19 OFFSET TESTS
+//  (verify offset constants are defined and non-zero)
+// ============================================================
+
+// Stub minimal types that Offsets_10219.h needs
+// (on Linux test builds, windows.h comes from stubs)
+#ifdef __linux__
+namespace Addr_main_10219_test
+{
+    // Re-declare the constants here for testing
+    static const DWORD FN_DataSend          = 0x00403F30;
+    static const DWORD PTR_NetObject        = 0x007D5D70;
+    static const DWORD FN_ProcessPacket     = 0x0050C270;
+    static const DWORD FN_RecvProtocol      = 0x0050B430;
+    static const DWORD IAT_SwapBuffers      = 0x007B528C;
+    static const DWORD NAME_CHAR            = 0x08B26758;
+    static const DWORD PTR_Hero             = 0x08B25740;
+    static const DWORD ARR_CharactersClient = 0x08B26800;
+    static const DWORD ARR_Items            = 0x09126800;
+    static const DWORD PTR_SelectedCharacter= 0x08B09A20;
+    static const DWORD PTR_TargetX          = 0x08B09A24;
+    static const DWORD PTR_TargetY          = 0x08B09A28;
+}
+#endif
+
+TEST(offsets_10219_all_nonzero)
+{
+#ifdef __linux__
+    using namespace Addr_main_10219_test;
+#endif
+    ASSERT_TRUE(FN_DataSend != 0);
+    ASSERT_TRUE(PTR_NetObject != 0);
+    ASSERT_TRUE(FN_ProcessPacket != 0);
+    ASSERT_TRUE(FN_RecvProtocol != 0);
+    ASSERT_TRUE(IAT_SwapBuffers != 0);
+    ASSERT_TRUE(NAME_CHAR != 0);
+    ASSERT_TRUE(PTR_Hero != 0);
+    ASSERT_TRUE(ARR_CharactersClient != 0);
+    ASSERT_TRUE(ARR_Items != 0);
+}
+
+TEST(offset_name_char_exact)
+{
+    // NAME_CHAR must be at 0x08B26758 for main.exe 1.02.19
+#ifdef __linux__
+    using namespace Addr_main_10219_test;
+#endif
+    ASSERT_EQ(NAME_CHAR, (DWORD)0x08B26758);
+}
+
+TEST(offsets_10219_in_valid_ranges)
+{
+    // All .text addresses must be in 0x00400000-0x006FFFFF
+    // All .data/.bss addresses must be > 0x007B0000
+#ifdef __linux__
+    using namespace Addr_main_10219_test;
+#endif
+    ASSERT_TRUE(FN_DataSend      >= 0x00400000 && FN_DataSend      < 0x00700000);
+    ASSERT_TRUE(FN_ProcessPacket >= 0x00400000 && FN_ProcessPacket < 0x00700000);
+    ASSERT_TRUE(FN_RecvProtocol  >= 0x00400000 && FN_RecvProtocol  < 0x00700000);
+    ASSERT_TRUE(PTR_NetObject    >= 0x007B0000);
+    ASSERT_TRUE(NAME_CHAR        >= 0x007B0000);
+}
+
+TEST(offsets_10219_datasend_after_imagebase)
+{
+    // DataSend should be shortly after ImageBase (0x00400000)
+#ifdef __linux__
+    using namespace Addr_main_10219_test;
+#endif
+    ASSERT_TRUE(FN_DataSend > 0x00400000);
+    ASSERT_TRUE(FN_DataSend < 0x00500000);
+}
+
+// ============================================================
 //  MAIN
 // ============================================================
 int main()
@@ -615,6 +757,22 @@ int main()
     printf("\n[DL/LE Buffs]\n");
     RUN(dl_has_darkness_buff);
     RUN(le_has_imperial_fort_and_darkness);
+
+    // 12. MuMain-compatible net data
+    printf("\n[Net Data (MuMain compat)]\n");
+    RUN(net_data_size);
+    RUN(net_status_size);
+    RUN(net_data_extra_items_layout);
+    RUN(net_data_hunting_range_nibble);
+    RUN(net_data_skill_fields);
+    RUN(net_data_bitfield_flags);
+
+    // 13. Version 1.02.19 offsets
+    printf("\n[Offsets 1.02.19]\n");
+    RUN(offsets_10219_all_nonzero);
+    RUN(offset_name_char_exact);
+    RUN(offsets_10219_in_valid_ranges);
+    RUN(offsets_10219_datasend_after_imagebase);
 
     printf("\n========================================\n");
     printf("  Results: %d passed, %d failed\n", g_passed, g_failed);

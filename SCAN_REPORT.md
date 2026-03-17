@@ -5,6 +5,7 @@
 | Файл | Версия | Источник подтверждения |
 |---|---|---|
 | `main.exe` | **1.02.11** | `Main.dll` debug string: `"[ ] Client Version : 1.02.11jpn"` |
+| `main.exe` | **1.02.19** | Season 3 Ep 1 — офсеты определены в `Offsets_10219.h` |
 | `Main.dll` | companion mod | `Init()` → 50 E9-трамплинов, `CPacketManager`, `CAttackHelper` |
 | `GameServer.exe` | **1.00.18** | Указано пользователем |
 | `GgSrvDll.dll` | — | Экспорты `GGAuthInitUser/GetQuery/CheckAnswer` |
@@ -12,7 +13,7 @@
 
 ---
 
-## Верификация всех адресов (main.exe 1.02.11)
+## Верификация адресов — main.exe 1.02.11
 
 Все адреса верифицированы по реальным байтам бинаря:
 
@@ -26,6 +27,59 @@
 | `0x007B35BC` | IAT-слот `recv` (.data) | DWORD=`0x07AEBFFA` ✓ |
 | `0x007D3B70` | Глобальный указатель на net-объект | `MOV ECX,[0x007D3B70]` перед DataSend ✓ |
 | `0x0050DD9C` | Таблица обработчиков опкодов | 147 записей, entry[0]=`0x0050AA94` ✓ |
+
+---
+
+## Адреса для main.exe 1.02.19 (Season 3 Ep 1)
+
+Все офсеты определены в `Client/Offsets_10219.h`.
+Метод определения: сигнатурный скан + дельта-анализ относительно 1.02.11.
+
+### Основные хуки
+
+| Адрес | Функция | Сигнатура |
+|---|---|---|
+| `0x00403F30` | `DataSend` (`__thiscall`) | `55 8B EC 83 EC 10 89 4D F0` |
+| `0x0050C270` | `ProcessPacket` (опкод-диспатч) | `8B 44 24 04 81 EC 7C 01 00 00` |
+| `0x0050B430` | `RecvProtocol` (recv-луп SEH) | `6A FF 64 A1 00 00 00 00 68` |
+| `0x007B528C` | IAT-слот `SwapBuffers` (.data) | `FF 15 8C 52 7B 00` в коде |
+
+### Данные игры
+
+| Адрес | Назначение | Описание |
+|---|---|---|
+| `0x007D5D70` | `PTR_NetObject` | Указатель на CNetObject |
+| **`0x08B26758`** | **`NAME_CHAR`** | **Имя текущего персонажа (char[11], null-terminated)** |
+| `0x08B25740` | `PTR_Hero` | Указатель на структуру героя (CHARACTER*) |
+| `0x08B26800` | `ARR_CharactersClient` | Массив видимых персонажей |
+| `0x09126800` | `ARR_Items` | Массив дропнутых предметов |
+| `0x08B09A20` | `PTR_SelectedCharacter` | Индекс текущей цели |
+| `0x08B09A24` | `PTR_TargetX` | Координата X движения |
+| `0x08B09A28` | `PTR_TargetY` | Координата Y движения |
+| `0x08B09A2C` | `PTR_WorldActive` | Текущая карта (MapID) |
+
+### NAME_CHAR — подробности
+
+**Адрес: `0x08B26758`**
+
+- Тип: `char[11]` — null-terminated ASCII строка
+- Содержит имя текущего залогиненного персонажа
+- Читать после успешного входа в игру (после Select Character)
+- Для верификации: прочитать 10 байт — должно совпасть с именем персонажа
+
+Как найти вручную:
+1. В IDA/Ghidra: поиск строковой ссылки "Select Character"
+2. Трассировка CALL, копирующего имя в глобальный буфер
+3. Типичный x-ref: `MOV EDI, [0x08B26758]` или `LEA ESI, [0x08B26758]`
+
+### Main.dll (companion, для 1.02.19)
+
+| Адрес | Назначение |
+|---|---|
+| `0x10035F66` | `Init()` entry point |
+| `0x100E546C` | `CAttackHelper*` global |
+| `0x10288DCC` | ws2_32 IAT send |
+| `0x10288DC8` | ws2_32 IAT recv |
 
 ---
 
@@ -129,4 +183,29 @@ RecvProtocol (SEH frame):
 
 SwapBuffers IAT:
   Найти строку SwapBuffers в .idata → IAT-запись → FF 15 [slot]
+
+NAME_CHAR (имя персонажа):
+  Искать глобальный буфер char[11] в .bss, заполняемый при Select Character
+  X-ref: LEA ESI/EDI, [addr]  →  CALL memcpy/strcpy вблизи character-select handler
 ```
+
+---
+
+## Интеграция из MuMain Season 5.2
+
+Исходный код MuHelper из https://github.com/sven-n/MuMain.git
+портирован в нашу кодовую базу:
+
+| Файл MuMain | → Файл MuHelper | Описание |
+|---|---|---|
+| `MUHelper/MuHelper.h` | `Client/MuHelperWorkLoop.h` | Work loop interface |
+| `MUHelper/MuHelper.cpp` | `Client/MuHelperWorkLoop.cpp` | Attack/Buff/Heal/Pickup/Regroup |
+| `MUHelper/MuHelperData.h` | `Client/MuHelperWorkLoop.h` | SkillCond enums, ConfigData → MuHelperWorkConfig |
+| `MUHelper/MuHelperData.cpp` | `Client/MuHelperWorkLoop.cpp` | Serialize/Deserialize |
+| `WSclient.h (PRECEIVE_MUHELPER_DATA)` | `Shared/MuHelperNetData.h` | Network data structure |
+
+Адаптации для Season 3 Ep 1 (vs Season 5.2):
+- VS2010-compatible C++ (нет constexpr, enum class, std::thread, std::atomic)
+- CRITICAL_SECTION вместо SpinLock
+- Массивы фиксированного размера вместо std::set
+- Заглушки для функций, зависящих от game engine (PathFinding, CheckTile, etc.)
