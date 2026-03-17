@@ -90,14 +90,18 @@ typedef DWORD (__thiscall *fnCCSAuth2_Check)(CCSAuth2* pThis);
 // ── Helper: resolve all exports at runtime ───────────────────
 struct GgSrvDll_API
 {
-    HMODULE           hMod               = nullptr;
-    fnInitGGAuth      InitGameguardAuth  = nullptr;
-    fnCleanupGGAuth   CleanupGameguardAuth= nullptr;
-    fnAddAuthProtocol AddAuthProtocol    = nullptr;
-    fnGGAuthInitUser  GGAuthInitUser     = nullptr;
-    fnGGAuthCloseUser GGAuthCloseUser    = nullptr;
-    fnGGAuthGetQuery  GGAuthGetQuery     = nullptr;
-    fnGGAuthCheckAnswer GGAuthCheckAnswer= nullptr;
+    HMODULE           hMod;
+    fnInitGGAuth      InitGameguardAuth;
+    fnCleanupGGAuth   CleanupGameguardAuth;
+    fnAddAuthProtocol AddAuthProtocol;
+    fnGGAuthInitUser  GGAuthInitUser;
+    fnGGAuthCloseUser GGAuthCloseUser;
+    fnGGAuthGetQuery  GGAuthGetQuery;
+    fnGGAuthCheckAnswer GGAuthCheckAnswer;
+
+    GgSrvDll_API() : hMod(NULL), InitGameguardAuth(NULL), CleanupGameguardAuth(NULL),
+        AddAuthProtocol(NULL), GGAuthInitUser(NULL), GGAuthCloseUser(NULL),
+        GGAuthGetQuery(NULL), GGAuthCheckAnswer(NULL) {}
 
     bool Load(const char* szPath = "GgSrvDll.dll")
     {
