@@ -7,6 +7,15 @@
 #include <cstdarg>
 #include <cstring>
 
+CMuHelperClient::CMuHelperClient()
+    : m_bRunning(false)
+{
+    memset(&m_config, 0, sizeof(m_config));
+    memset(&m_stats, 0, sizeof(m_stats));
+    memset(&m_partyHP, 0, sizeof(m_partyHP));
+    memset(m_skills, 0, sizeof(m_skills));
+}
+
 CMuHelperClient& CMuHelperClient::Instance()
 {
     static CMuHelperClient inst;

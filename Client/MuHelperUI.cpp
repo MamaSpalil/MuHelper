@@ -170,6 +170,19 @@ static bool SkillCombo(const char* id, BYTE* slot)
 // ============================================================
 //  Singleton
 // ============================================================
+CMuHelperUI::CMuHelperUI()
+    : m_bInited(false)
+    , m_bVisible(false)
+    , m_bDirty(false)
+    , m_hWnd(NULL)
+    , m_pEditCfg(NULL)
+    , m_pFontNormal(NULL)
+    , m_pFontSmall(NULL)
+    , m_pFontTitle(NULL)
+{
+    memset(&m_editCfg, 0, sizeof(m_editCfg));
+}
+
 CMuHelperUI& CMuHelperUI::Instance()
 {
     static CMuHelperUI inst;
