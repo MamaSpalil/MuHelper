@@ -951,6 +951,17 @@ void CMuHelperManager::SaveProfileToDB(int idx, BYTE slot)
     if (ci==m_charIds.end()||si==m_sessions.end()) return;
     HelperProfile& p=si->second.profiles[slot];
     if (!p.bUsed) return;
+
+    // Sanitize profile name: escape single quotes to prevent SQL injection
+    char safeName[32];
+    int j = 0;
+    for (int i = 0; i < 15 && p.szName[i] != '\0' && j < 30; i++)
+    {
+        if (p.szName[i] == '\'') { safeName[j++] = '\''; safeName[j++] = '\''; }
+        else safeName[j++] = p.szName[i];
+    }
+    safeName[j] = '\0';
+
     // MSSQL 2008 R2: IF EXISTS / UPDATE / ELSE INSERT
     char sql[512];
     sprintf_s(sql,
@@ -958,8 +969,8 @@ void CMuHelperManager::SaveProfileToDB(int idx, BYTE slot)
         "UPDATE MuHelperProfiles SET Name='%s',cfg=?,UpdatedAt=GETDATE() WHERE CharIdx=%u AND SlotIdx=%d "
         "ELSE "
         "INSERT INTO MuHelperProfiles(CharIdx,SlotIdx,Name,cfg) VALUES(%u,%d,'%s',?)",
-        ci->second,(int)slot,p.szName,
+        ci->second,(int)slot,safeName,
         ci->second,(int)slot,
-        ci->second,(int)slot,p.szName);
+        ci->second,(int)slot,safeName);
     g_DbManager.QueryBinary(sql,(BYTE*)&p.cfg,sizeof(MuHelperConfig));
 }
