@@ -1,0 +1,35 @@
+# Build artifacts
+*.obj
+*.o
+*.lib
+*.dll
+*.exe
+*.pdb
+*.ilk
+*.exp
+*.idb
+*.suo
+*.user
+*.ncb
+*.opensdf
+*.sdf
+*.opendb
+
+# VS directories
+Debug/
+Release/
+x64/
+.vs/
+ipch/
+
+# Build output
+bin/
+obj/
+out/
+
+# ImGui library (downloaded separately)
+Client/imgui/
+
+# OS
+Thumbs.db
+.DS_Store

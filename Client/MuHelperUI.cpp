@@ -584,13 +584,12 @@ void CMuHelperUI::TabParty()
     }
     else
     {
-        static const char* cls[] = {"DW","DK","Elf","MG","DL","Sum","RF","GL","Slayer","GC"};
         for (int i = 0; i < ph.bCount && i < 5; i++)
         {
-            auto& m = ph.members[i];
+            auto& m = ph.m[i];
             ImGui::Spacing();
             ImGui::TextColored(Mu::GOLD,"%-12s [%s]",
-                m.szName, m.bClass<10 ? cls[m.bClass]:"?");
+                m.szName, GetClassAbbr(m.bClass));
             char hpl[20]; snprintf(hpl,20,"HP %d%%",m.bHpPct);
             GBar(m.bHpPct/100.f, Mu::BAR_HP_LO, Mu::BAR_HP_HI, -1, 13, hpl);
             char mpl[20]; snprintf(mpl,20,"MP %d%%",m.bMpPct);

@@ -23,6 +23,7 @@ constexpr int  MH_POTION_COOLDOWN_MS= 1500;
 constexpr int  MH_MAX_RADIUS        = 12;
 constexpr int  MH_DEFAULT_RADIUS    = 5;
 constexpr int  MH_EXP_SAMPLE_SEC    = 60;   // rate averaging window
+constexpr int  MH_PARTY_HEAL_HP_PCT = 60;   // heal party members below this %
 
 // ── Per-session state ────────────────────────────────────────
 struct HelperSkillCD
@@ -38,13 +39,20 @@ struct MuHelperSession
     bool             bActive   = false;
     int              nTarget   = -1;
 
+    // Character class (resolved on char load)
+    BYTE  bClass     = 0;
+
     // Skill rotation state
     BYTE bRotationStep = 0;
     BYTE bAttackCount  = 0;
 
+    // Combo state (for BK/BM combo system)
+    BYTE bComboHitCount = 0;
+
     // Timers
     using tp = std::chrono::steady_clock::time_point;
     tp tLastAttack, tLastPickup, tLastBuff, tLastRepair, tLastPotion, tLastParty;
+    tp tLastPartyHeal;
 
     // Stats
     DWORD dwZenPickup       = 0;
@@ -107,10 +115,18 @@ private:
     void DoAutoBuff        (int idx, MuHelperSession&);
     void DoAutoRepair      (int idx, MuHelperSession&);
     void DoPartyHPBroadcast(int idx, MuHelperSession&);
+    void DoPartyHeal       (int idx, MuHelperSession&);
+    void DoComboAttack     (int idx, MuHelperSession&, const ClassSkillInfo*);
     void UpdateSkillCDs    (int idx, MuHelperSession&);
+
+    // Class-aware skill selection
+    WORD ResolveAttackSkill  (int idx, MuHelperSession&, const ClassSkillInfo*);
+    WORD ResolveAoESkill     (const ClassSkillInfo*);
+    void ApplyClassBuffs     (int idx, MuHelperSession&, const ClassSkillInfo*);
 
     // Target / item selection
     int  FindBestTarget    (int idx, const MuHelperSession&);
+    int  CountMobsInRange  (int idx, int radius);
     bool ShouldPickup      (int itemIdx, const MuHelperSession&);
     bool IsValidMob        (int idx, int mobIdx, int radius);
 
