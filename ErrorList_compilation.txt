@@ -1,0 +1,622 @@
+1>  MuHelperUI.cpp
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(24): error C2065: default: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(24): error C2253: CMuHelperUI: в виртуальной функции допускаются только чистый спецификатор или абстрактный спецификатор переопределения
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(43): error C2864: CMuHelperUI::m_bInited: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(44): error C2864: CMuHelperUI::m_bVisible: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(45): error C2864: CMuHelperUI::m_bDirty: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(46): error C2864: CMuHelperUI::m_hWnd: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(49): error C2864: CMuHelperUI::m_pEditCfg: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(50): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(50): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(53): error C2864: CMuHelperUI::m_pFontNormal: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(54): error C2864: CMuHelperUI::m_pFontSmall: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(55): error C2864: CMuHelperUI::m_pFontTitle: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\shared\muhelperpackets.h(319): error C2143: синтаксическая ошибка: отсутствие "," перед ":"
+1>c:\users\home\desktop\muhelper-main\shared\muhelperpackets.h(319): error C2530: e: ссылки должны быть инициализированы
+1>c:\users\home\desktop\muhelper-main\shared\muhelperpackets.h(319): error C3531: e: символ, тип которого содержит спецификатор "auto" должен иметь инициализатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C2332: enum: отсутствует имя тега
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C2236: непредвиденные "class" "LogColor". Возможно, отсутствует ";"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C3381: LogColor: спецификаторы доступа к сборке доступны только в коде, скомпилированном с параметром /clr
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C2143: синтаксическая ошибка: отсутствие ";" перед "}"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(38): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(38): error C2873: CbStatus: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(38): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(39): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(39): error C2873: CbItemPick: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(39): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(40): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(40): error C2873: CbCfgReply: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(40): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(41): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(41): error C2873: CbPartyHP: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(41): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(62): error C2061: синтаксическая ошибка: идентификатор "CbStatus"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(63): error C2061: синтаксическая ошибка: идентификатор "CbItemPick"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(64): error C2061: синтаксическая ошибка: идентификатор "CbCfgReply"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(65): error C2061: синтаксическая ошибка: идентификатор "CbPartyHP"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(80): error C2065: default: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(80): error C2253: CMuHelperClient: в виртуальной функции допускаются только чистый спецификатор или абстрактный спецификатор переопределения
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(89): error C2864: CMuHelperClient::m_bRunning: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(90): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(90): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(91): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(91): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(92): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(92): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(93): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(93): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(95): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(95): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C2144: синтаксическая ошибка: перед "int" требуется ";"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C2864: CMuHelperClient::MAX_LOG: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(99): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbStatus"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(99): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(99): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(100): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbItemPick"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(100): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(100): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(101): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbCfgReply"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(101): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(101): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(102): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbPartyHP"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(102): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(102): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(62): error C2065: m_cbStatus: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(62): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(63): error C2065: m_cbItemPick: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(63): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(64): error C2065: m_cbCfgReply: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(64): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(65): error C2065: m_cbPartyHP: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(65): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(69): error C2065: m_stats: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(70): error C2065: m_config: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(71): error C2065: m_partyHP: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(72): error C2065: m_skills: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(74): error C2065: m_profiles: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(26): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(26): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(30): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(30): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(30): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(34): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(34): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(34): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(41): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(41): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(41): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(46): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(46): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(46): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(50): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(50): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(50): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(53): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(53): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(53): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(54): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(54): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(54): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(55): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(55): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(55): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(58): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(58): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(58): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(59): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(59): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(59): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(62): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(62): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(62): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(66): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(66): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(66): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(69): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "SIZE_T"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(69): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(69): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(70): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "SIZE_T"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(70): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(70): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(71): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "SIZE_T"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(71): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(71): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(79): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(79): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(80): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(80): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(80): error C2086: int Addr_MainDll_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(79): см. объявление "Addr_MainDll_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(80): fatal error C1003: число ошибок превышает 100; остановка компиляции
+1>  MuHelperClient.cpp
+1>c:\users\home\desktop\muhelper-main\shared\muhelperpackets.h(319): error C2143: синтаксическая ошибка: отсутствие "," перед ":"
+1>c:\users\home\desktop\muhelper-main\shared\muhelperpackets.h(319): error C2530: e: ссылки должны быть инициализированы
+1>c:\users\home\desktop\muhelper-main\shared\muhelperpackets.h(319): error C3531: e: символ, тип которого содержит спецификатор "auto" должен иметь инициализатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C2332: enum: отсутствует имя тега
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C2236: непредвиденные "class" "LogColor". Возможно, отсутствует ";"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C3381: LogColor: спецификаторы доступа к сборке доступны только в коде, скомпилированном с параметром /clr
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C2143: синтаксическая ошибка: отсутствие ";" перед "}"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(38): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(38): error C2873: CbStatus: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(38): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(39): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(39): error C2873: CbItemPick: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(39): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(40): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(40): error C2873: CbCfgReply: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(40): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(41): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(41): error C2873: CbPartyHP: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(41): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(62): error C2061: синтаксическая ошибка: идентификатор "CbStatus"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(63): error C2061: синтаксическая ошибка: идентификатор "CbItemPick"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(64): error C2061: синтаксическая ошибка: идентификатор "CbCfgReply"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(65): error C2061: синтаксическая ошибка: идентификатор "CbPartyHP"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(80): error C2065: default: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(80): error C2253: CMuHelperClient: в виртуальной функции допускаются только чистый спецификатор или абстрактный спецификатор переопределения
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(89): error C2864: CMuHelperClient::m_bRunning: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(90): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(90): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(91): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(91): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(92): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(92): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(93): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(93): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(95): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(95): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C2144: синтаксическая ошибка: перед "int" требуется ";"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C2864: CMuHelperClient::MAX_LOG: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(99): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbStatus"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(99): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(99): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(100): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbItemPick"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(100): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(100): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(101): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbCfgReply"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(101): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(101): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(102): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbPartyHP"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(102): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(102): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(62): error C2065: m_cbStatus: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(62): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(63): error C2065: m_cbItemPick: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(63): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(64): error C2065: m_cbCfgReply: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(64): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(65): error C2065: m_cbPartyHP: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(65): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(69): error C2065: m_stats: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(70): error C2065: m_config: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(71): error C2065: m_partyHP: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(72): error C2065: m_skills: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(74): error C2065: m_profiles: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(26): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(26): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(30): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(30): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(30): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(34): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(34): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(34): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(41): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(41): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(41): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(46): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(46): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(46): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(50): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(50): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(50): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(53): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(53): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(53): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(54): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(54): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(54): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(55): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(55): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(55): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(58): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(58): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(58): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(59): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(59): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(59): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(62): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(62): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(62): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(66): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(66): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(66): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(69): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "SIZE_T"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(69): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(69): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(70): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "SIZE_T"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(70): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(70): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(71): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "SIZE_T"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(71): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(71): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(79): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(79): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(80): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(80): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(80): error C2086: int Addr_MainDll_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(79): см. объявление "Addr_MainDll_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(81): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(81): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(81): error C2086: int Addr_MainDll_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(79): см. объявление "Addr_MainDll_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(82): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(82): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(82): error C2086: int Addr_MainDll_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(79): см. объявление "Addr_MainDll_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.cpp(18): error C2065: m_config: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.cpp(18): error C2065: m_config: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.cpp(18): error C2070: 'unknown-type': недопустимый оператор sizeof
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.cpp(19): error C2065: m_config: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.cpp(19): error C2228: выражение слева от ".bAttackRadius" должно представлять класс, структуру или объединение
+1>          тип: 'unknown-type'
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.cpp(20): error C2065: m_config: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.cpp(20): error C2228: выражение слева от ".bPickupRadius" должно представлять класс, структуру или объединение
+1>          тип: 'unknown-type'
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.cpp(21): error C2065: m_config: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.cpp(21): fatal error C1003: число ошибок превышает 100; остановка компиляции
+1>  HookEngine.cpp
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(26): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(26): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(30): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(30): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(30): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(34): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(34): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(34): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(41): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(41): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(41): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(46): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(46): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(46): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(50): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(50): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(50): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(53): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(53): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(53): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(54): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(54): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(54): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(55): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(55): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(55): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(58): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(58): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(58): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(59): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(59): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(59): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(62): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(62): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(62): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(66): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(66): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(66): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(69): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "SIZE_T"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(69): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(69): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(70): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "SIZE_T"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(70): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(70): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(71): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "SIZE_T"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(71): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(71): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(79): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(79): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(80): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(80): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(80): error C2086: int Addr_MainDll_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(79): см. объявление "Addr_MainDll_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(81): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(81): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(81): error C2086: int Addr_MainDll_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(79): см. объявление "Addr_MainDll_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(82): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(82): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(82): error C2086: int Addr_MainDll_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(79): см. объявление "Addr_MainDll_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\shared\muhelperpackets.h(319): error C2143: синтаксическая ошибка: отсутствие "," перед ":"
+1>c:\users\home\desktop\muhelper-main\shared\muhelperpackets.h(319): error C2530: e: ссылки должны быть инициализированы
+1>c:\users\home\desktop\muhelper-main\shared\muhelperpackets.h(319): error C3531: e: символ, тип которого содержит спецификатор "auto" должен иметь инициализатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C2332: enum: отсутствует имя тега
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C2236: непредвиденные "class" "LogColor". Возможно, отсутствует ";"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C3381: LogColor: спецификаторы доступа к сборке доступны только в коде, скомпилированном с параметром /clr
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C2143: синтаксическая ошибка: отсутствие ";" перед "}"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(38): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(38): error C2873: CbStatus: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(38): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(39): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(39): error C2873: CbItemPick: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(39): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(40): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(40): error C2873: CbCfgReply: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(40): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(41): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(41): error C2873: CbPartyHP: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(41): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(62): error C2061: синтаксическая ошибка: идентификатор "CbStatus"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(63): error C2061: синтаксическая ошибка: идентификатор "CbItemPick"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(64): error C2061: синтаксическая ошибка: идентификатор "CbCfgReply"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(65): error C2061: синтаксическая ошибка: идентификатор "CbPartyHP"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(80): error C2065: default: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(80): error C2253: CMuHelperClient: в виртуальной функции допускаются только чистый спецификатор или абстрактный спецификатор переопределения
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(89): error C2864: CMuHelperClient::m_bRunning: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(90): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(90): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(91): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(91): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(92): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(92): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(93): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(93): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(95): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(95): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C2144: синтаксическая ошибка: перед "int" требуется ";"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C2864: CMuHelperClient::MAX_LOG: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(99): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbStatus"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(99): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(99): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(100): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbItemPick"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(100): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(100): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(101): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbCfgReply"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(101): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(101): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(102): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbPartyHP"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(102): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(102): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(62): error C2065: m_cbStatus: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(62): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(63): error C2065: m_cbItemPick: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(63): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(64): error C2065: m_cbCfgReply: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(64): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(65): error C2065: m_cbPartyHP: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(65): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(69): error C2065: m_stats: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(70): error C2065: m_config: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(71): error C2065: m_partyHP: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(72): error C2065: m_skills: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(74): error C2065: m_profiles: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(24): error C2065: default: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(24): error C2253: CMuHelperUI: в виртуальной функции допускаются только чистый спецификатор или абстрактный спецификатор переопределения
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(43): error C2864: CMuHelperUI::m_bInited: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(44): error C2864: CMuHelperUI::m_bVisible: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(45): error C2864: CMuHelperUI::m_bDirty: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(46): error C2864: CMuHelperUI::m_hWnd: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(49): error C2864: CMuHelperUI::m_pEditCfg: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(50): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(50): fatal error C1003: число ошибок превышает 100; остановка компиляции
+1>  dllmain.cpp
+1>c:\users\home\desktop\muhelper-main\shared\muhelperpackets.h(319): error C2143: синтаксическая ошибка: отсутствие "," перед ":"
+1>c:\users\home\desktop\muhelper-main\shared\muhelperpackets.h(319): error C2530: e: ссылки должны быть инициализированы
+1>c:\users\home\desktop\muhelper-main\shared\muhelperpackets.h(319): error C3531: e: символ, тип которого содержит спецификатор "auto" должен иметь инициализатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C2332: enum: отсутствует имя тега
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C2236: непредвиденные "class" "LogColor". Возможно, отсутствует ";"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C3381: LogColor: спецификаторы доступа к сборке доступны только в коде, скомпилированном с параметром /clr
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C2143: синтаксическая ошибка: отсутствие ";" перед "}"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(38): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(38): error C2873: CbStatus: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(38): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(39): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(39): error C2873: CbItemPick: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(39): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(40): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(40): error C2873: CbCfgReply: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(40): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(41): error C2143: синтаксическая ошибка: отсутствие ";" перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(41): error C2873: CbPartyHP: использование символа в "using"-объявлении не допускается
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(41): error C2513: int: нет переменных, объявленных перед "="
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(62): error C2061: синтаксическая ошибка: идентификатор "CbStatus"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(63): error C2061: синтаксическая ошибка: идентификатор "CbItemPick"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(64): error C2061: синтаксическая ошибка: идентификатор "CbCfgReply"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(65): error C2061: синтаксическая ошибка: идентификатор "CbPartyHP"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(80): error C2065: default: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(80): error C2253: CMuHelperClient: в виртуальной функции допускаются только чистый спецификатор или абстрактный спецификатор переопределения
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(89): error C2864: CMuHelperClient::m_bRunning: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(90): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(90): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(91): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(91): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(92): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(92): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(93): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(93): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(95): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(95): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C2144: синтаксическая ошибка: перед "int" требуется ";"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(97): error C2864: CMuHelperClient::MAX_LOG: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(99): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbStatus"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(99): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(99): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(100): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbItemPick"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(100): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(100): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(101): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbCfgReply"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(101): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(101): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(102): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "m_cbPartyHP"
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(102): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(102): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(62): error C2065: m_cbStatus: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(62): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(63): error C2065: m_cbItemPick: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(63): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(64): error C2065: m_cbCfgReply: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(64): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(65): error C2065: m_cbPartyHP: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(65): error C2065: cb: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(69): error C2065: m_stats: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(70): error C2065: m_config: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(71): error C2065: m_partyHP: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(72): error C2065: m_skills: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperclient.h(74): error C2065: m_profiles: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(24): error C2065: default: необъявленный идентификатор
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(24): error C2253: CMuHelperUI: в виртуальной функции допускаются только чистый спецификатор или абстрактный спецификатор переопределения
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(43): error C2864: CMuHelperUI::m_bInited: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(44): error C2864: CMuHelperUI::m_bVisible: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(45): error C2864: CMuHelperUI::m_bDirty: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(46): error C2864: CMuHelperUI::m_hWnd: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(49): error C2864: CMuHelperUI::m_pEditCfg: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(50): error C2059: синтаксическая ошибка: {
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(50): error C2334: непредвиденные лексемы перед "{"; пропуск вероятного тела функции
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(53): error C2864: CMuHelperUI::m_pFontNormal: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(54): error C2864: CMuHelperUI::m_pFontSmall: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\muhelperui.h(55): error C2864: CMuHelperUI::m_pFontTitle: в пределах класса могут быть инициализированы только статические константные данные-члены целого типа
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(26): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(26): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(30): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(30): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(30): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(34): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(34): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(34): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(41): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(41): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(41): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(46): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(46): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(46): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(50): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(50): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(50): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(53): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(53): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(53): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(54): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(54): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(54): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(55): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(55): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(55): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(58): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(58): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(58): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(59): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(59): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(59): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(62): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(62): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(62): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(66): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(66): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(66): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(69): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "SIZE_T"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(69): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(69): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(70): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "SIZE_T"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(70): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(70): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(71): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "SIZE_T"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(71): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(71): error C2086: int Addr_main_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(26): см. объявление "Addr_main_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(79): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(79): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(80): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "DWORD"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(80): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(80): error C2086: int Addr_MainDll_10211::constexpr: переопределение
+1>          c:\users\home\desktop\muhelper-main\client\hookengine.h(79): см. объявление "Addr_MainDll_10211::constexpr"
+1>c:\users\home\desktop\muhelper-main\client\hookengine.h(80): fatal error C1003: число ошибок превышает 100; остановка компиляции
