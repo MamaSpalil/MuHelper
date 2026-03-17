@@ -1,6 +1,6 @@
 // ============================================================
 //  MuHelper — Hook Engine Implementation
-//  Verified addresses for main.exe 1.02.19
+//  Verified addresses for main.exe 1.02.11
 // ============================================================
 #include "HookEngine.h"
 #include "MuHelperClient.h"

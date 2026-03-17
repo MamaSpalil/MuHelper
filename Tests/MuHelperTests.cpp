@@ -98,19 +98,19 @@ TEST(class_count)
 
 TEST(class_enum_values)
 {
-    ASSERT_EQ(CLASS_DK, 0);
-    ASSERT_EQ(CLASS_BK, 1);
-    ASSERT_EQ(CLASS_BM, 2);
-    ASSERT_EQ(CLASS_DW, 3);
-    ASSERT_EQ(CLASS_SM, 4);
-    ASSERT_EQ(CLASS_GM, 5);
-    ASSERT_EQ(CLASS_FE, 6);
-    ASSERT_EQ(CLASS_ME, 7);
-    ASSERT_EQ(CLASS_HE, 8);
-    ASSERT_EQ(CLASS_MG, 9);
-    ASSERT_EQ(CLASS_DM, 10);
-    ASSERT_EQ(CLASS_DL, 11);
-    ASSERT_EQ(CLASS_LE, 12);
+    ASSERT_EQ(CLASS_DW, 0);
+    ASSERT_EQ(CLASS_SM, 1);
+    ASSERT_EQ(CLASS_GM, 3);
+    ASSERT_EQ(CLASS_DK, 16);
+    ASSERT_EQ(CLASS_BK, 17);
+    ASSERT_EQ(CLASS_HK, 19);
+    ASSERT_EQ(CLASS_FE, 32);
+    ASSERT_EQ(CLASS_ME, 33);
+    ASSERT_EQ(CLASS_HE, 35);
+    ASSERT_EQ(CLASS_MG, 48);
+    ASSERT_EQ(CLASS_DM, 50);
+    ASSERT_EQ(CLASS_DL, 64);
+    ASSERT_EQ(CLASS_LE, 66);
 }
 
 TEST(class_skill_table_not_null)
@@ -124,7 +124,6 @@ TEST(class_skill_table_all_classes_present)
     const ClassSkillInfo* table = GetClassSkillTable();
     for (int i = 0; i < CLASS_COUNT; i++)
     {
-        ASSERT_EQ(table[i].eClass, (MuCharClass)i);
         ASSERT_NOT_NULL(table[i].szClassName);
         ASSERT_NOT_NULL(table[i].szClassAbbr);
         ASSERT_TRUE(table[i].wPrimarySkill != SKILL_NONE);
@@ -133,17 +132,20 @@ TEST(class_skill_table_all_classes_present)
 
 TEST(get_class_skill_info_valid)
 {
-    for (BYTE i = 0; i < CLASS_COUNT; i++)
+    BYTE allClasses[] = { CLASS_DW, CLASS_SM, CLASS_GM, CLASS_DK, CLASS_BK, CLASS_HK,
+                          CLASS_FE, CLASS_ME, CLASS_HE, CLASS_MG, CLASS_DM, CLASS_DL, CLASS_LE };
+    for (BYTE c : allClasses)
     {
-        const ClassSkillInfo* ci = GetClassSkillInfo(i);
+        const ClassSkillInfo* ci = GetClassSkillInfo(c);
         ASSERT_NOT_NULL(ci);
-        ASSERT_EQ(ci->eClass, (MuCharClass)i);
+        ASSERT_EQ(ci->eClass, (MuCharClass)c);
     }
 }
 
 TEST(get_class_skill_info_invalid)
 {
-    ASSERT_TRUE(GetClassSkillInfo(CLASS_COUNT) == nullptr);
+    ASSERT_TRUE(GetClassSkillInfo(2) == nullptr);   // not a valid class ID
+    ASSERT_TRUE(GetClassSkillInfo(4) == nullptr);
     ASSERT_TRUE(GetClassSkillInfo(255) == nullptr);
 }
 
@@ -176,14 +178,14 @@ TEST(bk_skills)
     ASSERT_EQ(ci->bIsMelee, 1);
 }
 
-TEST(bm_skills)
+TEST(hk_skills)
 {
-    const ClassSkillInfo* ci = GetClassSkillInfo(CLASS_BM);
+    const ClassSkillInfo* ci = GetClassSkillInfo(CLASS_HK);
     ASSERT_NOT_NULL(ci);
-    ASSERT_STREQ(ci->szClassName, "Blade Master");
-    ASSERT_EQ(ci->wPrimarySkill, SKILL_BM_DRAGON_SLASH);
-    ASSERT_EQ(ci->wSecondarySkill, SKILL_BM_PENETRATION);
-    ASSERT_EQ(ci->wAoESkill, SKILL_BM_LIGHTNING_STRIKE);
+    ASSERT_STREQ(ci->szClassName, "High Knight");
+    ASSERT_EQ(ci->wPrimarySkill, SKILL_HK_DRAGON_SLASH);
+    ASSERT_EQ(ci->wSecondarySkill, SKILL_HK_PENETRATION);
+    ASSERT_EQ(ci->wAoESkill, SKILL_HK_LIGHTNING_STRIKE);
     ASSERT_EQ(ci->wComboSkill, SKILL_BK_COMBO_ATTACK);
     ASSERT_EQ(ci->bComboHitsRequired, 3);
 }
@@ -303,12 +305,12 @@ TEST(le_skills)
 // ============================================================
 TEST(class_name_lookup)
 {
-    ASSERT_STREQ(GetClassName(CLASS_DK), "Dark Knight");
-    ASSERT_STREQ(GetClassName(CLASS_BK), "Blade Knight");
-    ASSERT_STREQ(GetClassName(CLASS_BM), "Blade Master");
     ASSERT_STREQ(GetClassName(CLASS_DW), "Dark Wizard");
     ASSERT_STREQ(GetClassName(CLASS_SM), "Soul Master");
     ASSERT_STREQ(GetClassName(CLASS_GM), "Grand Master");
+    ASSERT_STREQ(GetClassName(CLASS_DK), "Dark Knight");
+    ASSERT_STREQ(GetClassName(CLASS_BK), "Blade Knight");
+    ASSERT_STREQ(GetClassName(CLASS_HK), "High Knight");
     ASSERT_STREQ(GetClassName(CLASS_FE), "Fairy Elf");
     ASSERT_STREQ(GetClassName(CLASS_ME), "Muse Elf");
     ASSERT_STREQ(GetClassName(CLASS_HE), "High Elf");
@@ -385,7 +387,7 @@ TEST(elf_classes_have_party_heal)
 
 TEST(non_elf_classes_no_party_heal)
 {
-    BYTE nonElf[] = { CLASS_DK, CLASS_BK, CLASS_BM, CLASS_DW, CLASS_SM, CLASS_GM,
+    BYTE nonElf[] = { CLASS_DK, CLASS_BK, CLASS_HK, CLASS_DW, CLASS_SM, CLASS_GM,
                       CLASS_MG, CLASS_DM, CLASS_DL, CLASS_LE };
     for (BYTE c : nonElf)
     {
@@ -397,15 +399,15 @@ TEST(non_elf_classes_no_party_heal)
 // ============================================================
 //  8. COMBO SYSTEM TESTS
 // ============================================================
-TEST(bk_bm_have_combo)
+TEST(bk_hk_have_combo)
 {
     const ClassSkillInfo* bk = GetClassSkillInfo(CLASS_BK);
-    const ClassSkillInfo* bm = GetClassSkillInfo(CLASS_BM);
+    const ClassSkillInfo* hk = GetClassSkillInfo(CLASS_HK);
 
     ASSERT_TRUE(bk->wComboSkill != SKILL_NONE);
-    ASSERT_TRUE(bm->wComboSkill != SKILL_NONE);
+    ASSERT_TRUE(hk->wComboSkill != SKILL_NONE);
     ASSERT_EQ(bk->bComboHitsRequired, 3);
-    ASSERT_EQ(bm->bComboHitsRequired, 3);
+    ASSERT_EQ(hk->bComboHitsRequired, 3);
 }
 
 TEST(non_combo_classes)
@@ -434,7 +436,7 @@ TEST(teleport_classes)
 
 TEST(no_teleport_classes)
 {
-    BYTE noTP[] = { CLASS_DK, CLASS_BK, CLASS_BM, CLASS_FE, CLASS_ME,
+    BYTE noTP[] = { CLASS_DK, CLASS_BK, CLASS_HK, CLASS_FE, CLASS_ME,
                     CLASS_HE, CLASS_DL, CLASS_LE };
     for (BYTE c : noTP)
     {
@@ -448,7 +450,7 @@ TEST(no_teleport_classes)
 // ============================================================
 TEST(melee_classes)
 {
-    BYTE melee[] = { CLASS_DK, CLASS_BK, CLASS_BM, CLASS_MG, CLASS_DM, CLASS_DL, CLASS_LE };
+    BYTE melee[] = { CLASS_DK, CLASS_BK, CLASS_HK, CLASS_MG, CLASS_DM, CLASS_DL, CLASS_LE };
     for (BYTE c : melee)
     {
         const ClassSkillInfo* ci = GetClassSkillInfo(c);
@@ -560,7 +562,7 @@ int main()
     printf("\n[Class Skills]\n");
     RUN(dk_skills);
     RUN(bk_skills);
-    RUN(bm_skills);
+    RUN(hk_skills);
     RUN(dw_skills);
     RUN(sm_skills);
     RUN(gm_skills);
@@ -589,7 +591,7 @@ int main()
 
     // 7. Combo system
     printf("\n[Combo System]\n");
-    RUN(bk_bm_have_combo);
+    RUN(bk_hk_have_combo);
     RUN(non_combo_classes);
 
     // 8. Teleport
