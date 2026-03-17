@@ -256,12 +256,21 @@ void CMuHelperManager::DoAutoAttack(int idx, MuHelperSession& s)
     }
     else if (s.cfg.bCombatMode & COMBAT_MODE_SKILL)
     {
-        // Class-aware skill selection
+        // Class-aware skill selection: use class info to determine
+        // whether we should use the AoE or primary skill slot
         if (ci)
         {
             WORD resolvedSkill = ResolveAttackSkill(idx, s, ci);
             if (resolvedSkill != SKILL_NONE)
-                skillSlot = s.cfg.bAttackSkillSlot; // use configured slot
+            {
+                skillSlot = s.cfg.bAttackSkillSlot;
+                // If resolved to AoE and combo slot is configured, use that
+                if (resolvedSkill == ci->wAoESkill &&
+                    s.cfg.bComboSkillSlot != 0xFF)
+                {
+                    skillSlot = s.cfg.bComboSkillSlot;
+                }
+            }
         }
         else
         {
@@ -277,9 +286,15 @@ void CMuHelperManager::DoAutoAttack(int idx, MuHelperSession& s)
     else
     {
         GCSkillAttackSend(idx, s.nTarget, skillSlot);
-        // Use class-specific cooldown if available
+        // Use class-specific cooldown based on which skill was selected
         DWORD cdMs = 1500;
-        if (ci) cdMs = ci->dwPrimaryCooldownMs;
+        if (ci)
+        {
+            if (skillSlot == s.cfg.bComboSkillSlot)
+                cdMs = ci->dwAoECooldownMs;
+            else
+                cdMs = ci->dwPrimaryCooldownMs;
+        }
         SetSkillCD(s, skillSlot, cdMs);
     }
 
