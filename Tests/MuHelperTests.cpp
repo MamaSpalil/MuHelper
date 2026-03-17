@@ -936,7 +936,7 @@ int main()
     RUN(offset_character_attribute_valid);
     RUN(offset_world_active_valid);
 
-    // 15. AccountID & CHAR_NAME login/charselect offsets
+    // 18. AccountID & CHAR_NAME login/charselect offsets
     printf("\n[AccountID & CHAR_NAME Offsets]\n");
     RUN(offset_account_id_exact_10219);
     RUN(offset_account_id_exact_10211);

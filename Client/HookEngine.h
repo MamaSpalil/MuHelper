@@ -76,7 +76,7 @@ namespace Addr_main_10211
     static const SIZE_T STOLEN_RecvProtocol   = 7; // 6A FF 64 A1 00 00 00
 
     // ── Game data pointers (.bss) ─────────────────────────────
-    //  Delta from 1.02.11 → 1.02.19 is +0x2200 for .data/.bss
+    //  These are 1.02.11 addresses;  1.02.19 = addr + 0x2200
     static const DWORD PTR_Hero               = 0x08B23540;
     static const DWORD ARR_CharactersClient   = 0x08B24600;
     static const DWORD ARR_Items              = 0x09124600;
