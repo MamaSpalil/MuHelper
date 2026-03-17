@@ -23,52 +23,52 @@ namespace Addr_main_10211
     //  void DataSend(BYTE* pData, int nLen)
     //  Confirmed by SendBuffer Overflow xref + WSASend IAT call
     //  Prologue: 55 8B EC 83 EC 10 89 4D F0 …
-    constexpr DWORD FN_DataSend          = 0x00403D10;
+    static const DWORD FN_DataSend          = 0x00403D10;
 
     //  Pointer to the CNetObject instance stored in .data
     //  Read at runtime: CNetObject* pNet = *(void**)PTR_NetObject
-    constexpr DWORD PTR_NetObject        = 0x007D3B70;
+    static const DWORD PTR_NetObject        = 0x007D3B70;
 
     //  Encrypt context object (static VA in .bss)
     //  MOV ECX, 0x0587C278  before the encrypt call
-    constexpr DWORD OBJ_EncryptCtx      = 0x0587C278;
+    static const DWORD OBJ_EncryptCtx      = 0x0587C278;
 
     // ── Incoming packet dispatch ─────────────────────────────
     //  ProcessPacket  –  __cdecl (no EBP frame, SUB ESP 0x17C)
     //  int ProcessPacket(BYTE* pData, int nLen)
     //  Switch on pData[0]; 147-entry jump table at 0x0050DD9C
     //  CMP EAX, 0xF5 guard; opcode range 0x00-0xF4
-    constexpr DWORD FN_ProcessPacket     = 0x0050A070;
+    static const DWORD FN_ProcessPacket     = 0x0050A070;
 
     //  RecvProtocol  – outer recv/SEH loop, reassembles packets
     //  void RecvProtocol(CNetObject* pNet)
     //  Checks for C1/C2/C3 packet headers; decrypts; calls above
-    constexpr DWORD FN_RecvProtocol      = 0x00509230;
+    static const DWORD FN_RecvProtocol      = 0x00509230;
 
     // ── Rendering: OpenGL (NOT Direct3D) ────────────────────
     //  IAT slot in .data section (DWORD holding import address)
-    constexpr DWORD IAT_SwapBuffers      = 0x007B308C;
+    static const DWORD IAT_SwapBuffers      = 0x007B308C;
 
     //  Call sites: FF 15 8C 30 7B 00
-    constexpr DWORD CALL_SwapBuffers_1   = 0x006CF9E6;  // primary render loop
-    constexpr DWORD CALL_SwapBuffers_2   = 0x006D23FB;
-    constexpr DWORD CALL_SwapBuffers_3   = 0x006FB00C;
+    static const DWORD CALL_SwapBuffers_1   = 0x006CF9E6;  // primary render loop
+    static const DWORD CALL_SwapBuffers_2   = 0x006D23FB;
+    static const DWORD CALL_SwapBuffers_3   = 0x006FB00C;
 
     // ── WinSock IAT slots in .data ───────────────────────────
-    constexpr DWORD IAT_WSASend          = 0x007B35CC;
-    constexpr DWORD IAT_recv             = 0x007B35BC;
+    static const DWORD IAT_WSASend          = 0x007B35CC;
+    static const DWORD IAT_recv             = 0x007B35BC;
 
     // ── Network socket object in .bss ───────────────────────
-    constexpr DWORD OBJ_NetSocket        = 0x05877AE8;
+    static const DWORD OBJ_NetSocket        = 0x05877AE8;
 
     // ── Opcode handler table ─────────────────────────────────
     //  147 entries x DWORD; index = opcode byte (0x00-0xF4)
-    constexpr DWORD TBL_OpcodeHandlers   = 0x0050DD9C;
+    static const DWORD TBL_OpcodeHandlers   = 0x0050DD9C;
 
     // ── Stolen-byte counts for inline trampolines ────────────
-    constexpr SIZE_T STOLEN_DataSend       = 7; // 55 8B EC 83 EC 10 89
-    constexpr SIZE_T STOLEN_ProcessPacket  = 7; // 8B 44 24 04 81 EC 7C
-    constexpr SIZE_T STOLEN_RecvProtocol   = 7; // 6A FF 64 A1 00 00 00
+    static const SIZE_T STOLEN_DataSend       = 7; // 55 8B EC 83 EC 10 89
+    static const SIZE_T STOLEN_ProcessPacket  = 7; // 8B 44 24 04 81 EC 7C
+    static const SIZE_T STOLEN_RecvProtocol   = 7; // 6A FF 64 A1 00 00 00
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -76,10 +76,10 @@ namespace Addr_main_10211
 // ─────────────────────────────────────────────────────────────
 namespace Addr_MainDll_10211
 {
-    constexpr DWORD FN_Init              = 0x10035D66; // E9 jump-table (50 trampolines)
-    constexpr DWORD PTR_AttackHelperObj  = 0x100E526C; // CAttackHelper* global
-    constexpr DWORD IAT_WS2_Send        = 0x10288BCC; // ws2_32 Ord#19 (send)
-    constexpr DWORD IAT_WS2_Recv        = 0x10288BC8; // ws2_32 Ord#5  (recv)
+    static const DWORD FN_Init              = 0x10035D66; // E9 jump-table (50 trampolines)
+    static const DWORD PTR_AttackHelperObj  = 0x100E526C; // CAttackHelper* global
+    static const DWORD IAT_WS2_Send        = 0x10288BCC; // ws2_32 Ord#19 (send)
+    static const DWORD IAT_WS2_Recv        = 0x10288BC8; // ws2_32 Ord#5  (recv)
 }
 
 // ─────────────────────────────────────────────────────────────

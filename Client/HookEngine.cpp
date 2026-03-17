@@ -123,9 +123,10 @@ static BOOL __stdcall Hooked_SwapBuffers(HDC hdc)
 void HookEngine::InstallAll()
 {
     // Make trampolines executable
-    VirtualProtect(s_trampolineDataSend,   16, PAGE_EXECUTE_READWRITE, nullptr);
-    VirtualProtect(s_trampolineProcessPkt, 16, PAGE_EXECUTE_READWRITE, nullptr);
-    VirtualProtect(s_trampolineRecvProto,  16, PAGE_EXECUTE_READWRITE, nullptr);
+    DWORD dwOldProt;
+    VirtualProtect(s_trampolineDataSend,   16, PAGE_EXECUTE_READWRITE, &dwOldProt);
+    VirtualProtect(s_trampolineProcessPkt, 16, PAGE_EXECUTE_READWRITE, &dwOldProt);
+    VirtualProtect(s_trampolineRecvProto,  16, PAGE_EXECUTE_READWRITE, &dwOldProt);
 
     // 1. Hook ProcessPacket (highest priority – intercepts all opcodes)
     if (Patch::WriteJmp(FN_ProcessPacket,

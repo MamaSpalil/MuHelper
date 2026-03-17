@@ -59,7 +59,7 @@
 //    class_line: 0=Wizard, 1=Knight, 2=Elf, 3=MG, 4=DL
 //    evolution:  0=base, 1=1st, 3=2nd (MG/DL: 0=base, 2=evo)
 // ============================================================
-enum MuCharClass : BYTE
+enum MuCharClass
 {
     CLASS_DW  = 0,    // Dark Wizard (base)
     CLASS_SM  = 1,    // Soul Master (1st evolution)
@@ -80,7 +80,7 @@ enum MuCharClass : BYTE
 // ============================================================
 //  Skill IDs — unique per class ability
 // ============================================================
-enum MuSkillId : WORD
+enum MuSkillId
 {
     // -- Dark Knight line --
     SKILL_DK_SLASH              = 0x0001,
@@ -321,8 +321,8 @@ inline const char* GetSkillName(WORD skillId)
         { SKILL_LE_DARK_HORSE_ATTACK,  "Dark Horse Attack" },
         { SKILL_NONE,                  "(none)" },
     };
-    for (const auto& e : names)
-        if (e.wSkillId == skillId) return e.szName;
+    for (int _i = 0; _i < (int)(sizeof(names)/sizeof(names[0])); _i++)
+        if (names[_i].wSkillId == skillId) return names[_i].szName;
     return "Unknown";
 }
 
