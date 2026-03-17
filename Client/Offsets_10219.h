@@ -197,6 +197,29 @@ namespace Addr_main_10219
     //    3. Typical x-ref: LEA EDI, [USERACCOUNT]  near login handler
     // =============================================================
     static const DWORD PTR_UserAccount      = 0x08B09A00;
+
+    // =============================================================
+    //  Login-time offsets: AccountID and CHAR_NAME
+    //
+    //  OFFSET_AccountId — absolute VA of the numeric account ID
+    //    Populated after successful login (opcode 0xF1 sub 0x01).
+    //    Read as: DWORD id = *(DWORD*)OFFSET_AccountId;
+    //
+    //  NAME_CHAR (above) — character name after character selection
+    //    Populated after the player picks a character on the
+    //    "Select Character" screen.
+    //    Read as: const char* name = (const char*)NAME_CHAR;
+    //
+    //  Field offsets within the USERACCOUNT structure:
+    // =============================================================
+    static const DWORD USERACCOUNT_OFF_Name       = 0x00;  // char[11]
+    static const DWORD USERACCOUNT_OFF_AuthLevel   = 0x0C;  // BYTE
+    static const DWORD USERACCOUNT_OFF_AccountId   = 0x10;  // DWORD
+    static const DWORD USERACCOUNT_OFF_CharCount   = 0x14;  // BYTE
+    static const DWORD USERACCOUNT_OFF_LastChar    = 0x18;  // char[11]
+
+    //  Convenience: absolute VA of the AccountID field
+    static const DWORD OFFSET_AccountId = PTR_UserAccount + 0x10;
 }
 
 // ─────────────────────────────────────────────────────────────

@@ -624,6 +624,25 @@ namespace Addr_main_10219_test
     static const DWORD PTR_UserAccount      = 0x08B09A00;
     static const DWORD PTR_CharacterAttribute = 0x08B26700;
     static const DWORD PTR_WorldActive      = 0x08B09A2C;
+    // Login/character-selection convenience offsets
+    static const DWORD USERACCOUNT_OFF_Name       = 0x00;
+    static const DWORD USERACCOUNT_OFF_AuthLevel   = 0x0C;
+    static const DWORD USERACCOUNT_OFF_AccountId   = 0x10;
+    static const DWORD USERACCOUNT_OFF_CharCount   = 0x14;
+    static const DWORD USERACCOUNT_OFF_LastChar    = 0x18;
+    static const DWORD OFFSET_AccountId = PTR_UserAccount + 0x10;
+}
+
+namespace Addr_main_10211_test
+{
+    // 1.02.11 game data offsets (delta -0x2200 from 1.02.19)
+    static const DWORD NAME_CHAR            = 0x08B24558;
+    static const DWORD PTR_Hero             = 0x08B23540;
+    static const DWORD PTR_UserStruct       = 0x08B23540;
+    static const DWORD USERSTRUCT_SIZE      = 0x120;
+    static const DWORD PTR_UserAccount      = 0x08B07800;
+    static const DWORD USERACCOUNT_OFF_AccountId = 0x10;
+    static const DWORD OFFSET_AccountId     = PTR_UserAccount + 0x10;
 }
 #endif
 
@@ -727,6 +746,82 @@ TEST(offset_world_active_valid)
 #endif
     ASSERT_TRUE(PTR_WorldActive != 0);
     ASSERT_TRUE(PTR_WorldActive >= 0x007B0000);
+}
+
+// ============================================================
+//  18. AccountID AND CHAR_NAME LOGIN/CHARSELECT OFFSET TESTS
+// ============================================================
+TEST(offset_account_id_exact_10219)
+{
+    // OFFSET_AccountId must equal PTR_UserAccount + 0x10
+#ifdef __linux__
+    using namespace Addr_main_10219_test;
+#endif
+    ASSERT_EQ(OFFSET_AccountId, PTR_UserAccount + 0x10);
+    ASSERT_EQ(OFFSET_AccountId, (DWORD)0x08B09A10);
+}
+
+TEST(offset_account_id_exact_10211)
+{
+    // 1.02.11 OFFSET_AccountId must equal PTR_UserAccount + 0x10
+#ifdef __linux__
+    using namespace Addr_main_10211_test;
+#endif
+    ASSERT_EQ(OFFSET_AccountId, PTR_UserAccount + 0x10);
+    ASSERT_EQ(OFFSET_AccountId, (DWORD)0x08B07810);
+}
+
+TEST(offset_account_id_in_bss)
+{
+    // AccountID must be in .bss region (above 0x007B0000)
+#ifdef __linux__
+    using namespace Addr_main_10219_test;
+#endif
+    ASSERT_TRUE(OFFSET_AccountId >= 0x007B0000);
+}
+
+TEST(offset_useraccount_field_offsets)
+{
+    // Verify the USERACCOUNT field offsets are correct
+#ifdef __linux__
+    using namespace Addr_main_10219_test;
+#endif
+    ASSERT_EQ(USERACCOUNT_OFF_Name,      (DWORD)0x00);
+    ASSERT_EQ(USERACCOUNT_OFF_AuthLevel,  (DWORD)0x0C);
+    ASSERT_EQ(USERACCOUNT_OFF_AccountId,  (DWORD)0x10);
+    ASSERT_EQ(USERACCOUNT_OFF_CharCount,  (DWORD)0x14);
+    ASSERT_EQ(USERACCOUNT_OFF_LastChar,   (DWORD)0x18);
+}
+
+TEST(offset_name_char_10211_valid)
+{
+    // NAME_CHAR for 1.02.11 must be non-zero and in .bss
+#ifdef __linux__
+    using namespace Addr_main_10211_test;
+#endif
+    ASSERT_TRUE(NAME_CHAR != 0);
+    ASSERT_TRUE(NAME_CHAR >= 0x007B0000);
+    ASSERT_EQ(NAME_CHAR, (DWORD)0x08B24558);
+}
+
+TEST(offset_name_char_delta_consistent)
+{
+    // Delta between 1.02.11 and 1.02.19 NAME_CHAR must be 0x2200
+#ifdef __linux__
+    DWORD v11 = Addr_main_10211_test::NAME_CHAR;
+    DWORD v19 = Addr_main_10219_test::NAME_CHAR;
+#endif
+    ASSERT_EQ(v19 - v11, (DWORD)0x2200);
+}
+
+TEST(offset_useraccount_delta_consistent)
+{
+    // Delta between 1.02.11 and 1.02.19 PTR_UserAccount must be 0x2200
+#ifdef __linux__
+    DWORD v11 = Addr_main_10211_test::PTR_UserAccount;
+    DWORD v19 = Addr_main_10219_test::PTR_UserAccount;
+#endif
+    ASSERT_EQ(v19 - v11, (DWORD)0x2200);
 }
 
 // ============================================================
@@ -840,6 +935,16 @@ int main()
     RUN(offset_useraccount_valid);
     RUN(offset_character_attribute_valid);
     RUN(offset_world_active_valid);
+
+    // 15. AccountID & CHAR_NAME login/charselect offsets
+    printf("\n[AccountID & CHAR_NAME Offsets]\n");
+    RUN(offset_account_id_exact_10219);
+    RUN(offset_account_id_exact_10211);
+    RUN(offset_account_id_in_bss);
+    RUN(offset_useraccount_field_offsets);
+    RUN(offset_name_char_10211_valid);
+    RUN(offset_name_char_delta_consistent);
+    RUN(offset_useraccount_delta_consistent);
 
     printf("\n========================================\n");
     printf("  Results: %d passed, %d failed\n", g_passed, g_failed);
