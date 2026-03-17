@@ -55,7 +55,9 @@
 
 // ============================================================
 //  Character Class IDs (server Class byte, MU Online protocol)
-//  Encoding: (class_line << 4) | evolution_stage
+//  Encoding: (class_line << 4) | evolution
+//    class_line: 0=Wizard, 1=Knight, 2=Elf, 3=MG, 4=DL
+//    evolution:  0=base, 1=1st, 3=2nd (MG/DL: 0=base, 2=evo)
 // ============================================================
 enum MuCharClass : BYTE
 {
