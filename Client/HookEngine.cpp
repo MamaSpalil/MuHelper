@@ -1,6 +1,6 @@
 // ============================================================
 //  MuHelper — Hook Engine Implementation
-//  Verified addresses for main.exe 1.02.11
+//  Uses version-selected offsets via Addr:: namespace alias
 // ============================================================
 #include "HookEngine.h"
 #include "MuHelperClient.h"
@@ -9,7 +9,7 @@
 #include <cstring>
 #include <cstdio>
 
-using namespace Addr_main_10211;
+using namespace Addr;
 
 // ── Statics ──────────────────────────────────────────────────
 fnDataSend       HookEngine::OrigDataSend      = nullptr;

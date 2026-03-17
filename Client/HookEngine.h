@@ -1,7 +1,9 @@
 #pragma once
 // ============================================================
 //  MuHelper — Hook Engine  (VERIFIED ADDRESSES)
-//  Target: main.exe 1.02.11 (confirmed)  +  Main.dll (companion mod)
+//  Supported targets:
+//    main.exe 1.02.11  (original, confirmed)
+//    main.exe 1.02.19  (Season 3 Ep 1, new)
 //  Scan date: 2026-03-17
 //  Scanner: automated PE + byte-pattern analysis
 // ============================================================
@@ -10,8 +12,11 @@
 //  Hook strategy    : SwapBuffers IAT + inline-detour on
 //                     ProcessPacket + thiscall DataSend shim
 //
+//  Build with MUHELPER_TARGET_10219 to select 1.02.19 offsets.
+//  Default: 1.02.11 (legacy).
 // ============================================================
 #include <windows.h>
+#include "Offsets_10219.h"
 
 // ─────────────────────────────────────────────────────────────
 //  main.exe  (ImageBase = 0x00400000, confirmed PE header)
@@ -83,6 +88,18 @@ namespace Addr_MainDll_10211
 }
 
 // ─────────────────────────────────────────────────────────────
+//  Version selection — compile-time switch
+//  Define MUHELPER_TARGET_10219 to build for main.exe 1.02.19
+// ─────────────────────────────────────────────────────────────
+#ifdef MUHELPER_TARGET_10219
+namespace Addr = Addr_main_10219;
+namespace AddrDll = Addr_MainDll_10219;
+#else
+namespace Addr = Addr_main_10211;
+namespace AddrDll = Addr_MainDll_10211;
+#endif
+
+// ─────────────────────────────────────────────────────────────
 //  Function typedefs
 // ─────────────────────────────────────────────────────────────
 typedef void (__thiscall *fnDataSend)      (void* pNet, BYTE* pData, int nLen);
@@ -95,7 +112,7 @@ typedef BOOL (__stdcall *fnSwapBuffers)    (HDC hdc);
 // ─────────────────────────────────────────────────────────────
 inline void* GetNetObject()
 {
-    return *reinterpret_cast<void**>(Addr_main_10211::PTR_NetObject);
+    return *reinterpret_cast<void**>(Addr::PTR_NetObject);
 }
 
 // ─────────────────────────────────────────────────────────────

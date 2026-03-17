@@ -3,7 +3,9 @@
 
 // ============================================================
 //  MuHelper v2 — Shared Packets
-//  GameServer 1.00.18 / Client 1.02.11
+//  GameServer 1.00.18 / Client 1.02.11 / Client 1.02.19
+//  Net data format: see also Shared/MuHelperNetData.h for
+//  MuMain-compatible MUHELPER_NET_DATA structure
 // ============================================================
 
 #pragma pack(push, 1)
