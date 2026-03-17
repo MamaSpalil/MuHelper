@@ -1,7 +1,7 @@
 #pragma once
 // ============================================================
 //  MuHelper v2 — Server Manager
-//  GameServer 1.00.19  |  GgSrvDll.dll verified integration
+//  GameServer 1.00.18  |  GgSrvDll.dll verified integration
 // ============================================================
 #include "../Shared/MuHelperPackets.h"
 #include "GgSrvDll_Interface.h"

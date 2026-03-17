@@ -1,7 +1,7 @@
 // ============================================================
 //  MuHelper v2 — Server Implementation
 //  Integrates with GgSrvDll.dll (verified binary analysis)
-//  GameServer 1.00.19
+//  GameServer 1.00.18
 // ============================================================
 #include "MuHelperManager.h"
 
@@ -188,7 +188,7 @@ int CMuHelperManager::CountMobsInRange(int idx, int radius)
 }
 
 // ============================================================
-//  COMBO ATTACK (BK/BM specific)
+//  COMBO ATTACK (BK/HK specific)
 // ============================================================
 void CMuHelperManager::DoComboAttack(int idx, MuHelperSession& s, const ClassSkillInfo* ci)
 {
@@ -298,7 +298,7 @@ void CMuHelperManager::DoAutoAttack(int idx, MuHelperSession& s)
         SetSkillCD(s, skillSlot, cdMs);
     }
 
-    // Combo system (BK/BM)
+    // Combo system (BK/HK)
     if ((s.cfg.bCombatMode & COMBAT_MODE_COMBO) && ci)
         DoComboAttack(idx, s, ci);
 
@@ -535,7 +535,7 @@ void CMuHelperManager::DoPartyHPBroadcast(int idx, MuHelperSession& s)
         strncpy_s(pm.szName, m.Name, 10);
         pm.bHpPct = (BYTE)(m.MaxLife > 0 ? m.Life * 100 / m.MaxLife : 0);
         pm.bMpPct = (BYTE)(m.MaxMana > 0 ? m.Mana * 100 / m.MaxMana : 0);
-        pm.bClass = (BYTE)(m.Class & 0x0F);
+        pm.bClass = (BYTE)m.Class;
     }
     pkt.bCount = count;
     pkt.sz     = (BYTE)sizeof(pkt);
@@ -697,7 +697,7 @@ void CMuHelperManager::OnCharLoad(int idx, DWORD dwCharDbId)
     auto& s = m_sessions[idx];
 
     // Capture the character's class from the game object
-    s.bClass = (BYTE)(gObj[idx].Class & 0x0F);
+    s.bClass = (BYTE)gObj[idx].Class;
 
     LoadCfgFromDB    (idx, dwCharDbId);
     LoadProfilesFromDB(idx, dwCharDbId);

@@ -1,6 +1,6 @@
 // ============================================================
 //  MuHelper v2 — GameServer Integration Points
-//  GameServer 1.00.19 + GgSrvDll.dll
+//  GameServer 1.00.18 + GgSrvDll.dll
 // ============================================================
 #include "MuHelperManager.h"
 

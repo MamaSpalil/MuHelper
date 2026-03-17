@@ -3,7 +3,7 @@
 
 // ============================================================
 //  MuHelper v2 — Shared Packets
-//  GameServer 1.00.19 / Client 1.02.19
+//  GameServer 1.00.18 / Client 1.02.11
 // ============================================================
 
 #pragma pack(push, 1)
@@ -54,24 +54,27 @@
 #define MUHELPER_MAX_PROFILES       5
 
 // ============================================================
-//  Character Class IDs (server Class byte & 0x0F)
+//  Character Class IDs (server Class byte, MU Online protocol)
+//  Encoding: (class_line << 4) | evolution
+//    class_line: 0=Wizard, 1=Knight, 2=Elf, 3=MG, 4=DL
+//    evolution:  0=base, 1=1st, 3=2nd (MG/DL: 0=base, 2=evo)
 // ============================================================
 enum MuCharClass : BYTE
 {
-    CLASS_DK  = 0,    // Dark Knight (base)
-    CLASS_BK  = 1,    // Blade Knight (1st evolution)
-    CLASS_BM  = 2,    // Blade Master (2nd evolution)
-    CLASS_DW  = 3,    // Dark Wizard (base)
-    CLASS_SM  = 4,    // Soul Master (1st evolution)
-    CLASS_GM  = 5,    // Grand Master (2nd evolution)
-    CLASS_FE  = 6,    // Fairy Elf (base)
-    CLASS_ME  = 7,    // Muse Elf (1st evolution)
-    CLASS_HE  = 8,    // High Elf (2nd evolution)
-    CLASS_MG  = 9,    // Magic Gladiator (hybrid, no base evolution)
-    CLASS_DM  = 10,   // Duel Master (MG evolution)
-    CLASS_DL  = 11,   // Dark Lord (base)
-    CLASS_LE  = 12,   // Lord Emperor (DL evolution)
-    CLASS_COUNT= 13
+    CLASS_DW  = 0,    // Dark Wizard (base)
+    CLASS_SM  = 1,    // Soul Master (1st evolution)
+    CLASS_GM  = 3,    // Grand Master (2nd evolution)
+    CLASS_DK  = 16,   // Dark Knight (base)
+    CLASS_BK  = 17,   // Blade Knight (1st evolution)
+    CLASS_HK  = 19,   // High Knight (2nd evolution)
+    CLASS_FE  = 32,   // Fairy Elf (base)
+    CLASS_ME  = 33,   // Muse Elf (1st evolution)
+    CLASS_HE  = 35,   // High Elf (2nd evolution)
+    CLASS_MG  = 48,   // Magic Gladiator (base)
+    CLASS_DM  = 50,   // Duel Master (MG evolution)
+    CLASS_DL  = 64,   // Dark Lord (base)
+    CLASS_LE  = 66,   // Lord Emperor (DL evolution)
+    CLASS_COUNT= 13   // total number of classes (not max ID)
 };
 
 // ============================================================
@@ -87,9 +90,9 @@ enum MuSkillId : WORD
     SKILL_BK_SWORD_DANCE        = 0x0010,
     SKILL_BK_COMBO_ATTACK       = 0x0011,
     SKILL_BK_IMPALE             = 0x0012,
-    SKILL_BM_DRAGON_SLASH       = 0x0020,
-    SKILL_BM_PENETRATION        = 0x0021,
-    SKILL_BM_LIGHTNING_STRIKE   = 0x0022,
+    SKILL_HK_DRAGON_SLASH       = 0x0020,
+    SKILL_HK_PENETRATION        = 0x0021,
+    SKILL_HK_LIGHTNING_STRIKE   = 0x0022,
     // -- Dark Wizard line --
     SKILL_DW_FIREBALL           = 0x0101,
     SKILL_DW_POWER_WAVE         = 0x0102,
@@ -160,24 +163,6 @@ struct ClassSkillInfo
 inline const ClassSkillInfo* GetClassSkillTable()
 {
     static const ClassSkillInfo table[CLASS_COUNT] = {
-        // Dark Knight (DK) — melee, no combo yet
-        { CLASS_DK, "Dark Knight",     "DK",
-          SKILL_DK_SLASH,       SKILL_DK_UPPERCUT,      SKILL_DK_CYCLONE,
-          SKILL_NONE,           SKILL_NONE,             SKILL_NONE,
-          SKILL_NONE,           0, 0, 1, 0,
-          600, 800, 2000 },
-        // Blade Knight (BK) — melee, combo at 3 hits
-        { CLASS_BK, "Blade Knight",    "BK",
-          SKILL_BK_SWORD_DANCE, SKILL_BK_IMPALE,        SKILL_DK_CYCLONE,
-          SKILL_NONE,           SKILL_NONE,             SKILL_BK_COMBO_ATTACK,
-          SKILL_NONE,           3, 0, 1, 0,
-          600, 800, 2000 },
-        // Blade Master (BM) — melee, combo at 3 hits
-        { CLASS_BM, "Blade Master",    "BM",
-          SKILL_BM_DRAGON_SLASH,SKILL_BM_PENETRATION,   SKILL_BM_LIGHTNING_STRIKE,
-          SKILL_NONE,           SKILL_NONE,             SKILL_BK_COMBO_ATTACK,
-          SKILL_NONE,           3, 0, 1, 0,
-          600, 700, 1800 },
         // Dark Wizard (DW) — ranged, can teleport
         { CLASS_DW, "Dark Wizard",     "DW",
           SKILL_DW_FIREBALL,    SKILL_DW_POWER_WAVE,    SKILL_DW_LIGHTNING,
@@ -196,6 +181,24 @@ inline const ClassSkillInfo* GetClassSkillTable()
           SKILL_NONE,           SKILL_NONE,             SKILL_NONE,
           SKILL_NONE,           0, 0, 0, 1,
           700, 800, 2500 },
+        // Dark Knight (DK) — melee, no combo yet
+        { CLASS_DK, "Dark Knight",     "DK",
+          SKILL_DK_SLASH,       SKILL_DK_UPPERCUT,      SKILL_DK_CYCLONE,
+          SKILL_NONE,           SKILL_NONE,             SKILL_NONE,
+          SKILL_NONE,           0, 0, 1, 0,
+          600, 800, 2000 },
+        // Blade Knight (BK) — melee, combo at 3 hits
+        { CLASS_BK, "Blade Knight",    "BK",
+          SKILL_BK_SWORD_DANCE, SKILL_BK_IMPALE,        SKILL_DK_CYCLONE,
+          SKILL_NONE,           SKILL_NONE,             SKILL_BK_COMBO_ATTACK,
+          SKILL_NONE,           3, 0, 1, 0,
+          600, 800, 2000 },
+        // High Knight (HK) — melee, combo at 3 hits
+        { CLASS_HK, "High Knight",     "HK",
+          SKILL_HK_DRAGON_SLASH,SKILL_HK_PENETRATION,   SKILL_HK_LIGHTNING_STRIKE,
+          SKILL_NONE,           SKILL_NONE,             SKILL_BK_COMBO_ATTACK,
+          SKILL_NONE,           3, 0, 1, 0,
+          600, 700, 1800 },
         // Fairy Elf (FE) — ranged, has party heal & buffs
         { CLASS_FE, "Fairy Elf",       "FE",
           SKILL_FE_TRIPLE_SHOT, SKILL_FE_SUMMON_MONSTER,SKILL_NONE,
@@ -244,8 +247,10 @@ inline const ClassSkillInfo* GetClassSkillTable()
 
 inline const ClassSkillInfo* GetClassSkillInfo(BYTE classId)
 {
-    if (classId >= CLASS_COUNT) return nullptr;
-    return &GetClassSkillTable()[classId];
+    const ClassSkillInfo* table = GetClassSkillTable();
+    for (int i = 0; i < CLASS_COUNT; i++)
+        if (table[i].eClass == (MuCharClass)classId) return &table[i];
+    return nullptr;
 }
 
 inline const char* GetClassName(BYTE classId)
@@ -275,9 +280,9 @@ inline const char* GetSkillName(WORD skillId)
         { SKILL_BK_SWORD_DANCE,        "Sword Dance" },
         { SKILL_BK_COMBO_ATTACK,       "Combo Attack" },
         { SKILL_BK_IMPALE,             "Impale" },
-        { SKILL_BM_DRAGON_SLASH,       "Dragon Slash" },
-        { SKILL_BM_PENETRATION,        "Penetration" },
-        { SKILL_BM_LIGHTNING_STRIKE,   "Lightning Strike" },
+        { SKILL_HK_DRAGON_SLASH,       "Dragon Slash" },
+        { SKILL_HK_PENETRATION,        "Penetration" },
+        { SKILL_HK_LIGHTNING_STRIKE,   "Lightning Strike" },
         { SKILL_DW_FIREBALL,           "Fireball" },
         { SKILL_DW_POWER_WAVE,         "Power Wave" },
         { SKILL_DW_LIGHTNING,          "Lightning" },
