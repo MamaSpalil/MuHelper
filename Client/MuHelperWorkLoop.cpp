@@ -14,7 +14,7 @@
 // ── Constants ────────────────────────────────────────────────
 static const int MAX_ACTIONABLE_DISTANCE  = 10;
 static const int DEFAULT_DURABILITY_THR   = 50;
-static const int ITEMS_MAX                = 256;
+static const int ITEM_NONE                = 256;  // sentinel: no item selected
 
 // ── RAII guard for CRITICAL_SECTION (VS2010 compatible) ──────
 struct CSGuard
@@ -34,7 +34,7 @@ CMuHelperWorkLoop& CMuHelperWorkLoop::Instance()
 CMuHelperWorkLoop::CMuHelperWorkLoop()
     : m_bActive(false)
     , m_iCurrentTarget(-1)
-    , m_iCurrentItem(ITEMS_MAX)
+    , m_iCurrentItem(ITEM_NONE)
     , m_dwCurrentSkill(0)
     , m_iComboState(0)
     , m_iCurrentBuffIndex(0)
@@ -87,7 +87,7 @@ void CMuHelperWorkLoop::Start()
     m_iCurrentHealPartyIndex = 0;
     m_iCurrentTarget = -1;
     m_dwCurrentSkill = m_config.aiSkill[0];
-    m_iCurrentItem = ITEMS_MAX;
+    m_iCurrentItem = ITEM_NONE;
 
     // Store original position for regroup
     // In a real integration these come from the Hero global
@@ -220,7 +220,7 @@ void CMuHelperWorkLoop::DeleteItem(int id)
         }
     }
     if (id == m_iCurrentItem)
-        m_iCurrentItem = ITEMS_MAX;
+        m_iCurrentItem = ITEM_NONE;
 }
 
 // ── Distance helpers ─────────────────────────────────────────
@@ -464,10 +464,10 @@ int CMuHelperWorkLoop::Regroup()
 // Ported from MuMain: CMuHelper::ObtainItem()
 int CMuHelperWorkLoop::ObtainItem()
 {
-    if (m_iCurrentItem == ITEMS_MAX)
+    if (m_iCurrentItem == ITEM_NONE)
     {
         m_iCurrentItem = SelectItemToObtain();
-        if (m_iCurrentItem == ITEMS_MAX) return 1;
+        if (m_iCurrentItem == ITEM_NONE) return 1;
     }
 
     // In real integration: walk to item, send pickup request
@@ -487,7 +487,7 @@ bool CMuHelperWorkLoop::ShouldObtainItem(int iItemId)
 int CMuHelperWorkLoop::SelectItemToObtain()
 {
     CSGuard lock(m_csItems);
-    int closest = ITEMS_MAX;
+    int closest = ITEM_NONE;
     // In real integration: find nearest item within obtaining range
     if (m_nItems > 0 && ShouldObtainItem(m_items[0]))
         closest = m_items[0];
@@ -503,7 +503,10 @@ void MuHelperWorkConfig_ToNet(const MuHelperWorkConfig& cfg,
 
     net.HuntingRange       = (BYTE)(cfg.iHuntingRange & 0x0F);
     net.ObtainRange        = (BYTE)(cfg.iObtainingRange & 0x0F);
-    net.DistanceMin        = (WORD)(cfg.iMaxSecondsAway & 0x0F);
+    // NOTE: DistanceMin stores iMaxSecondsAway per MuMain protocol;
+    // field name in the protocol is misleading but matches the
+    // original MuMain ConfigDataSerDe::Serialize mapping exactly.
+    net.DistanceMin        = (WORD)(cfg.iMaxSecondsAway);
     net.LongDistanceAttack = cfg.bLongRangeCounterAttack ? 1 : 0;
     net.OriginalPosition   = cfg.bReturnToOriginalPosition ? 1 : 0;
 
@@ -585,8 +588,13 @@ void MuHelperWorkConfig_FromNet(const MUHELPER_NET_DATA& net,
     cfg.aiSkillCondition[1] = 0;
     if (net.Skill1Delay) cfg.aiSkillCondition[1] |= SkillCond::ON_TIMER;
     if (net.Skill1Con)   cfg.aiSkillCondition[1] |= SkillCond::ON_CONDITION;
-    cfg.aiSkillCondition[1] |= (net.Skill1PreCon == 0)
-        ? SkillCond::ON_MOBS_NEARBY : SkillCond::ON_MOBS_ATTACKING;
+    // Per MuMain protocol, one of NEARBY/ATTACKING is always present
+    // when ON_CONDITION is set.  PreCon==0 → NEARBY, PreCon==1 → ATTACKING.
+    if (net.Skill1Con)
+    {
+        cfg.aiSkillCondition[1] |= (net.Skill1PreCon == 0)
+            ? SkillCond::ON_MOBS_NEARBY : SkillCond::ON_MOBS_ATTACKING;
+    }
     switch (net.Skill1SubCon)
     {
     case 0: cfg.aiSkillCondition[1] |= SkillCond::ON_MORE_THAN_TWO;   break;
@@ -599,8 +607,12 @@ void MuHelperWorkConfig_FromNet(const MUHELPER_NET_DATA& net,
     cfg.aiSkillCondition[2] = 0;
     if (net.Skill2Delay) cfg.aiSkillCondition[2] |= SkillCond::ON_TIMER;
     if (net.Skill2Con)   cfg.aiSkillCondition[2] |= SkillCond::ON_CONDITION;
-    cfg.aiSkillCondition[2] |= (net.Skill2PreCon == 0)
-        ? SkillCond::ON_MOBS_NEARBY : SkillCond::ON_MOBS_ATTACKING;
+    // Same as Skill 1 — PreCon only relevant when ON_CONDITION is set
+    if (net.Skill2Con)
+    {
+        cfg.aiSkillCondition[2] |= (net.Skill2PreCon == 0)
+            ? SkillCond::ON_MOBS_NEARBY : SkillCond::ON_MOBS_ATTACKING;
+    }
     switch (net.Skill2SubCon)
     {
     case 0: cfg.aiSkillCondition[2] |= SkillCond::ON_MORE_THAN_TWO;   break;

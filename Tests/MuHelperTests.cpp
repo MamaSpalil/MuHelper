@@ -550,8 +550,8 @@ TEST(net_data_extra_items_layout)
     MUHELPER_NET_DATA nd;
     memset(&nd, 0, sizeof(nd));
     // Verify the ExtraItems array is correctly sized
-    ASSERT_EQ(sizeof(nd.ExtraItems), 180u);
-    ASSERT_EQ(sizeof(nd.ExtraItems[0]), 15u);
+    ASSERT_EQ(sizeof(nd.ExtraItems), (size_t)180);
+    ASSERT_EQ(sizeof(nd.ExtraItems[0]), (size_t)15);
 }
 
 TEST(net_data_hunting_range_nibble)

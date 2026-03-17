@@ -21,6 +21,7 @@
 typedef struct _MUHELPER_NET_DATA
 {
     BYTE DataStartMarker;                    // Index: 4 (after pkt header)
+                                             // Value: 0x00 (reserved, must be zero)
 
     // Bit-packed pickup flags                  Index: 5
     BYTE _unused5_lo   : 3;
