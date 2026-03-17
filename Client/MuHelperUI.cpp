@@ -25,41 +25,45 @@
 
 #pragma comment(lib, "opengl32.lib")
 
+#if defined(_MSC_VER) && _MSC_VER < 1900
+#define snprintf _snprintf
+#endif
+
 // ============================================================
 //  Colour palette  —  dark MuOnline fantasy aesthetic
 // ============================================================
 namespace Mu
 {
-    static ImVec4 BG_DEEP     {0.04f,0.04f,0.09f,0.96f};
-    static ImVec4 BG_PANEL    {0.07f,0.07f,0.14f,1.00f};
-    static ImVec4 BG_HEADER   {0.10f,0.09f,0.20f,1.00f};
-    static ImVec4 BG_ITEM     {0.09f,0.09f,0.16f,1.00f};
-    static ImVec4 BG_ITEM_HOV {0.14f,0.13f,0.25f,1.00f};
-    static ImVec4 GOLD        {1.00f,0.80f,0.20f,1.00f};
-    static ImVec4 GOLD_DIM    {0.70f,0.56f,0.14f,1.00f};
-    static ImVec4 BLUE        {0.30f,0.70f,1.00f,1.00f};
-    static ImVec4 GREEN       {0.20f,0.90f,0.40f,1.00f};
-    static ImVec4 RED         {1.00f,0.25f,0.20f,1.00f};
-    static ImVec4 CYAN        {0.20f,0.90f,0.90f,1.00f};
-    static ImVec4 PURPLE      {0.65f,0.30f,1.00f,1.00f};
-    static ImVec4 ORANGE      {1.00f,0.55f,0.10f,1.00f};
-    static ImVec4 GRAY        {0.55f,0.55f,0.60f,1.00f};
-    static ImVec4 WHITE       {0.92f,0.92f,0.95f,1.00f};
+    static const ImVec4 BG_DEEP(0.04f,0.04f,0.09f,0.96f);
+    static const ImVec4 BG_PANEL(0.07f,0.07f,0.14f,1.00f);
+    static const ImVec4 BG_HEADER(0.10f,0.09f,0.20f,1.00f);
+    static const ImVec4 BG_ITEM(0.09f,0.09f,0.16f,1.00f);
+    static const ImVec4 BG_ITEM_HOV(0.14f,0.13f,0.25f,1.00f);
+    static const ImVec4 GOLD(1.00f,0.80f,0.20f,1.00f);
+    static const ImVec4 GOLD_DIM(0.70f,0.56f,0.14f,1.00f);
+    static const ImVec4 BLUE(0.30f,0.70f,1.00f,1.00f);
+    static const ImVec4 GREEN(0.20f,0.90f,0.40f,1.00f);
+    static const ImVec4 RED(1.00f,0.25f,0.20f,1.00f);
+    static const ImVec4 CYAN(0.20f,0.90f,0.90f,1.00f);
+    static const ImVec4 PURPLE(0.65f,0.30f,1.00f,1.00f);
+    static const ImVec4 ORANGE(1.00f,0.55f,0.10f,1.00f);
+    static const ImVec4 GRAY(0.55f,0.55f,0.60f,1.00f);
+    static const ImVec4 WHITE(0.92f,0.92f,0.95f,1.00f);
     // Bars
-    static ImVec4 BAR_HP_LO   {0.75f,0.12f,0.12f,1.00f};
-    static ImVec4 BAR_HP_HI   {1.00f,0.30f,0.20f,1.00f};
-    static ImVec4 BAR_MP_LO   {0.10f,0.30f,0.90f,1.00f};
-    static ImVec4 BAR_MP_HI   {0.30f,0.60f,1.00f,1.00f};
-    static ImVec4 BAR_SD      {0.15f,0.65f,0.80f,1.00f};
-    static ImVec4 BAR_EXP_LO  {0.45f,0.15f,0.70f,1.00f};
-    static ImVec4 BAR_EXP_HI  {0.75f,0.30f,1.00f,1.00f};
-    static ImVec4 BAR_CD      {0.70f,0.45f,0.10f,1.00f};
+    static const ImVec4 BAR_HP_LO(0.75f,0.12f,0.12f,1.00f);
+    static const ImVec4 BAR_HP_HI(1.00f,0.30f,0.20f,1.00f);
+    static const ImVec4 BAR_MP_LO(0.10f,0.30f,0.90f,1.00f);
+    static const ImVec4 BAR_MP_HI(0.30f,0.60f,1.00f,1.00f);
+    static const ImVec4 BAR_SD(0.15f,0.65f,0.80f,1.00f);
+    static const ImVec4 BAR_EXP_LO(0.45f,0.15f,0.70f,1.00f);
+    static const ImVec4 BAR_EXP_HI(0.75f,0.30f,1.00f,1.00f);
+    static const ImVec4 BAR_CD(0.70f,0.45f,0.10f,1.00f);
     // Item quality
-    static ImVec4 IT_NORM     {0.80f,0.80f,0.80f,1.00f};
-    static ImVec4 IT_EXC      {0.30f,0.80f,1.00f,1.00f};
-    static ImVec4 IT_ANC      {1.00f,0.75f,0.20f,1.00f};
-    static ImVec4 IT_SOC      {0.55f,1.00f,0.55f,1.00f};
-    static ImVec4 IT_ZEN      {1.00f,0.85f,0.10f,1.00f};
+    static const ImVec4 IT_NORM(0.80f,0.80f,0.80f,1.00f);
+    static const ImVec4 IT_EXC(0.30f,0.80f,1.00f,1.00f);
+    static const ImVec4 IT_ANC(1.00f,0.75f,0.20f,1.00f);
+    static const ImVec4 IT_SOC(0.55f,1.00f,0.55f,1.00f);
+    static const ImVec4 IT_ZEN(1.00f,0.85f,0.10f,1.00f);
 }
 
 static ImU32 V4(ImVec4 v, float a = 1.0f)
@@ -77,45 +81,45 @@ static void ApplyStyle()
     s.PopupRounding   = 5.0f;  s.TabRounding     = 5.0f;
     s.GrabRounding    = 3.0f;  s.ScrollbarRounding=4.0f;
     s.WindowBorderSize= 1.0f;  s.FrameBorderSize  = 0.0f;
-    s.ItemSpacing     = {8.0f,5.0f}; s.FramePadding = {6.0f,4.0f};
-    s.WindowPadding   = {10.0f,10.0f}; s.ScrollbarSize= 10.0f;
+    s.ItemSpacing     = ImVec2(8.0f,5.0f); s.FramePadding = ImVec2(6.0f,4.0f);
+    s.WindowPadding   = ImVec2(10.0f,10.0f); s.ScrollbarSize= 10.0f;
     s.GrabMinSize     = 8.0f;  s.IndentSpacing    = 16.0f;
 
     ImVec4* c = s.Colors;
     c[ImGuiCol_WindowBg]          = Mu::BG_DEEP;
     c[ImGuiCol_ChildBg]           = Mu::BG_PANEL;
     c[ImGuiCol_PopupBg]           = Mu::BG_PANEL;
-    c[ImGuiCol_Border]            = {0.25f,0.22f,0.50f,0.80f};
+    c[ImGuiCol_Border]            = ImVec4(0.25f,0.22f,0.50f,0.80f);
     c[ImGuiCol_FrameBg]           = Mu::BG_ITEM;
     c[ImGuiCol_FrameBgHovered]    = Mu::BG_ITEM_HOV;
-    c[ImGuiCol_FrameBgActive]     = {0.20f,0.18f,0.38f,1.00f};
+    c[ImGuiCol_FrameBgActive]     = ImVec4(0.20f,0.18f,0.38f,1.00f);
     c[ImGuiCol_TitleBg]           = Mu::BG_HEADER;
-    c[ImGuiCol_TitleBgActive]     = {0.14f,0.12f,0.28f,1.00f};
+    c[ImGuiCol_TitleBgActive]     = ImVec4(0.14f,0.12f,0.28f,1.00f);
     c[ImGuiCol_CheckMark]         = Mu::GOLD;
     c[ImGuiCol_SliderGrab]        = Mu::GOLD_DIM;
     c[ImGuiCol_SliderGrabActive]  = Mu::GOLD;
-    c[ImGuiCol_Button]            = {0.16f,0.14f,0.32f,1.00f};
-    c[ImGuiCol_ButtonHovered]     = {0.26f,0.22f,0.52f,1.00f};
-    c[ImGuiCol_ButtonActive]      = {0.35f,0.28f,0.68f,1.00f};
-    c[ImGuiCol_Header]            = {0.20f,0.16f,0.42f,1.00f};
-    c[ImGuiCol_HeaderHovered]     = {0.28f,0.22f,0.56f,1.00f};
-    c[ImGuiCol_HeaderActive]      = {0.35f,0.28f,0.68f,1.00f};
-    c[ImGuiCol_Separator]         = {0.22f,0.20f,0.44f,0.80f};
-    c[ImGuiCol_Tab]               = {0.12f,0.10f,0.24f,1.00f};
-    c[ImGuiCol_TabHovered]        = {0.26f,0.22f,0.52f,1.00f};
-    c[ImGuiCol_TabActive]         = {0.20f,0.16f,0.42f,1.00f};
-    c[ImGuiCol_TabUnfocused]      = {0.09f,0.08f,0.17f,1.00f};
-    c[ImGuiCol_TabUnfocusedActive]= {0.16f,0.13f,0.32f,1.00f};
-    c[ImGuiCol_ScrollbarBg]       = {0.04f,0.04f,0.08f,0.80f};
-    c[ImGuiCol_ScrollbarGrab]     = {0.25f,0.22f,0.48f,1.00f};
-    c[ImGuiCol_ScrollbarGrabHovered]={0.35f,0.30f,0.65f,1.00f};
+    c[ImGuiCol_Button]            = ImVec4(0.16f,0.14f,0.32f,1.00f);
+    c[ImGuiCol_ButtonHovered]     = ImVec4(0.26f,0.22f,0.52f,1.00f);
+    c[ImGuiCol_ButtonActive]      = ImVec4(0.35f,0.28f,0.68f,1.00f);
+    c[ImGuiCol_Header]            = ImVec4(0.20f,0.16f,0.42f,1.00f);
+    c[ImGuiCol_HeaderHovered]     = ImVec4(0.28f,0.22f,0.56f,1.00f);
+    c[ImGuiCol_HeaderActive]      = ImVec4(0.35f,0.28f,0.68f,1.00f);
+    c[ImGuiCol_Separator]         = ImVec4(0.22f,0.20f,0.44f,0.80f);
+    c[ImGuiCol_Tab]               = ImVec4(0.12f,0.10f,0.24f,1.00f);
+    c[ImGuiCol_TabHovered]        = ImVec4(0.26f,0.22f,0.52f,1.00f);
+    c[ImGuiCol_TabActive]         = ImVec4(0.20f,0.16f,0.42f,1.00f);
+    c[ImGuiCol_TabUnfocused]      = ImVec4(0.09f,0.08f,0.17f,1.00f);
+    c[ImGuiCol_TabUnfocusedActive]= ImVec4(0.16f,0.13f,0.32f,1.00f);
+    c[ImGuiCol_ScrollbarBg]       = ImVec4(0.04f,0.04f,0.08f,0.80f);
+    c[ImGuiCol_ScrollbarGrab]     = ImVec4(0.25f,0.22f,0.48f,1.00f);
+    c[ImGuiCol_ScrollbarGrabHovered]=ImVec4(0.35f,0.30f,0.65f,1.00f);
     c[ImGuiCol_Text]              = Mu::WHITE;
     c[ImGuiCol_TextDisabled]      = Mu::GRAY;
-    c[ImGuiCol_ResizeGrip]        = {0.25f,0.22f,0.50f,0.50f};
-    c[ImGuiCol_ResizeGripHovered] = {0.40f,0.35f,0.75f,0.75f};
+    c[ImGuiCol_ResizeGrip]        = ImVec4(0.25f,0.22f,0.50f,0.50f);
+    c[ImGuiCol_ResizeGripHovered] = ImVec4(0.40f,0.35f,0.75f,0.75f);
     c[ImGuiCol_ResizeGripActive]  = Mu::GOLD_DIM;
     c[ImGuiCol_PlotLines]         = Mu::GOLD_DIM;
-    c[ImGuiCol_PlotHistogram]     = {0.30f,0.55f,0.90f,1.00f};
+    c[ImGuiCol_PlotHistogram]     = ImVec4(0.30f,0.55f,0.90f,1.00f);
 }
 
 // ============================================================
@@ -127,28 +131,28 @@ static void GBar(float frac,
 {
     frac = std::max(0.0f, std::min(1.0f, frac));
     ImVec2 p = ImGui::GetCursorScreenPos();
-    ImVec2 sz{w < 0 ? ImGui::GetContentRegionAvail().x : w, h};
+    ImVec2 sz(w < 0 ? ImGui::GetContentRegionAvail().x : w, h);
     ImDrawList* dl = ImGui::GetWindowDrawList();
 
-    dl->AddRectFilled(p, {p.x+sz.x,p.y+sz.y}, IM_COL32(20,18,36,200), 3.f);
+    dl->AddRectFilled(p, ImVec2(p.x+sz.x,p.y+sz.y), IM_COL32(20,18,36,200), 3.f);
     float fw = sz.x * frac;
     if (fw > 2.f)
     {
-        dl->AddRectFilledMultiColor(p, {p.x+fw,p.y+sz.y},
+        dl->AddRectFilledMultiColor(p, ImVec2(p.x+fw,p.y+sz.y),
             V4(cLo),V4(cHi),V4(cHi,0.85f),V4(cLo,0.85f));
-        dl->AddRectFilled(p,{p.x+fw,p.y+sz.y*0.35f},IM_COL32(255,255,255,18),0.f);
+        dl->AddRectFilled(p,ImVec2(p.x+fw,p.y+sz.y*0.35f),IM_COL32(255,255,255,18),0.f);
     }
-    dl->AddRect(p,{p.x+sz.x,p.y+sz.y},IM_COL32(60,52,120,180),3.f,0,1.f);
+    dl->AddRect(p,ImVec2(p.x+sz.x,p.y+sz.y),IM_COL32(60,52,120,180),3.f,0,1.f);
     if (ov)
     {
         ImVec2 ts = ImGui::CalcTextSize(ov);
-        dl->AddText({p.x+(sz.x-ts.x)*.5f,p.y+(sz.y-ts.y)*.5f},
+        dl->AddText(ImVec2(p.x+(sz.x-ts.x)*.5f,p.y+(sz.y-ts.y)*.5f),
                     IM_COL32(230,230,230,220),ov);
     }
     ImGui::Dummy(sz);
 }
 
-static void SecHead(const char* t, ImVec4 c = {1.f,.8f,.2f,1.f})
+static void SecHead(const char* t, ImVec4 c = ImVec4(1.f,.8f,.2f,1.f))
 {
     ImGui::Spacing();
     ImGui::PushStyleColor(ImGuiCol_Text, c);
@@ -170,6 +174,19 @@ static bool SkillCombo(const char* id, BYTE* slot)
 // ============================================================
 //  Singleton
 // ============================================================
+CMuHelperUI::CMuHelperUI()
+    : m_bInited(false)
+    , m_bVisible(false)
+    , m_bDirty(false)
+    , m_hWnd(NULL)
+    , m_pEditCfg(NULL)
+    , m_pFontNormal(NULL)
+    , m_pFontSmall(NULL)
+    , m_pFontTitle(NULL)
+{
+    memset(&m_editCfg, 0, sizeof(m_editCfg));
+}
+
 CMuHelperUI& CMuHelperUI::Instance()
 {
     static CMuHelperUI inst;
@@ -241,18 +258,18 @@ void CMuHelperUI::DrawStatOverlay()
         ImGuiWindowFlags_NoBringToFrontOnFocus|
         ImGuiWindowFlags_NoSavedSettings|ImGuiWindowFlags_AlwaysAutoResize;
 
-    ImGui::SetNextWindowPos({8.f,8.f}, ImGuiCond_Always);
+    ImGui::SetNextWindowPos(ImVec2(8.f,8.f), ImGuiCond_Always);
     ImGui::SetNextWindowBgAlpha(0.80f);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding,{8.f,6.f});
-    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing,{4.f,3.f});
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding,ImVec2(8.f,6.f));
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing,ImVec2(4.f,3.f));
 
     if (ImGui::Begin("##ov", nullptr, fl))
     {
         ImDrawList* dl = ImGui::GetWindowDrawList();
         ImVec2 p = ImGui::GetCursorScreenPos();
         ImVec4 dc = run ? Mu::GREEN : Mu::RED;
-        dl->AddCircleFilled({p.x+6,p.y+7},4.5f,V4(dc));
-        ImGui::Dummy({14,0}); ImGui::SameLine(0,4);
+        dl->AddCircleFilled(ImVec2(p.x+6,p.y+7),4.5f,V4(dc));
+        ImGui::Dummy(ImVec2(14,0)); ImGui::SameLine(0,4);
         ImGui::PushStyleColor(ImGuiCol_Text, run ? Mu::GREEN : Mu::GRAY);
         ImGui::Text("MuHelper %s", run ? "ON" : "OFF");
         ImGui::PopStyleColor();
@@ -279,10 +296,10 @@ void CMuHelperUI::DrawMainPanel()
     char title[64];
     snprintf(title,64," MuHelper v2   %s###mhpanel", run ? "[ACTIVE]" : "[IDLE]");
 
-    ImGui::SetNextWindowSize({500,560},ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSizeConstraints({420,460},{720,900});
+    ImGui::SetNextWindowSize(ImVec2(500,560),ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSizeConstraints(ImVec2(420,460),ImVec2(720,900));
     ImGui::PushStyleColor(ImGuiCol_TitleBgActive,
-        run ? ImVec4{0.08f,0.28f,0.10f,1.f} : ImVec4{0.14f,0.12f,0.28f,1.f});
+        run ? ImVec4(0.08f,0.28f,0.10f,1.f) : ImVec4(0.14f,0.12f,0.28f,1.f));
 
     if (ImGui::Begin(title, &m_bVisible, ImGuiWindowFlags_NoCollapse))
     {
@@ -291,17 +308,17 @@ void CMuHelperUI::DrawMainPanel()
             float bw = 108.f;
             if (run)
             {
-                ImGui::PushStyleColor(ImGuiCol_Button,        {0.50f,0.09f,0.09f,1.f});
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, {0.80f,0.14f,0.12f,1.f});
-                if (ImGui::Button("  STOP  ",{bw,28}))
+                ImGui::PushStyleColor(ImGuiCol_Button,        ImVec4(0.50f,0.09f,0.09f,1.f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.80f,0.14f,0.12f,1.f));
+                if (ImGui::Button("  STOP  ",ImVec2(bw,28)))
                     CMuHelperClient::Instance().SendEnable(false);
                 ImGui::PopStyleColor(2);
             }
             else
             {
-                ImGui::PushStyleColor(ImGuiCol_Button,        {0.09f,0.42f,0.14f,1.f});
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, {0.13f,0.64f,0.20f,1.f});
-                if (ImGui::Button("  START  ",{bw,28}))
+                ImGui::PushStyleColor(ImGuiCol_Button,        ImVec4(0.09f,0.42f,0.14f,1.f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.13f,0.64f,0.20f,1.f));
+                if (ImGui::Button("  START  ",ImVec2(bw,28)))
                     CMuHelperClient::Instance().SendEnable(true);
                 ImGui::PopStyleColor(2);
             }
@@ -341,9 +358,9 @@ void CMuHelperUI::DrawMainPanel()
         if (m_bDirty)
         {
             ImGui::Separator(); ImGui::Spacing();
-            ImGui::PushStyleColor(ImGuiCol_Button,        {0.18f,0.38f,0.18f,1.f});
-            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, {0.26f,0.54f,0.26f,1.f});
-            if (ImGui::Button("  Apply & Save Config  ",{-1,0}))
+            ImGui::PushStyleColor(ImGuiCol_Button,        ImVec4(0.18f,0.38f,0.18f,1.f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.26f,0.54f,0.26f,1.f));
+            if (ImGui::Button("  Apply & Save Config  ",ImVec2(-1,0)))
             { CMuHelperClient::Instance().SendConfig(m_editCfg); m_bDirty=false; }
             ImGui::PopStyleColor(2);
         }
@@ -370,16 +387,16 @@ void CMuHelperUI::DrawSkillCooldownBar(float sw)
         ImVec2 p = ImGui::GetCursorScreenPos();
         float h = 20.f;
         ImDrawList* dl = ImGui::GetWindowDrawList();
-        dl->AddRectFilled(p,{p.x+sw-2,p.y+h},IM_COL32(20,16,40,200),2.f);
+        dl->AddRectFilled(p,ImVec2(p.x+sw-2,p.y+h),IM_COL32(20,16,40,200),2.f);
         if (frac > 0.01f)
         {
             ImVec4 fc = (frac > 0.99f) ? Mu::GREEN : Mu::BAR_CD;
-            dl->AddRectFilled(p,{p.x+(sw-2)*frac,p.y+h},V4(fc,0.85f),2.f);
+            dl->AddRectFilled(p,ImVec2(p.x+(sw-2)*frac,p.y+h),V4(fc,0.85f),2.f);
         }
-        dl->AddRect(p,{p.x+sw-2,p.y+h},IM_COL32(60,50,120,180),2.f,0,1.f);
+        dl->AddRect(p,ImVec2(p.x+sw-2,p.y+h),IM_COL32(60,50,120,180),2.f,0,1.f);
         ImVec2 ts = ImGui::CalcTextSize(lbl);
-        dl->AddText({p.x+(sw-2-ts.x)*.5f,p.y+(h-ts.y)*.5f},IM_COL32(200,190,220,220),lbl);
-        ImGui::Dummy({sw,h}); ImGui::SameLine(0,0);
+        dl->AddText(ImVec2(p.x+(sw-2-ts.x)*.5f,p.y+(h-ts.y)*.5f),IM_COL32(200,190,220,220),lbl);
+        ImGui::Dummy(ImVec2(sw,h)); ImGui::SameLine(0,0);
     }
     ImGui::NewLine();
 }
@@ -389,7 +406,7 @@ void CMuHelperUI::DrawSkillCooldownBar(float sw)
 // ============================================================
 void CMuHelperUI::TabCombat()
 {
-    ImGui::BeginChild("##cbt",{0,0},false);
+    ImGui::BeginChild("##cbt",ImVec2(0,0),false);
     auto& cfg = m_editCfg;
     auto Mark = [&](){ m_bDirty = true; };
 
@@ -448,7 +465,7 @@ void CMuHelperUI::TabCombat()
 // ============================================================
 void CMuHelperUI::TabPickup()
 {
-    ImGui::BeginChild("##pku",{0,0},false);
+    ImGui::BeginChild("##pku",ImVec2(0,0),false);
     auto& cfg = m_editCfg;
     auto Mark = [&](){ m_bDirty = true; };
 
@@ -467,8 +484,9 @@ void CMuHelperUI::TabPickup()
         {"Misc (scrolls)",     PICKUP_FLAG_MISC,     Mu::GRAY},
     };
     ImGui::Columns(2,nullptr,false);
-    for (auto& r : rows)
+    for (int ri = 0; ri < (int)(sizeof(rows)/sizeof(rows[0])); ri++)
     {
+        const FR& r = rows[ri];
         bool v = !!(cfg.wPickupFlags & r.fl);
         char id[24]; snprintf(id,24,"##pf%04X",r.fl);
         if (ImGui::Checkbox(id,&v)) { v?cfg.wPickupFlags|=r.fl:cfg.wPickupFlags&=~r.fl; Mark(); }
@@ -478,12 +496,12 @@ void CMuHelperUI::TabPickup()
     ImGui::Columns(1);
     ImGui::Spacing();
 
-    ImGui::PushStyleColor(ImGuiCol_Button,{0.10f,0.36f,0.14f,1.f});
-    if (ImGui::Button("Pick ALL",{110,0}))  { cfg.wPickupFlags=PICKUP_FLAG_ALL;  Mark(); }
+    ImGui::PushStyleColor(ImGuiCol_Button,ImVec4(0.10f,0.36f,0.14f,1.f));
+    if (ImGui::Button("Pick ALL",ImVec2(110,0)))  { cfg.wPickupFlags=PICKUP_FLAG_ALL;  Mark(); }
     ImGui::PopStyleColor();
     ImGui::SameLine(0,8);
-    ImGui::PushStyleColor(ImGuiCol_Button,{0.36f,0.10f,0.10f,1.f});
-    if (ImGui::Button("Pick NONE",{110,0})) { cfg.wPickupFlags=PICKUP_FLAG_NONE; Mark(); }
+    ImGui::PushStyleColor(ImGuiCol_Button,ImVec4(0.36f,0.10f,0.10f,1.f));
+    if (ImGui::Button("Pick NONE",ImVec2(110,0))) { cfg.wPickupFlags=PICKUP_FLAG_NONE; Mark(); }
     ImGui::PopStyleColor();
 
     SecHead("Pickup Radius");
@@ -499,7 +517,7 @@ void CMuHelperUI::TabPickup()
 // ============================================================
 void CMuHelperUI::TabPotions()
 {
-    ImGui::BeginChild("##pot",{0,0},false);
+    ImGui::BeginChild("##pot",ImVec2(0,0),false);
     auto& cfg = m_editCfg;
     auto Mark = [&](){ m_bDirty = true; };
 
@@ -510,8 +528,9 @@ void CMuHelperUI::TabPotions()
         {"##mp","MP Potion", POTION_FLAG_MP,     &cfg.bMpThreshold,     Mu::BAR_MP_LO,Mu::BAR_MP_HI},
         {"##sd","Shield",    POTION_FLAG_SHIELD, &cfg.bShieldThreshold, Mu::BAR_SD,   Mu::BAR_SD},
     };
-    for (auto& r : rows)
+    for (int ri = 0; ri < (int)(sizeof(rows)/sizeof(rows[0])); ri++)
     {
+        PR& r = rows[ri];
         bool v = !!(cfg.bPotionFlags & r.fl);
         if (ImGui::Checkbox(r.id,&v)) { v?cfg.bPotionFlags|=r.fl:cfg.bPotionFlags&=~r.fl; Mark(); }
         ImGui::SameLine(0,6); ImGui::TextUnformatted(r.lbl);
@@ -540,7 +559,7 @@ void CMuHelperUI::TabPotions()
 // ============================================================
 void CMuHelperUI::TabBuffs()
 {
-    ImGui::BeginChild("##buf",{0,0},false);
+    ImGui::BeginChild("##buf",ImVec2(0,0),false);
     auto& cfg = m_editCfg;
     auto Mark = [&](){ m_bDirty = true; };
 
@@ -574,7 +593,7 @@ void CMuHelperUI::TabBuffs()
 // ============================================================
 void CMuHelperUI::TabParty()
 {
-    ImGui::BeginChild("##pty",{0,0},false);
+    ImGui::BeginChild("##pty",ImVec2(0,0),false);
     SecHead("Party HP / MP Bars");
 
     auto& ph = CMuHelperClient::Instance().GetPartyHP();
@@ -604,7 +623,7 @@ void CMuHelperUI::TabParty()
 // ============================================================
 void CMuHelperUI::TabStats()
 {
-    ImGui::BeginChild("##sts",{0,0},false);
+    ImGui::BeginChild("##sts",ImVec2(0,0),false);
     auto& st = CMuHelperClient::Instance().GetStats();
     SecHead("Session Statistics");
 
@@ -617,7 +636,7 @@ void CMuHelperUI::TabStats()
 
     ImGui::Columns(2,nullptr,false);
     auto Row=[](const char* l, const char* v, ImVec4 c){
-        ImGui::TextColored({0.55f,0.55f,0.60f,1.f},"%s",l);
+        ImGui::TextColored(ImVec4(0.55f,0.55f,0.60f,1.f),"%s",l);
         ImGui::NextColumn();
         ImGui::TextColored(c,"%s",v);
         ImGui::NextColumn();
@@ -641,7 +660,7 @@ void CMuHelperUI::TabStats()
 // ============================================================
 void CMuHelperUI::TabLog()
 {
-    ImGui::BeginChild("##lg",{0,0},false);
+    ImGui::BeginChild("##lg",ImVec2(0,0),false);
     static char filt[64]={};
     ImGui::SetNextItemWidth(-60);
     ImGui::InputText("Filter##lf",filt,64);
@@ -652,9 +671,11 @@ void CMuHelperUI::TabLog()
     static const ImVec4 lc[] = {
         Mu::WHITE,Mu::IT_ZEN,Mu::GREEN,Mu::RED,Mu::CYAN,Mu::GRAY
     };
-    ImGui::BeginChild("##lgsc",{0,-4},false,ImGuiWindowFlags_HorizontalScrollbar);
-    for (auto& e : CMuHelperClient::Instance().GetLog())
+    ImGui::BeginChild("##lgsc",ImVec2(0,-4),false,ImGuiWindowFlags_HorizontalScrollbar);
+    const std::deque<HelperLogEntry>& _log = CMuHelperClient::Instance().GetLog();
+    for (size_t _li = 0; _li < _log.size(); _li++)
     {
+        const HelperLogEntry& e = _log[_li];
         if (filt[0] && !strstr(e.sText.c_str(),filt)) continue;
         DWORD s = e.dwTimestamp/1000;
         ImGui::PushStyleColor(ImGuiCol_Text,Mu::GRAY);
@@ -674,7 +695,7 @@ void CMuHelperUI::TabLog()
 // ============================================================
 void CMuHelperUI::TabProfiles()
 {
-    ImGui::BeginChild("##prof",{0,0},false);
+    ImGui::BeginChild("##prof",ImVec2(0,0),false);
     SecHead("Config Profiles");
     ImGui::TextColored(Mu::GRAY,"Save up to 5 named configurations."); ImGui::Spacing();
 
@@ -695,7 +716,7 @@ void CMuHelperUI::TabProfiles()
         ImGui::SetNextItemWidth(110);
         ImGui::InputText("##pn",names[i],16);
         ImGui::SameLine(0,6);
-        ImGui::PushStyleColor(ImGuiCol_Button,{0.14f,0.36f,0.16f,1.f});
+        ImGui::PushStyleColor(ImGuiCol_Button,ImVec4(0.14f,0.36f,0.16f,1.f));
         if (ImGui::Button("Save"))
             CMuHelperClient::Instance().SaveProfile((BYTE)i, names[i],
                 CMuHelperClient::Instance().GetConfig());

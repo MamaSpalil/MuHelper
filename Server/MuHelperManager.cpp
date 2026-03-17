@@ -24,12 +24,9 @@ extern int          gItemCount;
 GgSrvDll_API g_GgSrv;
 
 // ── Timer helpers ─────────────────────────────────────────────
-using Clock = std::chrono::steady_clock;
-using ms_t  = std::chrono::milliseconds;
-
-static bool Elapsed(const Clock::time_point& t, int ms)
+static bool Elapsed(DWORD tLast, int ms)
 {
-    return std::chrono::duration_cast<ms_t>(Clock::now()-t).count() >= ms;
+    return (GetTickCount() - tLast) >= (DWORD)ms;
 }
 static DWORD GetTickSec() { return GetTickCount() / 1000; }
 
@@ -38,6 +35,11 @@ CMuHelperManager& CMuHelperManager::Instance()
 {
     static CMuHelperManager inst;
     return inst;
+}
+
+CMuHelperManager::CMuHelperManager() : m_dwLastTick(0), m_bGGInitOk(false)
+{
+    InitializeCriticalSection(&m_cs);
 }
 
 // ============================================================
@@ -63,11 +65,13 @@ void CMuHelperManager::OnServerStart()
 
 void CMuHelperManager::OnServerShutdown()
 {
-    std::lock_guard<std::recursive_mutex> lk(m_mutex);
-    // Close all active GG auth sessions
-    for (auto& [idx, sess] : m_sessions)
-        CloseGGAuthForPlayer(idx);
+    EnterCriticalSection(&m_cs);
+    for (std::unordered_map<int,MuHelperSession>::iterator it = m_sessions.begin();
+         it != m_sessions.end(); ++it)
+        CloseGGAuthForPlayer(it->first);
     m_sessions.clear();
+    LeaveCriticalSection(&m_cs);
+    DeleteCriticalSection(&m_cs);
 }
 
 // ============================================================
@@ -75,12 +79,13 @@ void CMuHelperManager::OnServerShutdown()
 // ============================================================
 void CMuHelperManager::OnServerTick()
 {
-    if (!Elapsed(m_tLastTick, MH_TICK_MS)) return;
-    m_tLastTick = Clock::now();
+    if (!Elapsed(m_dwLastTick, MH_TICK_MS)) return;
+    m_dwLastTick = GetTickCount();
 
-    std::lock_guard<std::recursive_mutex> lk(m_mutex);
-    for (auto& [idx, sess] : m_sessions)
-        if (sess.bActive) TickPlayer(idx);
+    CSGuard lk(m_cs);
+    for (std::unordered_map<int,MuHelperSession>::iterator it = m_sessions.begin();
+         it != m_sessions.end(); ++it)
+        if (it->second.bActive) TickPlayer(it->first);
 }
 
 void CMuHelperManager::TickPlayer(int idx)
@@ -103,7 +108,7 @@ void CMuHelperManager::TickPlayer(int idx)
     if (Elapsed(s.tLastParty, MH_PARTY_SEND_MS))
     {
         DoPartyHPBroadcast(idx, s);
-        s.tLastParty = Clock::now();
+        s.tLastParty = GetTickCount();
     }
 
     // Status packet every 5s (10 ticks)
@@ -117,8 +122,9 @@ void CMuHelperManager::TickPlayer(int idx)
 void CMuHelperManager::UpdateSkillCDs(int idx, MuHelperSession& s)
 {
     DWORD now = GetTickCount();
-    for (auto& cd : s.skillCDs)
+    for (size_t i = 0; i < s.skillCDs.size(); ++i)
     {
+        HelperSkillCD& cd = s.skillCDs[i];
         if (cd.dwDurationMs == 0) continue;
         DWORD elapsed = now - cd.dwStartMs;
         if (elapsed < cd.dwDurationMs)
@@ -302,7 +308,7 @@ void CMuHelperManager::DoAutoAttack(int idx, MuHelperSession& s)
     if ((s.cfg.bCombatMode & COMBAT_MODE_COMBO) && ci)
         DoComboAttack(idx, s, ci);
 
-    s.tLastAttack = Clock::now();
+    s.tLastAttack = GetTickCount();
 }
 
 // ============================================================
@@ -331,7 +337,7 @@ void CMuHelperManager::DoAutoPickup(int idx, MuHelperSession& s)
             SendItemPicked(idx, i);
             if (item.Type == ITEMTYPE_ZEN) s.dwZenPickup += item.wAmount;
             else                           s.wItemPickup++;
-            s.tLastPickup = Clock::now();
+            s.tLastPickup = GetTickCount();
             break;
         }
     }
@@ -373,7 +379,7 @@ void CMuHelperManager::DoAutoPotion(int idx, MuHelperSession& s)
     auto UsePot = [&](int type) -> bool {
         if (GCUsePotionSend(idx, type) == TRUE)
         {
-            s.tLastPotion = Clock::now();
+            s.tLastPotion = GetTickCount();
             return true;
         }
         return false;
@@ -444,7 +450,7 @@ void CMuHelperManager::DoAutoBuff(int idx, MuHelperSession& s)
     const ClassSkillInfo* ci = GetClassSkillInfo(s.bClass);
     ApplyClassBuffs(idx, s, ci);
 
-    s.tLastBuff = Clock::now();
+    s.tLastBuff = GetTickCount();
 }
 
 // ============================================================
@@ -485,7 +491,7 @@ void CMuHelperManager::DoPartyHeal(int idx, MuHelperSession& s)
     if (healTarget >= 0)
     {
         GCSkillAttackSend(idx, healTarget, ci->wPartyHealSkill & 0xFF);
-        s.tLastPartyHeal = Clock::now();
+        s.tLastPartyHeal = GetTickCount();
     }
 }
 
@@ -506,7 +512,7 @@ void CMuHelperManager::DoAutoRepair(int idx, MuHelperSession& s)
         if ((eq.Durability * 100 / eq.DurabilityMax) < 10)
         {
             GCRepairItemSend(idx, slot);
-            s.tLastRepair = Clock::now();
+            s.tLastRepair = GetTickCount();
             break;
         }
     }
@@ -620,7 +626,7 @@ WORD CMuHelperManager::CalcSessionMinutes(MuHelperSession& s)
 // ============================================================
 void CMuHelperManager::OnPktEnable(int idx, const PKT_MuHelper_Enable* p)
 {
-    std::lock_guard<std::recursive_mutex> lk(m_mutex);
+    CSGuard lk(m_cs);
     auto& s = m_sessions[idx];
     s.bActive = (p->bEnable != 0);
     if (s.bActive)
@@ -642,7 +648,7 @@ void CMuHelperManager::OnPktEnable(int idx, const PKT_MuHelper_Enable* p)
 
 void CMuHelperManager::OnPktCfgSend(int idx, const PKT_MuHelper_CfgSend* p)
 {
-    std::lock_guard<std::recursive_mutex> lk(m_mutex);
+    CSGuard lk(m_cs);
     auto& s = m_sessions[idx];
 
     // Sanitize
@@ -660,13 +666,13 @@ void CMuHelperManager::OnPktCfgSend(int idx, const PKT_MuHelper_CfgSend* p)
 
 void CMuHelperManager::OnPktCfgRequest(int idx)
 {
-    std::lock_guard<std::recursive_mutex> lk(m_mutex);
+    CSGuard lk(m_cs);
     SendCfgReply(idx, m_sessions[idx].cfg);
 }
 
 void CMuHelperManager::OnPktProfileSave(int idx, const PKT_MuHelper_ProfileSave* p)
 {
-    std::lock_guard<std::recursive_mutex> lk(m_mutex);
+    CSGuard lk(m_cs);
     if (p->bSlot >= MUHELPER_MAX_PROFILES) return;
     auto& s = m_sessions[idx];
     s.profiles[p->bSlot].bUsed = true;
@@ -678,7 +684,7 @@ void CMuHelperManager::OnPktProfileSave(int idx, const PKT_MuHelper_ProfileSave*
 
 void CMuHelperManager::OnPktProfileLoad(int idx, const PKT_MuHelper_ProfileLoad* p)
 {
-    std::lock_guard<std::recursive_mutex> lk(m_mutex);
+    CSGuard lk(m_cs);
     if (p->bSlot >= MUHELPER_MAX_PROFILES) return;
     auto& s = m_sessions[idx];
     if (!s.profiles[p->bSlot].bUsed) return;
@@ -692,7 +698,7 @@ void CMuHelperManager::OnPktProfileLoad(int idx, const PKT_MuHelper_ProfileLoad*
 // ============================================================
 void CMuHelperManager::OnCharLoad(int idx, DWORD dwCharDbId)
 {
-    std::lock_guard<std::recursive_mutex> lk(m_mutex);
+    CSGuard lk(m_cs);
     m_charIds[idx] = dwCharDbId;
     auto& s = m_sessions[idx];
 
@@ -712,7 +718,7 @@ void CMuHelperManager::OnCharLoad(int idx, DWORD dwCharDbId)
 
 void CMuHelperManager::OnCharDisconnect(int idx)
 {
-    std::lock_guard<std::recursive_mutex> lk(m_mutex);
+    CSGuard lk(m_cs);
     SaveCfgToDB(idx);
     CloseGGAuthForPlayer(idx);
     m_sessions.erase(idx);
@@ -721,7 +727,7 @@ void CMuHelperManager::OnCharDisconnect(int idx)
 
 void CMuHelperManager::OnMonsterKilled(int killerIdx, int /*mobIdx*/, DWORD dwExp)
 {
-    std::lock_guard<std::recursive_mutex> lk(m_mutex);
+    CSGuard lk(m_cs);
     auto it = m_sessions.find(killerIdx);
     if (it == m_sessions.end() || !it->second.bActive) return;
     auto& s = it->second;
@@ -731,13 +737,13 @@ void CMuHelperManager::OnMonsterKilled(int killerIdx, int /*mobIdx*/, DWORD dwEx
     s.nTarget = -1;
 
     DWORD now = GetTickSec();
-    s.killSamples.push_back({now, s.wKillCount});
-    s.expSamples.push_back({now, s.dwExpGained});
+    s.killSamples.push_back(std::make_pair(now, s.wKillCount));
+    s.expSamples.push_back(std::make_pair(now, s.dwExpGained));
 }
 
 void CMuHelperManager::OnItemDropped(int idx, int /*itemIdx*/)
 {
-    std::lock_guard<std::recursive_mutex> lk(m_mutex);
+    CSGuard lk(m_cs);
     auto it = m_sessions.find(idx);
     if (it == m_sessions.end()) return;
     auto& s = it->second;
@@ -752,7 +758,7 @@ void CMuHelperManager::OnItemDropped(int idx, int /*itemIdx*/)
 
 void CMuHelperManager::OnLevelUp(int idx)
 {
-    std::lock_guard<std::recursive_mutex> lk(m_mutex);
+    CSGuard lk(m_cs);
     auto it = m_sessions.find(idx);
     if (it == m_sessions.end()) return;
     auto& s = it->second;
@@ -806,7 +812,7 @@ void CALLBACK CMuHelperManager::OnGGAuthComplete(int nObjIdx, CCSAuth2* pAuth, i
 // ============================================================
 void CMuHelperManager::SendCfgAck(int idx, bool ok)
 {
-    PKT_MuHelper_CfgAck p{};
+    PKT_MuHelper_CfgAck p = {};
     p.h=0xC1; p.sz=sizeof(p); p.op=MUHELPER_OPCODE_MAIN; p.sub=MUHELPER_SUB_CFG_ACK;
     p.bResult = ok?0:1;
     DataSend(idx,(BYTE*)&p,sizeof(p));
@@ -814,7 +820,7 @@ void CMuHelperManager::SendCfgAck(int idx, bool ok)
 
 void CMuHelperManager::SendCfgReply(int idx, const MuHelperConfig& cfg)
 {
-    PKT_MuHelper_CfgReply p{};
+    PKT_MuHelper_CfgReply p = {};
     p.h=0xC1; p.sz=sizeof(p); p.op=MUHELPER_OPCODE_MAIN; p.sub=MUHELPER_SUB_CFG_REPLY;
     p.cfg=cfg;
     DataSend(idx,(BYTE*)&p,sizeof(p));
@@ -823,7 +829,7 @@ void CMuHelperManager::SendCfgReply(int idx, const MuHelperConfig& cfg)
 void CMuHelperManager::SendItemPicked(int idx, int itemIdx)
 {
     const ITEMSTRUCT& item = gItem[itemIdx];
-    PKT_MuHelper_ItemPicked p{};
+    PKT_MuHelper_ItemPicked p = {};
     p.h=0xC1; p.sz=sizeof(p); p.op=MUHELPER_OPCODE_MAIN; p.sub=MUHELPER_SUB_ITEM_PICKED;
     p.wItemType  = (WORD)item.Type;
     p.bItemLevel = item.Level;
@@ -835,7 +841,7 @@ void CMuHelperManager::SendItemPicked(int idx, int itemIdx)
 
 void CMuHelperManager::SendStatus(int idx, const MuHelperSession& s)
 {
-    PKT_MuHelper_Status p{};
+    PKT_MuHelper_Status p = {};
     p.h=0xC1; p.sz=sizeof(p); p.op=MUHELPER_OPCODE_MAIN; p.sub=MUHELPER_SUB_STATUS;
     p.bRunning       = s.bActive?1:0;
     p.dwZenPickup    = s.dwZenPickup;
@@ -850,7 +856,7 @@ void CMuHelperManager::SendStatus(int idx, const MuHelperSession& s)
 
 void CMuHelperManager::SendSkillStatus(int idx, BYTE slot, WORD cdMs)
 {
-    PKT_MuHelper_SkillStatus p{};
+    PKT_MuHelper_SkillStatus p = {};
     p.h=0xC1; p.sz=sizeof(p); p.op=MUHELPER_OPCODE_MAIN; p.sub=MUHELPER_SUB_SKILL_STATUS;
     p.bSlot=slot; p.wCooldownMs=cdMs;
     DataSend(idx,(BYTE*)&p,sizeof(p));

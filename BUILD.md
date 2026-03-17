@@ -21,10 +21,18 @@ MuHelper/
 
 ---
 
+## Требования к компиляции
+
+- **Visual Studio 2010** (Platform Toolset v100) или выше
+- Операционная система Windows 10 Pro x86/x64
+- Код совместим с C++ компилятором VS 2010 (не использует C++11-only конструкции, кроме `auto`, `nullptr`, `static_assert`, `std::array`, `std::function`, `std::unordered_map` и лямбд — всё поддерживается в VS 2010)
+
+---
+
 ## A. Серверная сторона (GameServer 1.00.18)
 
 ### Требования
-- Visual Studio 2005/2008 (тот же компилятор что и GS)
+- Visual Studio 2010 (или тот же компилятор что и GS)
 - MySQL C API или ODBC
 
 ### Новые возможности сервера

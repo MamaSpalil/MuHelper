@@ -11,7 +11,7 @@
 // ============================================================
 
 // Log entry with colour tag
-enum class LogColor { White, Gold, Green, Red, Cyan, Gray };
+enum LogColor { LogColor_White = 0, LogColor_Gold, LogColor_Green, LogColor_Red, LogColor_Cyan, LogColor_Gray };
 struct HelperLogEntry
 {
     std::string sText;
@@ -35,10 +35,10 @@ struct SessionStats
 };
 
 // Callbacks
-using CbStatus    = std::function<void(const PKT_MuHelper_Status&)>;
-using CbItemPick  = std::function<void(const PKT_MuHelper_ItemPicked&)>;
-using CbCfgReply  = std::function<void(const MuHelperConfig&)>;
-using CbPartyHP   = std::function<void(const PKT_MuHelper_PartyHP&)>;
+typedef std::function<void(const PKT_MuHelper_Status&)>       CbStatus;
+typedef std::function<void(const PKT_MuHelper_ItemPicked&)>   CbItemPick;
+typedef std::function<void(const MuHelperConfig&)>            CbCfgReply;
+typedef std::function<void(const PKT_MuHelper_PartyHP&)>      CbPartyHP;
 
 // ============================================================
 class CMuHelperClient
@@ -77,7 +77,7 @@ public:
     void RawSend(BYTE* lpMsg, int nLen);
 
 private:
-    CMuHelperClient() = default;
+    CMuHelperClient();
     void HandleCfgAck    (BYTE*, int);
     void HandleCfgReply  (BYTE*, int);
     void HandleItemPicked(BYTE*, int);
@@ -86,15 +86,15 @@ private:
     void HandlePartyHP   (BYTE*, int);
     void AddLog(LogColor c, const char* fmt, ...);
 
-    bool                   m_bRunning = false;
-    MuHelperConfig         m_config   = {};
-    SessionStats           m_stats    = {};
-    PKT_MuHelper_PartyHP   m_partyHP  = {};
-    SkillCooldown          m_skills[8]= {};
+    bool                   m_bRunning;
+    MuHelperConfig         m_config;
+    SessionStats           m_stats;
+    PKT_MuHelper_PartyHP   m_partyHP;
+    SkillCooldown          m_skills[8];
 
-    std::array<HelperProfile,5>   m_profiles = {};
+    std::array<HelperProfile,5>   m_profiles;
     std::deque<HelperLogEntry>    m_log;
-    static constexpr int          MAX_LOG = 80;
+    static const int              MAX_LOG = 80;
 
     CbStatus   m_cbStatus;
     CbItemPick m_cbItemPick;

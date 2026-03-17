@@ -8,22 +8,31 @@
 #include <unordered_map>
 #include <array>
 #include <deque>
-#include <mutex>
-#include <chrono>
 #include <string>
 
 // ── Tuning ───────────────────────────────────────────────────
-constexpr int  MH_TICK_MS           = 500;
-constexpr int  MH_ATTACK_DELAY_MS   = 600;
-constexpr int  MH_PICKUP_DELAY_MS   = 400;
-constexpr int  MH_BUFF_INTERVAL_MS  = 30000;
-constexpr int  MH_REPAIR_INTERVAL_MS= 60000;
-constexpr int  MH_PARTY_SEND_MS     = 2000;
-constexpr int  MH_POTION_COOLDOWN_MS= 1500;
-constexpr int  MH_MAX_RADIUS        = 12;
-constexpr int  MH_DEFAULT_RADIUS    = 5;
-constexpr int  MH_EXP_SAMPLE_SEC    = 60;   // rate averaging window
-constexpr int  MH_PARTY_HEAL_HP_PCT = 60;   // heal party members below this %
+static const int  MH_TICK_MS           = 500;
+static const int  MH_ATTACK_DELAY_MS   = 600;
+static const int  MH_PICKUP_DELAY_MS   = 400;
+static const int  MH_BUFF_INTERVAL_MS  = 30000;
+static const int  MH_REPAIR_INTERVAL_MS= 60000;
+static const int  MH_PARTY_SEND_MS     = 2000;
+static const int  MH_POTION_COOLDOWN_MS= 1500;
+static const int  MH_MAX_RADIUS        = 12;
+static const int  MH_DEFAULT_RADIUS    = 5;
+static const int  MH_EXP_SAMPLE_SEC    = 60;   // rate averaging window
+static const int  MH_PARTY_HEAL_HP_PCT = 60;   // heal party members below this %
+
+// RAII wrapper for CRITICAL_SECTION (replaces std::lock_guard)
+class CSGuard
+{
+    CRITICAL_SECTION& m_cs;
+    CSGuard(const CSGuard&);
+    CSGuard& operator=(const CSGuard&);
+public:
+    CSGuard(CRITICAL_SECTION& cs) : m_cs(cs) { EnterCriticalSection(&m_cs); }
+    ~CSGuard() { LeaveCriticalSection(&m_cs); }
+};
 
 // ── Per-session state ────────────────────────────────────────
 struct HelperSkillCD
@@ -35,45 +44,56 @@ struct HelperSkillCD
 
 struct MuHelperSession
 {
-    MuHelperConfig   cfg       = {};
-    bool             bActive   = false;
-    int              nTarget   = -1;
+    MuHelperConfig   cfg;
+    bool             bActive;
+    int              nTarget;
 
     // Character class (resolved on char load)
-    BYTE  bClass     = 0;
+    BYTE  bClass;
 
     // Skill rotation state
-    BYTE bRotationStep = 0;
-    BYTE bAttackCount  = 0;
+    BYTE bRotationStep;
+    BYTE bAttackCount;
 
     // Combo state (for BK/BM combo system)
-    BYTE bComboHitCount = 0;
+    BYTE bComboHitCount;
 
-    // Timers
-    using tp = std::chrono::steady_clock::time_point;
-    tp tLastAttack, tLastPickup, tLastBuff, tLastRepair, tLastPotion, tLastParty;
-    tp tLastPartyHeal;
+    // Timers (GetTickCount values)
+    DWORD tLastAttack, tLastPickup, tLastBuff, tLastRepair, tLastPotion, tLastParty;
+    DWORD tLastPartyHeal;
 
     // Stats
-    DWORD dwZenPickup       = 0;
-    WORD  wItemPickup       = 0;
-    WORD  wKillCount        = 0;
-    DWORD dwExpGained       = 0;
-    DWORD dwStartTimeSec    = 0;
+    DWORD dwZenPickup;
+    WORD  wItemPickup;
+    WORD  wKillCount;
+    DWORD dwExpGained;
+    DWORD dwStartTimeSec;
 
     // Rate tracking (circular buffers)
-    std::deque<std::pair<DWORD,WORD>>  killSamples;  // {tick,count}
-    std::deque<std::pair<DWORD,DWORD>> expSamples;
+    std::deque<std::pair<DWORD,WORD> >  killSamples;  // {tick,count}
+    std::deque<std::pair<DWORD,DWORD> > expSamples;
 
     // Skill cooldowns
-    std::array<HelperSkillCD,8> skillCDs = {};
+    std::array<HelperSkillCD,8> skillCDs;
 
     // GG auth session (one per connected player)
-    CCSAuth2* pGGAuth = nullptr;
-    bool      bGGAuthReady = false;
+    CCSAuth2* pGGAuth;
+    bool      bGGAuthReady;
 
     // Profile cache
-    std::array<HelperProfile,5> profiles = {};
+    std::array<HelperProfile,5> profiles;
+
+    MuHelperSession()
+        : bActive(false), nTarget(-1), bClass(0)
+        , bRotationStep(0), bAttackCount(0), bComboHitCount(0)
+        , tLastAttack(0), tLastPickup(0), tLastBuff(0), tLastRepair(0)
+        , tLastPotion(0), tLastParty(0), tLastPartyHeal(0)
+        , dwZenPickup(0), wItemPickup(0), wKillCount(0)
+        , dwExpGained(0), dwStartTimeSec(0)
+        , pGGAuth(NULL), bGGAuthReady(false)
+    {
+        memset(&cfg, 0, sizeof(cfg));
+    }
 };
 
 // ============================================================
@@ -105,7 +125,7 @@ public:
     static void CALLBACK OnGGAuthComplete(int nObjIdx, CCSAuth2* pAuth, int nResult);
 
 private:
-    CMuHelperManager() = default;
+    CMuHelperManager();
 
     // Per-player update
     void TickPlayer        (int idx);
@@ -156,10 +176,10 @@ private:
     // Data
     std::unordered_map<int,MuHelperSession> m_sessions;
     std::unordered_map<int,DWORD>           m_charIds;
-    std::recursive_mutex                     m_mutex;
+    CRITICAL_SECTION                        m_cs;
 
-    std::chrono::steady_clock::time_point   m_tLastTick;
-    bool                                    m_bGGInitOk = false;
+    DWORD                                   m_dwLastTick;
+    bool                                    m_bGGInitOk;
 };
 
 #define g_MuHelper CMuHelperManager::Instance()

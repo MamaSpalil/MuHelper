@@ -134,8 +134,9 @@ TEST(get_class_skill_info_valid)
 {
     BYTE allClasses[] = { CLASS_DW, CLASS_SM, CLASS_GM, CLASS_DK, CLASS_BK, CLASS_HK,
                           CLASS_FE, CLASS_ME, CLASS_HE, CLASS_MG, CLASS_DM, CLASS_DL, CLASS_LE };
-    for (BYTE c : allClasses)
+    for (int i = 0; i < (int)(sizeof(allClasses)/sizeof(allClasses[0])); i++)
     {
+        BYTE c = allClasses[i];
         const ClassSkillInfo* ci = GetClassSkillInfo(c);
         ASSERT_NOT_NULL(ci);
         ASSERT_EQ(ci->eClass, (MuCharClass)c);
@@ -389,9 +390,9 @@ TEST(non_elf_classes_no_party_heal)
 {
     BYTE nonElf[] = { CLASS_DK, CLASS_BK, CLASS_HK, CLASS_DW, CLASS_SM, CLASS_GM,
                       CLASS_MG, CLASS_DM, CLASS_DL, CLASS_LE };
-    for (BYTE c : nonElf)
+    for (int i = 0; i < (int)(sizeof(nonElf)/sizeof(nonElf[0])); i++)
     {
-        const ClassSkillInfo* ci = GetClassSkillInfo(c);
+        const ClassSkillInfo* ci = GetClassSkillInfo(nonElf[i]);
         ASSERT_TRUE(ci->bHasPartyHeal == 0);
     }
 }
@@ -414,9 +415,9 @@ TEST(non_combo_classes)
 {
     BYTE noCombo[] = { CLASS_DK, CLASS_DW, CLASS_SM, CLASS_GM, CLASS_FE,
                        CLASS_ME, CLASS_HE, CLASS_MG, CLASS_DM, CLASS_DL, CLASS_LE };
-    for (BYTE c : noCombo)
+    for (int i = 0; i < (int)(sizeof(noCombo)/sizeof(noCombo[0])); i++)
     {
-        const ClassSkillInfo* ci = GetClassSkillInfo(c);
+        const ClassSkillInfo* ci = GetClassSkillInfo(noCombo[i]);
         ASSERT_TRUE(ci->wComboSkill == SKILL_NONE);
     }
 }
@@ -427,9 +428,9 @@ TEST(non_combo_classes)
 TEST(teleport_classes)
 {
     BYTE canTP[] = { CLASS_DW, CLASS_SM, CLASS_GM, CLASS_MG, CLASS_DM };
-    for (BYTE c : canTP)
+    for (int i = 0; i < (int)(sizeof(canTP)/sizeof(canTP[0])); i++)
     {
-        const ClassSkillInfo* ci = GetClassSkillInfo(c);
+        const ClassSkillInfo* ci = GetClassSkillInfo(canTP[i]);
         ASSERT_EQ(ci->bCanTeleport, 1);
     }
 }
@@ -438,9 +439,9 @@ TEST(no_teleport_classes)
 {
     BYTE noTP[] = { CLASS_DK, CLASS_BK, CLASS_HK, CLASS_FE, CLASS_ME,
                     CLASS_HE, CLASS_DL, CLASS_LE };
-    for (BYTE c : noTP)
+    for (int i = 0; i < (int)(sizeof(noTP)/sizeof(noTP[0])); i++)
     {
-        const ClassSkillInfo* ci = GetClassSkillInfo(c);
+        const ClassSkillInfo* ci = GetClassSkillInfo(noTP[i]);
         ASSERT_EQ(ci->bCanTeleport, 0);
     }
 }
@@ -451,9 +452,9 @@ TEST(no_teleport_classes)
 TEST(melee_classes)
 {
     BYTE melee[] = { CLASS_DK, CLASS_BK, CLASS_HK, CLASS_MG, CLASS_DM, CLASS_DL, CLASS_LE };
-    for (BYTE c : melee)
+    for (int i = 0; i < (int)(sizeof(melee)/sizeof(melee[0])); i++)
     {
-        const ClassSkillInfo* ci = GetClassSkillInfo(c);
+        const ClassSkillInfo* ci = GetClassSkillInfo(melee[i]);
         ASSERT_EQ(ci->bIsMelee, 1);
     }
 }
@@ -461,9 +462,9 @@ TEST(melee_classes)
 TEST(ranged_classes)
 {
     BYTE ranged[] = { CLASS_DW, CLASS_SM, CLASS_GM, CLASS_FE, CLASS_ME, CLASS_HE };
-    for (BYTE c : ranged)
+    for (int i = 0; i < (int)(sizeof(ranged)/sizeof(ranged[0])); i++)
     {
-        const ClassSkillInfo* ci = GetClassSkillInfo(c);
+        const ClassSkillInfo* ci = GetClassSkillInfo(ranged[i]);
         ASSERT_EQ(ci->bIsMelee, 0);
     }
 }
