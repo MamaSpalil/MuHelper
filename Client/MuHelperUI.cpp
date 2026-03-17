@@ -484,9 +484,9 @@ void CMuHelperUI::TabPickup()
         {"Misc (scrolls)",     PICKUP_FLAG_MISC,     Mu::GRAY},
     };
     ImGui::Columns(2,nullptr,false);
-    for (int _ri = 0; _ri < (int)(sizeof(rows)/sizeof(rows[0])); _ri++)
+    for (int ri = 0; ri < (int)(sizeof(rows)/sizeof(rows[0])); ri++)
     {
-        const FR& r = rows[_ri];
+        const FR& r = rows[ri];
         bool v = !!(cfg.wPickupFlags & r.fl);
         char id[24]; snprintf(id,24,"##pf%04X",r.fl);
         if (ImGui::Checkbox(id,&v)) { v?cfg.wPickupFlags|=r.fl:cfg.wPickupFlags&=~r.fl; Mark(); }
@@ -528,9 +528,9 @@ void CMuHelperUI::TabPotions()
         {"##mp","MP Potion", POTION_FLAG_MP,     &cfg.bMpThreshold,     Mu::BAR_MP_LO,Mu::BAR_MP_HI},
         {"##sd","Shield",    POTION_FLAG_SHIELD, &cfg.bShieldThreshold, Mu::BAR_SD,   Mu::BAR_SD},
     };
-    for (int _ri = 0; _ri < (int)(sizeof(rows)/sizeof(rows[0])); _ri++)
+    for (int ri = 0; ri < (int)(sizeof(rows)/sizeof(rows[0])); ri++)
     {
-        PR& r = rows[_ri];
+        PR& r = rows[ri];
         bool v = !!(cfg.bPotionFlags & r.fl);
         if (ImGui::Checkbox(r.id,&v)) { v?cfg.bPotionFlags|=r.fl:cfg.bPotionFlags&=~r.fl; Mark(); }
         ImGui::SameLine(0,6); ImGui::TextUnformatted(r.lbl);

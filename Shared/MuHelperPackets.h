@@ -321,8 +321,8 @@ inline const char* GetSkillName(WORD skillId)
         { SKILL_LE_DARK_HORSE_ATTACK,  "Dark Horse Attack" },
         { SKILL_NONE,                  "(none)" },
     };
-    for (int _i = 0; _i < (int)(sizeof(names)/sizeof(names[0])); _i++)
-        if (names[_i].wSkillId == skillId) return names[_i].szName;
+    for (int i = 0; i < (int)(sizeof(names)/sizeof(names[0])); i++)
+        if (names[i].wSkillId == skillId) return names[i].szName;
     return "Unknown";
 }
 
