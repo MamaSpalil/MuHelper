@@ -876,10 +876,11 @@ static const DWORD STR_PartyJpg             = 0x007E5A6B;  // "Party.jpg"
 //
 // ============================================================================
 
+//  Names match the Addr_MainDll_10211 namespace in HookEngine.h
 static const DWORD DLL_FN_Init              = 0x10035D66;  // Init trampoline table
 static const DWORD DLL_PTR_AttackHelperObj  = 0x100E526C;  // CAttackHelper* global
-static const DWORD DLL_IAT_WS2_Send        = 0x10288BCC;  // ws2_32 send IAT slot
-static const DWORD DLL_IAT_WS2_Recv        = 0x10288BC8;  // ws2_32 recv IAT slot
+static const DWORD DLL_IAT_WS2_Send        = 0x10288BCC;  // ws2_32 Ord#19 (send)
+static const DWORD DLL_IAT_WS2_Recv        = 0x10288BC8;  // ws2_32 Ord#5  (recv)
 
 
 // ============================================================================
