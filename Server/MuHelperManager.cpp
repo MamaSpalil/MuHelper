@@ -2,10 +2,11 @@
 //  MuHelper v2 — Server Implementation
 //  Integrates with GgSrvDll.dll (verified binary analysis)
 //  GameServer 1.00.18
+//  Database: MSSQL 2008 R2 (ODBC via GameServer DatabaseManager)
 // ============================================================
 #include "MuHelperManager.h"
 
-// ── GameServer 1.00.19 internal headers (adjust paths) ───────
+// ── GameServer 1.00.18 internal headers (adjust paths) ───────
 #include "../../GameServer/Object.h"
 #include "../../GameServer/GameProtocol.h"
 #include "../../GameServer/ItemManager.h"
@@ -868,7 +869,7 @@ void CMuHelperManager::SendPartyHP(int idx, const MuHelperSession&)
 }
 
 // ============================================================
-//  DATABASE HELPERS
+//  DATABASE HELPERS (MSSQL 2008 R2 via ODBC)
 // ============================================================
 void CMuHelperManager::LoadCfgFromDB(int idx, DWORD charId)
 {
@@ -885,7 +886,7 @@ void CMuHelperManager::LoadCfgFromDB(int idx, DWORD charId)
     else
     {
         // Defaults
-        auto& cfg = m_sessions[idx].cfg;
+        MuHelperConfig& cfg = m_sessions[idx].cfg;
         memset(&cfg,0,sizeof(cfg));
         cfg.bAttackRadius   = MH_DEFAULT_RADIUS;
         cfg.bPickupRadius   = MH_DEFAULT_RADIUS;
@@ -903,19 +904,26 @@ void CMuHelperManager::LoadCfgFromDB(int idx, DWORD charId)
 
 void CMuHelperManager::SaveCfgToDB(int idx)
 {
-    auto ci = m_charIds.find(idx);
-    auto si = m_sessions.find(idx);
+    std::unordered_map<int,DWORD>::iterator ci = m_charIds.find(idx);
+    std::unordered_map<int,MuHelperSession>::iterator si = m_sessions.find(idx);
     if (ci==m_charIds.end()||si==m_sessions.end()) return;
+    // MSSQL 2008 R2: use IF EXISTS / UPDATE / ELSE INSERT pattern
+    // (MERGE is also available in 2008 R2 but this pattern is simpler
+    //  and compatible with the GameServer DatabaseManager ODBC layer)
     char sql[512];
-    sprintf_s(sql,"INSERT INTO MuHelperConfig(CharIdx,cfg) VALUES(%u,?) "
-                  "ON DUPLICATE KEY UPDATE cfg=VALUES(cfg)", ci->second);
+    sprintf_s(sql,
+        "IF EXISTS (SELECT 1 FROM MuHelperConfig WHERE CharIdx=%u) "
+        "UPDATE MuHelperConfig SET cfg=?, UpdatedAt=GETDATE() WHERE CharIdx=%u "
+        "ELSE "
+        "INSERT INTO MuHelperConfig(CharIdx,cfg) VALUES(%u,?)",
+        ci->second, ci->second, ci->second);
     g_DbManager.QueryBinary(sql,(BYTE*)&si->second.cfg,sizeof(MuHelperConfig));
 }
 
 void CMuHelperManager::LoadProfilesFromDB(int idx, DWORD charId)
 {
     char sql[256];
-    sprintf_s(sql,"SELECT SlotIdx,Name,cfg FROM MuHelperProfiles WHERE CharIdx=%u", charId);
+    sprintf_s(sql,"SELECT SlotIdx,Name,cfg FROM MuHelperProfiles WHERE CharIdx=%u ORDER BY SlotIdx", charId);
     DB_RESULT* r = g_DbManager.Query(sql);
     if (r)
     {
@@ -925,7 +933,7 @@ void CMuHelperManager::LoadProfilesFromDB(int idx, DWORD charId)
             if (!row[0]) break;
             int slot=atoi(row[0]);
             if (slot<0||slot>=MUHELPER_MAX_PROFILES) { r->FetchRow(); continue; }
-            auto& p=m_sessions[idx].profiles[slot];
+            HelperProfile& p=m_sessions[idx].profiles[slot];
             p.bUsed=true;
             strncpy_s(p.szName,row[1]?row[1]:"",15);
             unsigned long* len=r->FetchLengths();
@@ -938,13 +946,31 @@ void CMuHelperManager::LoadProfilesFromDB(int idx, DWORD charId)
 
 void CMuHelperManager::SaveProfileToDB(int idx, BYTE slot)
 {
-    auto ci=m_charIds.find(idx); auto si=m_sessions.find(idx);
+    std::unordered_map<int,DWORD>::iterator ci=m_charIds.find(idx);
+    std::unordered_map<int,MuHelperSession>::iterator si=m_sessions.find(idx);
     if (ci==m_charIds.end()||si==m_sessions.end()) return;
-    auto& p=si->second.profiles[slot];
+    HelperProfile& p=si->second.profiles[slot];
     if (!p.bUsed) return;
+
+    // Sanitize profile name: escape single quotes to prevent SQL injection
+    char safeName[32];
+    int j = 0;
+    for (int i = 0; i < 15 && p.szName[i] != '\0' && j < 30; i++)
+    {
+        if (p.szName[i] == '\'') { safeName[j++] = '\''; safeName[j++] = '\''; }
+        else safeName[j++] = p.szName[i];
+    }
+    safeName[j] = '\0';
+
+    // MSSQL 2008 R2: IF EXISTS / UPDATE / ELSE INSERT
     char sql[512];
-    sprintf_s(sql,"INSERT INTO MuHelperProfiles(CharIdx,SlotIdx,Name,cfg) VALUES(%u,%d,'%s',?) "
-                  "ON DUPLICATE KEY UPDATE Name=VALUES(Name),cfg=VALUES(cfg)",
-              ci->second,(int)slot,p.szName);
+    sprintf_s(sql,
+        "IF EXISTS (SELECT 1 FROM MuHelperProfiles WHERE CharIdx=%u AND SlotIdx=%d) "
+        "UPDATE MuHelperProfiles SET Name='%s',cfg=?,UpdatedAt=GETDATE() WHERE CharIdx=%u AND SlotIdx=%d "
+        "ELSE "
+        "INSERT INTO MuHelperProfiles(CharIdx,SlotIdx,Name,cfg) VALUES(%u,%d,'%s',?)",
+        ci->second,(int)slot,safeName,
+        ci->second,(int)slot,
+        ci->second,(int)slot,safeName);
     g_DbManager.QueryBinary(sql,(BYTE*)&p.cfg,sizeof(MuHelperConfig));
 }

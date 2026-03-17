@@ -1,5 +1,8 @@
 -- ============================================================
---  MuHelper v2 — Database Schema
+--  MuHelper v2 — Database Schema (MySQL — DEPRECATED)
+--  NOTE: The production database uses MSSQL 2008 R2.
+--  See muhelper_schema_mssql.sql for the active schema.
+--  This file is kept for reference only.
 -- ============================================================
 
 -- Main config (96 bytes blob)

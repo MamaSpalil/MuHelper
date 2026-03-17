@@ -5,10 +5,11 @@
 //    imgui.h/.cpp, imgui_draw.cpp, imgui_tables.cpp,
 //    imgui_widgets.cpp, imgui_impl_opengl2.h/.cpp,
 //    imgui_impl_win32.h/.cpp
-//    https://github.com/ocornut/imgui  tag v1.90.x
+//    https://github.com/ocornut/imgui  tag v1.82.x (VS2010 compatible)
 //
 //  Link: opengl32.lib
 // ============================================================
+#define NOMINMAX
 #include "MuHelperUI.h"
 #include "MuHelperClient.h"
 #include "HookEngine.h"
@@ -129,7 +130,7 @@ static void GBar(float frac,
                  ImVec4 cLo, ImVec4 cHi,
                  float w, float h, const char* ov = nullptr)
 {
-    frac = std::max(0.0f, std::min(1.0f, frac));
+    frac = (std::max)(0.0f, (std::min)(1.0f, frac));
     ImVec2 p = ImGui::GetCursorScreenPos();
     ImVec2 sz(w < 0 ? ImGui::GetContentRegionAvail().x : w, h);
     ImDrawList* dl = ImGui::GetWindowDrawList();
@@ -333,7 +334,7 @@ void CMuHelperUI::DrawMainPanel()
             float avail = ImGui::GetContentRegionAvail().x;
             if (avail > 160.f)
             {
-                float sw = std::min(30.f, avail / 8.f);
+                float sw = (std::min)(30.f, avail / 8.f);
                 ImGui::SameLine(ImGui::GetWindowWidth() - sw*8 - 14);
                 DrawSkillCooldownBar(sw);
             }
@@ -630,7 +631,7 @@ void CMuHelperUI::TabStats()
     if (st.dwExpGained > 0)
     {
         char el[32]; snprintf(el,32,"%u EXP",st.dwExpGained);
-        GBar(std::min(1.f,st.dwExpGained/5000000.f), Mu::BAR_EXP_LO, Mu::BAR_EXP_HI, -1, 16, el);
+        GBar((std::min)(1.f,st.dwExpGained/5000000.f), Mu::BAR_EXP_LO, Mu::BAR_EXP_HI, -1, 16, el);
         ImGui::Spacing();
     }
 
@@ -682,7 +683,7 @@ void CMuHelperUI::TabLog()
         ImGui::Text("[%02d:%02d]",(s/60)%60,s%60);
         ImGui::PopStyleColor();
         ImGui::SameLine(0,6);
-        ImGui::TextColored(lc[std::min((int)e.color,5)],"%s",e.sText.c_str());
+        ImGui::TextColored(lc[(std::min)((int)e.color,5)],"%s",e.sText.c_str());
     }
     if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY()-20.f)
         ImGui::SetScrollHereY(1.f);

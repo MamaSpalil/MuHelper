@@ -1,6 +1,8 @@
 #pragma once
 #define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
 #include <windows.h>
+#include "../Shared/MuHelperPackets.h"
 
 // Dear ImGui forward declarations
 struct ImFont;
@@ -46,8 +48,8 @@ private:
     HWND     m_hWnd;
 
     // Working copy of config (applied on Save)
-    struct MuHelperConfig* m_pEditCfg;
-    struct MuHelperConfig  m_editCfg;
+    MuHelperConfig* m_pEditCfg;
+    MuHelperConfig  m_editCfg;
 
     // ImGui fonts
     ImFont*  m_pFontNormal;

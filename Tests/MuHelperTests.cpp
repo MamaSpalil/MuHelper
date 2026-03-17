@@ -618,6 +618,12 @@ namespace Addr_main_10219_test
     static const DWORD PTR_SelectedCharacter= 0x08B09A20;
     static const DWORD PTR_TargetX          = 0x08B09A24;
     static const DWORD PTR_TargetY          = 0x08B09A28;
+    // Additional offsets: UserStruct, UserAccount
+    static const DWORD PTR_UserStruct       = 0x08B25740;
+    static const DWORD USERSTRUCT_SIZE      = 0x120;
+    static const DWORD PTR_UserAccount      = 0x08B09A00;
+    static const DWORD PTR_CharacterAttribute = 0x08B26700;
+    static const DWORD PTR_WorldActive      = 0x08B09A2C;
 }
 #endif
 
@@ -668,6 +674,59 @@ TEST(offsets_10219_datasend_after_imagebase)
 #endif
     ASSERT_TRUE(FN_DataSend > 0x00400000);
     ASSERT_TRUE(FN_DataSend < 0x00500000);
+}
+
+// ============================================================
+//  17. USERSTRUCT AND USERACCOUNT OFFSET TESTS
+// ============================================================
+TEST(offset_userstruct_valid)
+{
+    // PTR_UserStruct should point to the same address as PTR_Hero
+#ifdef __linux__
+    using namespace Addr_main_10219_test;
+#endif
+    ASSERT_TRUE(PTR_UserStruct != 0);
+    ASSERT_EQ(PTR_UserStruct, PTR_Hero);
+    ASSERT_TRUE(PTR_UserStruct >= 0x007B0000);
+}
+
+TEST(offset_userstruct_size)
+{
+#ifdef __linux__
+    using namespace Addr_main_10219_test;
+#endif
+    ASSERT_EQ(USERSTRUCT_SIZE, (DWORD)0x120);
+    ASSERT_TRUE(USERSTRUCT_SIZE >= 0x100);
+    ASSERT_TRUE(USERSTRUCT_SIZE <= 0x400);
+}
+
+TEST(offset_useraccount_valid)
+{
+#ifdef __linux__
+    using namespace Addr_main_10219_test;
+#endif
+    ASSERT_TRUE(PTR_UserAccount != 0);
+    ASSERT_TRUE(PTR_UserAccount >= 0x007B0000);
+    // UserAccount should be in the .bss data region
+    ASSERT_TRUE(PTR_UserAccount < ARR_CharactersClient);
+}
+
+TEST(offset_character_attribute_valid)
+{
+#ifdef __linux__
+    using namespace Addr_main_10219_test;
+#endif
+    ASSERT_TRUE(PTR_CharacterAttribute != 0);
+    ASSERT_TRUE(PTR_CharacterAttribute >= 0x007B0000);
+}
+
+TEST(offset_world_active_valid)
+{
+#ifdef __linux__
+    using namespace Addr_main_10219_test;
+#endif
+    ASSERT_TRUE(PTR_WorldActive != 0);
+    ASSERT_TRUE(PTR_WorldActive >= 0x007B0000);
 }
 
 // ============================================================
@@ -773,6 +832,14 @@ int main()
     RUN(offset_name_char_exact);
     RUN(offsets_10219_in_valid_ranges);
     RUN(offsets_10219_datasend_after_imagebase);
+
+    // 14. UserStruct / UserAccount offsets
+    printf("\n[UserStruct / UserAccount]\n");
+    RUN(offset_userstruct_valid);
+    RUN(offset_userstruct_size);
+    RUN(offset_useraccount_valid);
+    RUN(offset_character_attribute_valid);
+    RUN(offset_world_active_valid);
 
     printf("\n========================================\n");
     printf("  Results: %d passed, %d failed\n", g_passed, g_failed);
