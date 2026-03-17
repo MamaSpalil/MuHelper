@@ -74,6 +74,35 @@ namespace Addr_main_10211
     static const SIZE_T STOLEN_DataSend       = 7; // 55 8B EC 83 EC 10 89
     static const SIZE_T STOLEN_ProcessPacket  = 7; // 8B 44 24 04 81 EC 7C
     static const SIZE_T STOLEN_RecvProtocol   = 7; // 6A FF 64 A1 00 00 00
+
+    // ── Game data pointers (.bss) ─────────────────────────────
+    //  These are 1.02.11 addresses;  1.02.19 = addr + 0x2200
+    static const DWORD PTR_Hero               = 0x08B23540;
+    static const DWORD ARR_CharactersClient   = 0x08B24600;
+    static const DWORD ARR_Items              = 0x09124600;
+    static const DWORD PTR_CharacterAttribute = 0x08B24500;
+    static const DWORD PTR_SelectedCharacter  = 0x08B07820;
+    static const DWORD PTR_TargetX            = 0x08B07824;
+    static const DWORD PTR_TargetY            = 0x08B07828;
+    static const DWORD PTR_WorldActive        = 0x08B0782C;
+    static const DWORD PTR_UserStruct         = 0x08B23540;   // == PTR_Hero
+    static const DWORD USERSTRUCT_SIZE        = 0x120;
+
+    // ── NAME_CHAR — character name (populated after Select Character)
+    static const DWORD NAME_CHAR              = 0x08B24558;
+
+    // ── USERACCOUNT — account data (populated after login, opcode 0xF1 01)
+    static const DWORD PTR_UserAccount        = 0x08B07800;
+
+    // ── Field offsets within USERACCOUNT structure ─────────────
+    static const DWORD USERACCOUNT_OFF_Name       = 0x00;  // char[11]
+    static const DWORD USERACCOUNT_OFF_AuthLevel   = 0x0C;  // BYTE
+    static const DWORD USERACCOUNT_OFF_AccountId   = 0x10;  // DWORD
+    static const DWORD USERACCOUNT_OFF_CharCount   = 0x14;  // BYTE
+    static const DWORD USERACCOUNT_OFF_LastChar    = 0x18;  // char[11]
+
+    // ── Convenience: absolute VA of the AccountID field ───────
+    static const DWORD OFFSET_AccountId = PTR_UserAccount + 0x10;
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -113,6 +142,35 @@ typedef BOOL (__stdcall *fnSwapBuffers)    (HDC hdc);
 inline void* GetNetObject()
 {
     return *reinterpret_cast<void**>(Addr::PTR_NetObject);
+}
+
+// ─────────────────────────────────────────────────────────────
+//  Runtime helper: read character name (after Select Character)
+//  Returns pointer to the null-terminated char[11] buffer.
+//  Valid only after the player selects a character.
+// ─────────────────────────────────────────────────────────────
+inline const char* GetCharName()
+{
+    return reinterpret_cast<const char*>(Addr::NAME_CHAR);
+}
+
+// ─────────────────────────────────────────────────────────────
+//  Runtime helper: read numeric AccountID (after login)
+//  Returns the DWORD account ID stored in USERACCOUNT+0x10.
+//  Valid only after a successful login (opcode 0xF1 sub 0x01).
+// ─────────────────────────────────────────────────────────────
+inline DWORD GetAccountId()
+{
+    return *reinterpret_cast<DWORD*>(Addr::OFFSET_AccountId);
+}
+
+// ─────────────────────────────────────────────────────────────
+//  Runtime helper: read account name (after login)
+//  Returns pointer to the null-terminated char[11] buffer.
+// ─────────────────────────────────────────────────────────────
+inline const char* GetAccountName()
+{
+    return reinterpret_cast<const char*>(Addr::PTR_UserAccount);
 }
 
 // ─────────────────────────────────────────────────────────────

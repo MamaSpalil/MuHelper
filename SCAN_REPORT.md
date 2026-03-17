@@ -60,7 +60,7 @@
 
 ### NAME_CHAR — подробности
 
-**Адрес: `0x08B26758`**
+**Адрес: `0x08B24558`** (1.02.11) / **`0x08B26758`** (1.02.19)
 
 - Тип: `char[11]` — null-terminated ASCII строка
 - Содержит имя текущего залогиненного персонажа
@@ -71,6 +71,37 @@
 1. В IDA/Ghidra: поиск строковой ссылки "Select Character"
 2. Трассировка CALL, копирующего имя в глобальный буфер
 3. Типичный x-ref: `MOV EDI, [0x08B26758]` или `LEA ESI, [0x08B26758]`
+
+### USERACCOUNT / AccountID — подробности
+
+**Адрес структуры:** `0x08B07800` (1.02.11) / `0x08B09A00` (1.02.19)
+
+- Заполняется при успешном логине (обработчик опкода `0xF1`, субкод `0x01`)
+- Структура `USERACCOUNT`:
+
+| Смещение | Тип | Поле | Описание |
+|---|---|---|---|
+| `+0x00` | `char[11]` | `szAccountName` | Имя аккаунта (логин) |
+| `+0x0C` | `BYTE` | `bAuthLevel` | Уровень авторизации |
+| **`+0x10`** | **`DWORD`** | **`dwAccountId`** | **Числовой ID аккаунта** |
+| `+0x14` | `BYTE` | `bCharCount` | Количество персонажей |
+| `+0x18` | `char[11]` | `szLastChar` | Имя последнего персонажа |
+
+**AccountID абсолютный адрес:**
+- 1.02.11: `0x08B07810` (`PTR_UserAccount + 0x10`)
+- 1.02.19: `0x08B09A10` (`PTR_UserAccount + 0x10`)
+
+Как найти вручную:
+1. Найти обработчик `LoginResult` (опкод `0xF1 01`)
+2. Трассировать CALL, копирующий имя аккаунта → глобальный буфер
+3. Типичный x-ref: `LEA EDI, [USERACCOUNT]` рядом с обработчиком логина
+
+Чтение из кода:
+```cpp
+DWORD accountId = *(DWORD*)(Addr::OFFSET_AccountId);       // или GetAccountId()
+const char* charName = (const char*)(Addr::NAME_CHAR);      // или GetCharName()
+const char* accName  = (const char*)(Addr::PTR_UserAccount); // или GetAccountName()
+```
 
 ### Main.dll (companion, для 1.02.19)
 
