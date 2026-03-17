@@ -7,6 +7,10 @@
 #include <cstdarg>
 #include <cstring>
 
+#if defined(_MSC_VER) && _MSC_VER < 1900
+#define vsnprintf _vsnprintf
+#endif
+
 CMuHelperClient::CMuHelperClient()
     : m_bRunning(false)
 {
