@@ -21,7 +21,7 @@ public:
     bool IsVisible() const { return m_bVisible; }
 
 private:
-    CMuHelperUI() = default;
+    CMuHelperUI();
 
     // Panel sections
     void DrawMainPanel();
@@ -40,17 +40,17 @@ private:
     void TabProfiles();
 
     // State
-    bool     m_bInited  = false;
-    bool     m_bVisible = false;
-    bool     m_bDirty   = false;
-    HWND     m_hWnd     = nullptr;
+    bool     m_bInited;
+    bool     m_bVisible;
+    bool     m_bDirty;
+    HWND     m_hWnd;
 
     // Working copy of config (applied on Save)
-    struct MuHelperConfig* m_pEditCfg = nullptr;
-    struct MuHelperConfig  m_editCfg  = {};
+    struct MuHelperConfig* m_pEditCfg;
+    struct MuHelperConfig  m_editCfg;
 
     // ImGui fonts
-    ImFont*  m_pFontNormal = nullptr;
-    ImFont*  m_pFontSmall  = nullptr;
-    ImFont*  m_pFontTitle  = nullptr;
+    ImFont*  m_pFontNormal;
+    ImFont*  m_pFontSmall;
+    ImFont*  m_pFontTitle;
 };

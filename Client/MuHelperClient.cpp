@@ -38,7 +38,7 @@ void CMuHelperClient::Init()
     for (auto& p : m_profiles) { p.bUsed = false; memset(p.szName,0,16); }
 
     RequestConfig();
-    AddLog(LogColor::Cyan, "MuHelper v2 ready. Press F10 to open.");
+    AddLog(LogColor_Cyan, "MuHelper v2 ready. Press F10 to open.");
 }
 
 // ── Packet router ─────────────────────────────────────────────
@@ -62,16 +62,16 @@ void CMuHelperClient::HandleCfgAck(BYTE* lpMsg, int nLen)
     if (nLen < (int)sizeof(PKT_MuHelper_CfgAck)) return;
     auto* p = (PKT_MuHelper_CfgAck*)lpMsg;
     if (p->bResult == 0)
-        AddLog(LogColor::Green, "Config saved.");
+        AddLog(LogColor_Green, "Config saved.");
     else
-        AddLog(LogColor::Red, "Config save failed.");
+        AddLog(LogColor_Red, "Config save failed.");
 }
 
 void CMuHelperClient::HandleCfgReply(BYTE* lpMsg, int nLen)
 {
     if (nLen < (int)sizeof(PKT_MuHelper_CfgReply)) return;
     m_config = ((PKT_MuHelper_CfgReply*)lpMsg)->cfg;
-    AddLog(LogColor::Cyan, "Config loaded.");
+    AddLog(LogColor_Cyan, "Config loaded.");
     if (m_cbCfgReply) m_cbCfgReply(m_config);
 }
 
@@ -81,7 +81,7 @@ void CMuHelperClient::HandleItemPicked(BYTE* lpMsg, int nLen)
     auto* p = (PKT_MuHelper_ItemPicked*)lpMsg;
 
     if (p->dwZenAmount > 0)
-        AddLog(LogColor::Gold, "Zen: +%u", p->dwZenAmount);
+        AddLog(LogColor_Gold, "Zen: +%u", p->dwZenAmount);
     else
     {
         const char* tag = "";
@@ -89,7 +89,7 @@ void CMuHelperClient::HandleItemPicked(BYTE* lpMsg, int nLen)
         else if (p->bItemOpts & 0x02) tag = " [ANC]";
         else if (p->bItemOpts & 0x04) tag = " [SOC]";
 
-        LogColor c = (p->bItemOpts) ? LogColor::Gold : LogColor::White;
+        LogColor c = (p->bItemOpts) ? LogColor_Gold : LogColor_White;
         AddLog(c, "+%s +%d%s", p->szItemName, p->bItemLevel, tag);
     }
     if (m_cbItemPick) m_cbItemPick(*p);
@@ -137,7 +137,7 @@ void CMuHelperClient::SendEnable(bool bEnable)
     pkt.op = MUHELPER_OPCODE_MAIN; pkt.sub = MUHELPER_SUB_ENABLE;
     pkt.bEnable = bEnable ? 1 : 0;
     RawSend((BYTE*)&pkt, sizeof(pkt));
-    AddLog(bEnable ? LogColor::Green : LogColor::Red,
+    AddLog(bEnable ? LogColor_Green : LogColor_Red,
            "Helper %s.", bEnable ? "STARTED" : "STOPPED");
 }
 
@@ -174,7 +174,7 @@ void CMuHelperClient::SaveProfile(BYTE slot, const char* name, const MuHelperCon
     m_profiles[slot].bUsed = true;
     strncpy_s(m_profiles[slot].szName, name, 15);
     m_profiles[slot].cfg = cfg;
-    AddLog(LogColor::Cyan, "Profile %d '%s' saved.", slot+1, name);
+    AddLog(LogColor_Cyan, "Profile %d '%s' saved.", slot+1, name);
 }
 
 void CMuHelperClient::LoadProfile(BYTE slot)
@@ -185,7 +185,7 @@ void CMuHelperClient::LoadProfile(BYTE slot)
     pkt.op = MUHELPER_OPCODE_MAIN; pkt.sub = MUHELPER_SUB_PROFILE_LOAD;
     pkt.bSlot = slot;
     RawSend((BYTE*)&pkt, sizeof(pkt));
-    AddLog(LogColor::Cyan, "Loading profile %d...", slot+1);
+    AddLog(LogColor_Cyan, "Loading profile %d...", slot+1);
 }
 
 void CMuHelperClient::RawSend(BYTE* lpMsg, int nLen)
