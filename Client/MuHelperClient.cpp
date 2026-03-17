@@ -44,7 +44,7 @@ void CMuHelperClient::Init()
     m_config.bShowStatOverlay  = 1;
 
     // Init profiles
-    for (auto& p : m_profiles) { p.bUsed = false; memset(p.szName,0,16); }
+    for (int _pi = 0; _pi < MUHELPER_MAX_PROFILES; _pi++) { m_profiles[_pi].bUsed = false; memset(m_profiles[_pi].szName,0,16); }
 
     RequestConfig();
     AddLog(LogColor_Cyan, "MuHelper v2 ready. Press F10 to open.");
